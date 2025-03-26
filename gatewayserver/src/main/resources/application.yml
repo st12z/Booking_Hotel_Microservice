@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: gatewayserver
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          lower-case-service-id: true
+          enabled: false # Tự động cấu hình các route gateway
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    gateway:
+      access: unrestricted
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8070/eureka/
+server:
+  port: 8072
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG

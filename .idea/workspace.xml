@@ -1,0 +1,626 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="51d15752-74e9-4b1e-bbb6-eccb5a2b114f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/eurekaserver/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gatewayserver/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/CityController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../BÀI15.drawio - draw.io_files/.idea/BÀI15.drawio - draw.io_files.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringOauth2/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringOauth2/.idea/SpringOauth2.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringOauth2/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringOauth2/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringOauth2/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringOauth2/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringOauth2/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringOauth2/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringOauth2/SpringOauth2/src/main/java/com/example/SpringOauth2/HelloController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringOauth2/SpringOauth2/src/main/java/com/example/SpringOauth2/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../api-gateway/api-gateway/api-gateway (1)/api-gateway/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../api-gateway/api-gateway/src/main/java/Routes.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../api-gateway/api-gateway/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../chat-app/chat-app/src/main/java/com/thuc/chat_app/config/WebSocketConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../chat-app/chat-app/src/main/java/com/thuc/chat_app/controllers/ChatController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../chat-app/chat-app/src/main/java/com/thuc/chat_app/controllers/RoomController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../chat-app/chat-app/src/main/java/com/thuc/chat_app/entities/Message.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../chat-app/chat-app/src/main/java/com/thuc/chat_app/entities/Room.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../chat-app/chat-app/src/main/java/com/thuc/chat_app/payload/MessageRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../chat-app/chat-app/src/main/java/com/thuc/chat_app/repositories/RoomRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../chat-app/chat-app/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../chat-demo/chat-demo/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../chat/chat/src/main/java/com/thuc/chat/Config/WebSocketConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../chat/chat/src/main/java/com/thuc/chat/Config/WebSocketEventListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../chat/chat/src/main/java/com/thuc/chat/Controller/ChatController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../chat/chat/src/main/java/com/thuc/chat/Model/ChatMessage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../chat/chat/src/main/java/com/thuc/chat/Model/MessageType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../chat/chat/src/main/resources/static/css/main.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../chat/chat/src/main/resources/static/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../chat/chat/src/main/resources/static/js/main.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/.idea/ecomer-project.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/docker-compose.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/java/com/thucjava/ecomer_project/controller/AdminController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/java/com/thucjava/ecomer_project/controller/HomeController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/java/com/thucjava/ecomer_project/controller/UserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/java/com/thucjava/ecomer_project/model/Cart.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/java/com/thucjava/ecomer_project/model/Category.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/java/com/thucjava/ecomer_project/model/OrderAddress.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/java/com/thucjava/ecomer_project/model/OrderRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/java/com/thucjava/ecomer_project/model/Product.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/java/com/thucjava/ecomer_project/model/ProductOrder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/java/com/thucjava/ecomer_project/model/UserDtls.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/java/com/thucjava/ecomer_project/repository/CartRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/java/com/thucjava/ecomer_project/repository/CategoryRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/java/com/thucjava/ecomer_project/repository/ProductOrderRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/java/com/thucjava/ecomer_project/repository/ProductRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/java/com/thucjava/ecomer_project/repository/UserRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/java/com/thucjava/ecomer_project/service/CartService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/java/com/thucjava/ecomer_project/service/CategoryService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/java/com/thucjava/ecomer_project/service/CommonService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/java/com/thucjava/ecomer_project/service/OrderService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/java/com/thucjava/ecomer_project/service/ProductService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/java/com/thucjava/ecomer_project/service/UserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/java/com/thucjava/ecomer_project/service/impl/CartServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/java/com/thucjava/ecomer_project/service/impl/CategoryServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/java/com/thucjava/ecomer_project/service/impl/CommonServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/java/com/thucjava/ecomer_project/service/impl/OrderServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/java/com/thucjava/ecomer_project/service/impl/ProductServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/java/com/thucjava/ecomer_project/utils/AppConstant.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/java/com/thucjava/ecomer_project/utils/CommonUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/java/com/thucjava/ecomer_project/utils/FileUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/java/com/thucjava/ecomer_project/utils/OrderStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/resources/static/css/style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/resources/static/img/category_img/appli.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/resources/static/img/category_img/beuty.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/resources/static/img/category_img/groccery.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/resources/static/img/category_img/laptop.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/resources/static/img/category_img/mobile.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/resources/static/img/category_img/pant.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/resources/static/img/ecom.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/resources/static/img/ecom1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/resources/static/img/ecom2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/resources/static/img/ecom3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/resources/static/img/product_img/laptop.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/resources/static/js/script.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/resources/templates/admin/add_product.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/resources/templates/admin/category.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/resources/templates/admin/edit_category.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/resources/templates/admin/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/resources/templates/admin/orders.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/resources/templates/admin/products.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/resources/templates/admin/users.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/resources/templates/base.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/resources/templates/forgot_password.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/resources/templates/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/resources/templates/login.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/resources/templates/message.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/resources/templates/product.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/resources/templates/register.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/resources/templates/reset_password.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/resources/templates/user/cart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/resources/templates/user/home.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/resources/templates/user/my_orders.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/resources/templates/user/order.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/resources/templates/user/success.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomer-project/ecomer-project/src/main/resources/templates/view_product.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomerce-project/ecomerce-project/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomerce-project/ecomerce-project/src/main/java/com/thucjava/ecomerce_project/controller/HomeController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomerce-project/ecomerce-project/src/main/webapp/WEB-INF/decorators.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomerce-project/ecomerce-project/src/main/webapp/WEB-INF/views/client/home.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomerce-project/ecomerce-project/src/main/webapp/WEB-INF/views/index.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomerce-project/ecomerce-project/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomerce-project/ecomerce-project/src/main/webapp/common/client/footer.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomerce-project/ecomerce-project/src/main/webapp/common/client/header.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomerce-project/ecomerce-project/src/main/webapp/common/taglib.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ecomerce-project/ecomerce-project/src/main/webapp/decorators/client.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../employee-management/.idea/employee-management.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../employee-management/employee-management/src/main/java/com/thucjava/employee_management/config/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../employee-management/employee-management/src/main/java/com/thucjava/employee_management/controller/MainController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../employee-management/employee-management/src/main/java/com/thucjava/employee_management/controller/UserRegistrationController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../employee-management/employee-management/src/main/java/com/thucjava/employee_management/dto/UserRegistrationDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../employee-management/employee-management/src/main/java/com/thucjava/employee_management/model/Role.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../employee-management/employee-management/src/main/java/com/thucjava/employee_management/model/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../employee-management/employee-management/src/main/java/com/thucjava/employee_management/repo/UserRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../employee-management/employee-management/src/main/java/com/thucjava/employee_management/service/UserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../employee-management/employee-management/src/main/java/com/thucjava/employee_management/service/UserServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../employee-management/employee-management/src/main/resources/templates/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../employee-management/employee-management/src/main/resources/templates/login.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../employee-management/employee-management/src/main/resources/templates/new_employee.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../employee-management/employee-management/src/main/resources/templates/registration.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../employee-management/employee-management/src/main/resources/templates/update_employee.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/docker-compose.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/shopweb.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/TokenEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/config/CrossOriginConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/config/JwtFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/config/KafkaProducerConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/config/ModalMapperConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/config/RedisConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/config/WebSecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/constant/Constant.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/controller/MailController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/controller/ProductController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/controller/TokenController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/controller/UserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/converter/ConverterProduct.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/dto/request/TokenRequestDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/dto/request/UserRequestDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/dto/response/PageResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/dto/response/ProductResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/dto/response/ResponseData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/dto/response/ResponseError.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/dto/response/TokenResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/dto/response/UserResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/exception/ErrorException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/exception/GlobalException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/exception/ResourceException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/exception/ResourceExistException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/model/BaseEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/model/Brand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/model/Category.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/model/Discount.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/model/Message.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/model/OrderItems.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/model/Orders.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/model/Permission.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/model/Product.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/model/RefreshToken.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/model/ResetToken.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/model/Review.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/model/Role.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/model/RoomChat.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/model/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/model/UserPrincipal.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/repository/BrandRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/repository/CategoryRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/repository/ProductRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/repository/UserRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/service/FilterCriteria.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/service/JwtService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/service/MyUserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/service/ProductCriteriaConsumer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/service/ProductService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/service/UserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/service/impl/JwtServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/service/impl/ProductServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/service/impl/RedisProduct.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/utils/ConverterToSlug.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/utils/RoleType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/utils/SendEmail.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/utils/SendMail.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/utils/StatusOrderEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/utils/TokenRandom.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/utils/TokenType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/utils/UploadImage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/java/com/thuc/interview/utils/VNPayUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../interview/interview/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../inventory-service/inventory-service/docker-compose.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../inventory-service/inventory-service/src/main/java/com/thuc/inventory_service/controller/InventoryController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../inventory-service/inventory-service/src/main/java/com/thuc/inventory_service/model/Inventory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../inventory-service/inventory-service/src/main/java/com/thuc/inventory_service/repository/InventoryRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../inventory-service/inventory-service/src/main/java/com/thuc/inventory_service/service/InventoryService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../inventory-service/inventory-service/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../order-service/order-service/docker-compose.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../order-service/order-service/src/main/java/com/thuc/order_service/client/InventoryClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../order-service/order-service/src/main/java/com/thuc/order_service/controller/OrderController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../order-service/order-service/src/main/java/com/thuc/order_service/dto/OrderRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../order-service/order-service/src/main/java/com/thuc/order_service/model/Orders.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../order-service/order-service/src/main/java/com/thuc/order_service/repository/OrderRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../order-service/order-service/src/main/java/com/thuc/order_service/service/OrderService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../order-service/order-service/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../product-service/product-service/docker-compose.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../product-service/product-service/src/main/java/com/thuc/product_service/controller/ProductController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../product-service/product-service/src/main/java/com/thuc/product_service/dto/ProductRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../product-service/product-service/src/main/java/com/thuc/product_service/dto/ProductResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../product-service/product-service/src/main/java/com/thuc/product_service/model/Product.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../product-service/product-service/src/main/java/com/thuc/product_service/repository/ProductRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../product-service/product-service/src/main/java/com/thuc/product_service/service/ProductService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../product-service/product-service/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../question-service/question-service/src/main/java/com/thuc/question_service/controller/QuestionController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../question-service/question-service/src/main/java/com/thuc/question_service/dao/QuestionDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../question-service/question-service/src/main/java/com/thuc/question_service/model/QuestionWrapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../question-service/question-service/src/main/java/com/thuc/question_service/model/Questions.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../question-service/question-service/src/main/java/com/thuc/question_service/model/Response.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../question-service/question-service/src/main/java/com/thuc/question_service/service/QuestionService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../question-service/question-service/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../quiz-service/quiz-service/src/main/java/com/thuc/quiz_service/controller/QuizController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../quiz-service/quiz-service/src/main/java/com/thuc/quiz_service/dao/QuizDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../quiz-service/quiz-service/src/main/java/com/thuc/quiz_service/dto/QuizDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../quiz-service/quiz-service/src/main/java/com/thuc/quiz_service/feign/QuizInterface.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../quiz-service/quiz-service/src/main/java/com/thuc/quiz_service/model/QuestionWrapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../quiz-service/quiz-service/src/main/java/com/thuc/quiz_service/model/Quiz.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../quiz-service/quiz-service/src/main/java/com/thuc/quiz_service/model/Response.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../quiz-service/quiz-service/src/main/java/com/thuc/quiz_service/service/QuizService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../quiz-service/quiz-service/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../quizapp/.idea/quizapp.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../quizapp/quizapp/src/main/java/com/thuc/quizapp/controller/QuestionController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../quizapp/quizapp/src/main/java/com/thuc/quizapp/controller/QuizController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../quizapp/quizapp/src/main/java/com/thuc/quizapp/dao/QuestionDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../quizapp/quizapp/src/main/java/com/thuc/quizapp/dao/QuizDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../quizapp/quizapp/src/main/java/com/thuc/quizapp/model/QuestionWrapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../quizapp/quizapp/src/main/java/com/thuc/quizapp/model/Questions.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../quizapp/quizapp/src/main/java/com/thuc/quizapp/model/Quiz.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../quizapp/quizapp/src/main/java/com/thuc/quizapp/model/Response.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../quizapp/quizapp/src/main/java/com/thuc/quizapp/service/QuestionService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../quizapp/quizapp/src/main/java/com/thuc/quizapp/service/QuizService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../quizapp/quizapp/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../restdemo/.idea/restdemo.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../restdemo/restdemo/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../restdemo/restdemo/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../restdemo/restdemo/src/main/java/com/devcode/restdemo/HelloController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section6/.idea/section6.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section6/v1-springboot/.idea/v1-springboot.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section6/v1-springboot/accounts/src/main/java/com/thuc/accounts/dto/AccountsInfoDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section6/v1-springboot/accounts/src/main/resources/application_prod.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section6/v1-springboot/accounts/src/main/resources/application_qa.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section6/v1-springboot/cards/src/main/resources/application_prod.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section6/v1-springboot/cards/src/main/resources/application_qa.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section6/v1-springboot/loans/src/main/java/com/thuc/loans/dto/LoansInfoDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section6/v1-springboot/loans/src/main/resources/application_prod.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section6/v1-springboot/loans/src/main/resources/application_qa.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section6/v2-spring-cloud-config/.idea/v2-spring-cloud-config.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section6/v2-spring-cloud-config/configserver/configserver/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section6/v2-spring-cloud-config/configserver/configserver/src/main/resources/config/accounts-prod.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section6/v2-spring-cloud-config/configserver/configserver/src/main/resources/config/accounts-qa.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section6/v2-spring-cloud-config/configserver/configserver/src/main/resources/config/accounts.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section6/v2-spring-cloud-config/configserver/configserver/src/main/resources/config/cards-prod.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section6/v2-spring-cloud-config/configserver/configserver/src/main/resources/config/cards-qa.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section6/v2-spring-cloud-config/configserver/configserver/src/main/resources/config/cards.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section6/v2-spring-cloud-config/configserver/configserver/src/main/resources/config/loans-prod.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section6/v2-spring-cloud-config/configserver/configserver/src/main/resources/config/loans-qa.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section6/v2-spring-cloud-config/configserver/configserver/src/main/resources/config/loans.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section6/v2-spring-cloud-config/docker-compose/default/common-config.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section6/v2-spring-cloud-config/docker-compose/default/docker-compose.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section6/v2-spring-cloud-config/docker-compose/prod/common-config.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section6/v2-spring-cloud-config/docker-compose/prod/docker-compose.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section7/.idea/section7.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section8/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section8/accounts/src/main/java/com/thuc/accounts/controller/CustomerController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section8/accounts/src/main/java/com/thuc/accounts/dto/CardsDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section8/accounts/src/main/java/com/thuc/accounts/dto/CustomerDetailsDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section8/accounts/src/main/java/com/thuc/accounts/dto/LoansDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section8/accounts/src/main/java/com/thuc/accounts/service/ICustomersService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section8/accounts/src/main/java/com/thuc/accounts/service/client/CardsFeignClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section8/accounts/src/main/java/com/thuc/accounts/service/client/LoansFeignClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section8/accounts/src/main/java/com/thuc/accounts/service/impl/CustomerServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section8/eurekaserver/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section9/gatewayserver/gatewayserver/src/main/java/com/thuc/gatewayserver/filters/FilterUtility.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section9/gatewayserver/gatewayserver/src/main/java/com/thuc/gatewayserver/filters/RequestTraceFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section9/gatewayserver/gatewayserver/src/main/java/com/thuc/gatewayserver/filters/ResponseTraceFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section9/gatewayserver/gatewayserver/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section_10/accounts/src/main/java/com/thuc/accounts/service/client/CardsFallBack.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section_10/accounts/src/main/java/com/thuc/accounts/service/client/LoansFallBack.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section_10/gatewayserver/gatewayserver/src/main/java/com/thuc/gatewayserver/controller/FallbackController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section_11/docker-compose/observability/alloy/alloy-local-config.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section_11/docker-compose/observability/grafana/datasource.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section_11/docker-compose/observability/loki/loki-config.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section_11/docker-compose/observability/prometheus/prometheus.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section_11/docker-compose/observability/tempo/tempo.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section_12/accounts/src/main/java/com/thuc/accounts/config/KeycloakRoleConverter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section_12/accounts/src/main/java/com/thuc/accounts/config/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section_12/gatewayserver/gatewayserver/src/main/java/com/thuc/gatewayserver/config/KeycloakRoleConverter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section_12/gatewayserver/gatewayserver/src/main/java/com/thuc/gatewayserver/config/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section_13/accounts/src/main/java/com/thuc/accounts/dto/AccountsMsgDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section_13/accounts/src/main/java/com/thuc/accounts/functions/AccountsFunctions.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section_13/message/message/src/main/java/com/thuc/message/dto/AccountsMsgDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../section_13/message/message/src/main/java/com/thuc/message/functions/MessageFunctions.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../service-registry/service-registry/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/docker-compose.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/redis.config" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/config/AuditorAwareImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/config/CrossOriginConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/config/JpaConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/config/JwtFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/config/JwtProperties.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/config/MailConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/config/ModalMapperConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/config/RedisConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/config/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/config/VNPayConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/config/WebSocketConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/constant/Constant.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/controller/AdminController/AdminAccountController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/controller/AdminController/BrandAdminController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/controller/AdminController/CategoryAdminController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/controller/AdminController/DashboardController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/controller/AdminController/OrderAdminController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/controller/AdminController/ProductAdminController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/controller/AdminController/RevenueController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/controller/AdminController/ReviewAdminController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/controller/AdminController/RoleAdminController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/controller/AdminController/RoomChatAdminController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/controller/BrandController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/controller/CartController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/controller/CategoryController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/controller/ChatController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/controller/HomeController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/controller/JwtController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/controller/OrderController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/controller/PaymentController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/controller/ProductController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/controller/ReviewController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/controller/RoomController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/controller/UserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/converter/Converter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/dto/request/BrandRequestDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/dto/request/CartRequestDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/dto/request/CategoryRequestDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/dto/request/ChangePasswordDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/dto/request/ItemRequestDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/dto/request/MessageRequestDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/dto/request/OrderRequestDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/dto/request/ProductRequestDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/dto/request/RefreshTokenRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/dto/request/ResetPasswordDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/dto/request/ReviewRequestDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/dto/request/UserRequestDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/dto/response/BrandResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/dto/response/CategoryResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/dto/response/DashBoardResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/dto/response/ItemResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/dto/response/MessageResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/dto/response/NotificationResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/dto/response/OrderResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/dto/response/OrderResponseBasic.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/dto/response/PageResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/dto/response/ProductResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/dto/response/ResponseData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/dto/response/ResponseError.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/dto/response/RevenueDayResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/dto/response/RevenueResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/dto/response/ReviewResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/dto/response/RoleResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/dto/response/RoomChatResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/dto/response/TokenResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/dto/response/UserResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/exception/ErrorResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/exception/InvalidDataException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/exception/ResourceNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/exception/ResoureceExistException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/model/BaseEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/model/Brand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/model/Category.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/model/Message.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/model/OrderItems.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/model/Orders.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/model/Product.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/model/RefreshToken.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/model/ResetToken.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/model/Review.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/model/Role.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/model/RoomChat.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/model/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/model/UserPrincipal.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/repository/BrandRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/repository/CategoryRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/repository/MessageRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/repository/OrderItemRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/repository/OrderRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/repository/ProductRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/repository/RefreshTokenRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/repository/ResetTokenRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/repository/ReviewRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/repository/RoleRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/repository/RoomRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/repository/UserRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/repository/criteria/FilterCriteria.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/repository/criteria/ProductSearchCriteriaImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/AdminService/DashBoardService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/AdminService/Impl/DashBoardServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/AdminService/Impl/OrderServiceAdminImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/AdminService/Impl/ProductServiceAdminImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/AdminService/Impl/ReviewServiceAdminImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/AdminService/OrderServiceAdmin.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/AdminService/ProductServiceAdmin.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/AdminService/ReviewServiceAdmin.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/BrandService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/CartService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/CategoryService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/JwtService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/MessageService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/MyUserDetailsService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/OrderService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/PaymentService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/ProductService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/RedisBrandService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/RedisCartService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/RedisCategory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/RedisProductService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/RefreshTokenService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/ResetTokenService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/ReviewService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/RoleService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/RoomService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/UserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/impl/BrandServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/impl/CartServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/impl/CategoryServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/impl/JwtServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/impl/MessageServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/impl/OrderServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/impl/PaymentServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/impl/ProductServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/impl/RedisBrandServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/impl/RedisCartServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/impl/RedisCategoryImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/impl/RedisProductServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/impl/RefreshTokenServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/impl/ResetTokenServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/impl/ReviewServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/impl/RoleServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/impl/RoomServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/utils/ConverterToSlug.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/utils/RoleType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/utils/SendMail.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/utils/StatusOrderEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/utils/TokenRandom.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/utils/TokenType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/utils/UploadImage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/java/com/thucjava/shopapp/utils/VNPayUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopapp/shopapp/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../spring-example/spring-example/src/main/java/com/thucjava/spring_example/controller/UserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../spring-example/spring-example/src/main/java/com/thucjava/spring_example/dto/request/UserRequestDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../spring-example/spring-example/src/main/java/com/thucjava/spring_example/dto/response/ResponseData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../spring-example/spring-example/src/main/java/com/thucjava/spring_example/dto/response/ResponseError.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../spring-example/spring-example/src/main/java/com/thucjava/spring_example/dto/response/ResponseSuccess.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../spring-example/spring-example/src/main/java/com/thucjava/spring_example/exception/ErrorResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../spring-example/spring-example/src/main/java/com/thucjava/spring_example/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../spring-example/spring-example/src/main/java/com/thucjava/spring_example/util/UserStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../testlombok/testlombok/src/main/java/com/thucjava/testlombok/Student.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../thymeleaf-project/thymeleaf-project/src/main/java/com/thucjava/thymeleaf_project/controller/MainController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../thymeleaf-project/thymeleaf-project/src/main/java/com/thucjava/thymeleaf_project/model/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../thymeleaf-project/thymeleaf-project/src/main/resources/templates/fragments.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../thymeleaf-project/thymeleaf-project/src/main/resources/templates/register_form.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../thymeleaf-project/thymeleaf-project/src/main/resources/templates/test.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2urI75Hsy7dqW0jFpSHYFbDZxM4" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Maven.eurekaserver [clean].executor": "Run",
+    "Maven.eurekaserver [package].executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Spring Boot.EurekaserverApplication.executor": "Debug",
+    "Spring Boot.GatewayserverApplication.executor": "Debug",
+    "Spring Boot.RoomServiceAppliction.executor": "Debug",
+    "Spring Boot.RoomsApplication.executor": "Debug",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "run.configurations.included.in.services": "true",
+    "settings.editor.selected.configurable": "reference.projectsettings.compiler.annotationProcessors",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn clean" />
+      <command value="mvn package" />
+    </option>
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="KtorApplicationConfigurationType" />
+        <option value="MicronautRunConfigurationType" />
+        <option value="QuarkusRunConfigurationType" />
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.GatewayserverApplication">
+    <configuration name="EurekaserverApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="eurekaserver" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.thuc.eurekaserver.EurekaserverApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GatewayserverApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="gatewayserver" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.thuc.gatewayserver.GatewayserverApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RoomsApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="room-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.thuc.rooms.RoomsApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="com.poratu.idea.plugins.tomcat">
+      <predefined_log_file enabled="true" id="Tomcat Localhost Log" />
+      <predefined_log_file enabled="true" id="Tomcat Access Log" />
+      <predefined_log_file id="Tomcat Catalina Log" />
+      <predefined_log_file id="Tomcat Manager Log" />
+      <predefined_log_file id="Tomcat Host Manager Log" />
+      <option name="catalinaBase" value="" />
+      <option name="contextPath" value="" />
+      <option name="docBase" value="" />
+      <option name="extraClassPath" value="" />
+      <option name="tomcatInfo">
+        <TomcatInfo>
+          <option name="name" value="Apache Tomcat/9.0.98" />
+          <option name="path" value="$PROJECT_DIR$/../apache-tomcat-9.0.98-windows-x64/apache-tomcat-9.0.98" />
+          <option name="version" value="9.0.98.0" />
+        </TomcatInfo>
+      </option>
+      <option name="vmOptions" value="" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.22562.218" />
+        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-IU-243.22562.218" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="51d15752-74e9-4b1e-bbb6-eccb5a2b114f" name="Changes" comment="" />
+      <created>1743000098018</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1743000098018</updated>
+      <workItem from="1743000099455" duration="2688000" />
+      <workItem from="1743002823951" duration="858000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
