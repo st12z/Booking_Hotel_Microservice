@@ -20,6 +20,7 @@ public class PropertyConverter {
                 .longitude(property.getLongitude())
                 .ratingStar(property.getRatingStar())
                 .numReviews(property.getNumReviews())
+                .slug(property.getSlug())
                 .build();
     }
 }

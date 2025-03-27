@@ -1,5 +1,6 @@
 package com.thuc.rooms.entity;
 
+import com.thuc.rooms.utils.ConvertToSlug;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,4 +28,12 @@ public class City extends BaseEntity {
 
     @OneToMany(mappedBy = "city")
     private List<Trip> trips;
+
+    private String slug;
+
+    @PrePersist
+    public void prePersist() {
+        this.slug = ConvertToSlug.convertToSlug(name);
+    }
+
 }

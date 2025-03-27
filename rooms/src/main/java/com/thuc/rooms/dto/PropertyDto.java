@@ -32,6 +32,8 @@ public class PropertyDto {
 
     private List <String> images;
 
+    private String slug;
+
     private int numReviews;
 
     private double avgReviewScore;

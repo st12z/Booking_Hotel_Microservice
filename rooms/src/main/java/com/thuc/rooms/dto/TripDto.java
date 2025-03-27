@@ -1,34 +1,23 @@
-package com.thuc.rooms.entity;
+package com.thuc.rooms.dto;
 
-import jakarta.persistence.*;
+
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.math.BigDecimal;
 
-@Entity
-@Getter
-@Setter
+@Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Trip extends BaseEntity{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class TripDto {
     private int id;
-
     private String name;
-
     private String tripType;
-
-    @ManyToOne
-    @JoinColumn(name="city_id")
-    private City city;
-
+    private int city_id;
     private BigDecimal latitude;
-
     private BigDecimal longitude;
-
     private String image;
 }

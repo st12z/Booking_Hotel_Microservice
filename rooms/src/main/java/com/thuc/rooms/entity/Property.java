@@ -1,5 +1,6 @@
 package com.thuc.rooms.entity;
 
+import com.thuc.rooms.utils.ConvertToSlug;
 import com.thuc.rooms.utils.StringListConverter;
 import jakarta.persistence.*;
 import lombok.*;
@@ -56,5 +57,15 @@ public class Property extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "city_id")
     private City city;
+
+    @OneToMany(mappedBy = "property")
+    private List<Room> rooms;
+
+    private String slug;
+
+    @PrePersist
+    public void prePersist() {
+        this.slug = ConvertToSlug.convertToSlug(name);
+    }
 
 }

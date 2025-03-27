@@ -22,6 +22,9 @@ public class RoomType extends BaseEntity{
     @JoinColumn(name = "property_id")
     private Property property;
 
+    @OneToMany(mappedBy = "roomType")
+    private List<Room> rooms;
+
     private String name;
 
     private int price;
