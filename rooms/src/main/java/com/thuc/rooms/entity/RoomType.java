@@ -31,8 +31,6 @@ public class RoomType extends BaseEntity{
 
     private int maxGuests;
 
-
-
     private int totalRooms;
 
     private int area;

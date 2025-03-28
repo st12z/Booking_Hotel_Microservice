@@ -1,12 +1,12 @@
 package com.thuc.rooms.repository;
 
-import com.thuc.rooms.entity.Property;
+import com.thuc.rooms.entity.RoomType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface PropertyRepository extends JpaRepository<Property,String> {
-    List<Property> findByCityId(int cityId);
+public interface RoomTypeRepository extends JpaRepository<RoomType, String> {
+    List<RoomType> findByPropertyId(int propertyId);
 }
