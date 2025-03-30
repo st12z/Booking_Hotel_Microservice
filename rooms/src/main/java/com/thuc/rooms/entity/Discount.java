@@ -1,9 +1,6 @@
 package com.thuc.rooms.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -17,21 +14,22 @@ import java.time.LocalDateTime;
 public class Discount extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     private String code;
 
-    private int discountValue;
+    private Integer discountValue;
 
     private String discountType;
 
-    private int minBookingAmount;
+    private Integer minBookingAmount;
 
     private LocalDateTime startDate;
 
     private LocalDateTime endDate;
 
-    private int quantity;
+    private Integer quantity;
 
+    @Column(columnDefinition = "TEXT")
     private String image;
 }

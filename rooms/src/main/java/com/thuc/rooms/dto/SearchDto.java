@@ -1,5 +1,6 @@
 package com.thuc.rooms.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 @ToString
 public class SearchDto {
     private String destination;
-    private LocalDate checkIn;
-    private LocalDate checkOut;
-    private int quantityBed;
+    private LocalDateTime checkIn;
+    private LocalDateTime checkOut;
+    private Integer quantityBed;
 }

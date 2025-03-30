@@ -18,7 +18,7 @@ import java.util.List;
 public class Property extends BaseEntity {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column(nullable = false)
     private String name;
@@ -26,13 +26,15 @@ public class Property extends BaseEntity {
     @Column(nullable = false)
     private String propertyType;
 
-    private int ratingStar;
+    private Integer ratingStar;
 
     @Column(columnDefinition = "TEXT")
     private String address;
 
+    @Column(precision = 50, scale = 10)
     private BigDecimal latitude;
 
+    @Column(precision = 50, scale = 10)
     private BigDecimal longitude;
 
     @Column(columnDefinition = "TEXT")
@@ -46,13 +48,17 @@ public class Property extends BaseEntity {
     @Column(columnDefinition = "TEXT[]")
     private List <String> images;
 
-    private int numReviews;
+    private Integer numReviews;
 
-    private double avgReviewScore;
+    private Double avgReviewScore;
 
+    @Column(nullable = true)
+    private Double distanceFromCenter;
 
+    @Column(nullable = true)
+    private Double distanceFromTrip;
 
-    private boolean deleted;
+    private Boolean deleted;
 
     @ManyToOne
     @JoinColumn(name = "city_id")

@@ -12,13 +12,13 @@ import java.util.List;
 @Getter
 @Setter
 public class PropertyDto {
-    private int id;
+    private Integer id;
 
     private String name;
 
     private String propertyType;
 
-    private int ratingStar;
+    private Integer ratingStar;
 
     private String address;
 
@@ -34,9 +34,13 @@ public class PropertyDto {
 
     private String slug;
 
-    private int numReviews;
+    private Integer numReviews;
 
-    private double avgReviewScore;
+    private Double avgReviewScore;
 
-    private boolean deleted;
+    private Boolean deleted;
+
+    private Double distanceFromCenter;
+
+    private Double distanceFromTrip;
 }

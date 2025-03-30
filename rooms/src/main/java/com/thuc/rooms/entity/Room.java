@@ -3,18 +3,21 @@ package com.thuc.rooms.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@Table(name="rooms")
 public class Room extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
-    private int roomNumber;
+    private Integer roomNumber;
 
     private String status;
 
@@ -25,4 +28,8 @@ public class Room extends BaseEntity{
     @ManyToOne
     @JoinColumn(name="room_type_id")
     private RoomType roomType;
+
+    private LocalDateTime checkIn;
+
+    private LocalDateTime checkOut;
 }

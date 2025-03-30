@@ -9,19 +9,19 @@ import lombok.*;
 @Getter
 @Setter
 public class RoomTypeDto {
-    private int id;
+    private Integer id;
 
-    private int propertyId;
+    private Integer propertyId;
 
     private String name;
 
-    private int price;
+    private Integer price;
 
-    private int maxGuests;
+    private Integer maxGuests;
 
-    private int totalRooms;
+    private Integer totalRooms;
 
-    private int area;
+    private Integer area;
 
-    private int discount;
+    private Integer discount;
 }

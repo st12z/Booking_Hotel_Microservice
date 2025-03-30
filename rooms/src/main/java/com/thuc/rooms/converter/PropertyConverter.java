@@ -15,11 +15,13 @@ public class PropertyConverter {
                 .address(property.getAddress())
                 .overview(property.getOverview())
                 .images(property.getImages())
-                .deleted(property.isDeleted())
+                .deleted(property.getDeleted())
                 .latitude(property.getLatitude())
                 .longitude(property.getLongitude())
                 .ratingStar(property.getRatingStar())
                 .numReviews(property.getNumReviews())
+                .distanceFromCenter(property.getDistanceFromCenter())
+                .distanceFromTrip(property.getDistanceFromTrip())
                 .slug(property.getSlug())
                 .build();
     }

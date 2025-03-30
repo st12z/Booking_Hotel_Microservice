@@ -13,10 +13,10 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TripDto {
-    private int id;
+    private Integer id;
     private String name;
     private String tripType;
-    private int city_id;
+    private Integer city_id;
     private BigDecimal latitude;
     private BigDecimal longitude;
     private String image;

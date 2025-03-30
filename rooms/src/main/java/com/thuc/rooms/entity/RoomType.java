@@ -13,10 +13,11 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name="room_type")
 public class RoomType extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "property_id")
@@ -27,13 +28,15 @@ public class RoomType extends BaseEntity{
 
     private String name;
 
-    private int price;
+    private Integer price;
 
-    private int maxGuests;
+    private Integer maxGuests;
 
-    private int totalRooms;
+    private Integer totalRooms;
 
-    private int area;
+    private Integer area;
 
-    private int discount;
+    private Integer discount;
+
+    private Integer numBeds;
 }

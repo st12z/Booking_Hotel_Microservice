@@ -11,21 +11,21 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DiscountDto {
-    private int id;
+    private Integer id;
 
     private String code;
 
     private String discountType;
 
-    private int discountValue;
+    private Integer discountValue;
 
-    private int minBookingAmount;
+    private Integer minBookingAmount;
 
     private LocalDateTime startDate;
 
     private LocalDateTime endDate;
 
-    private int quantity;
+    private Integer quantity;
 
     private String image;
 }

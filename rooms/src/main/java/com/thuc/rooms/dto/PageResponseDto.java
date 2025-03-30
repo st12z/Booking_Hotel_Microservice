@@ -5,15 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class CityDto {
-    private Integer id;
-    private String name;
-    private String image;
-    private String slug;
+@NoArgsConstructor
+public class PageResponseDto<T> {
+    private Long total;
+    private Integer pageNo;
+    private Integer pageSize;
+    private T dataPage;
 }
