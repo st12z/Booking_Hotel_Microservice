@@ -4,20 +4,29 @@ import com.thuc.rooms.converter.TripConverter;
 import com.thuc.rooms.dto.TripDto;
 import com.thuc.rooms.dto.TripTypeDto;
 import com.thuc.rooms.entity.Trip;
+import com.thuc.rooms.repository.CityRepository;
 import com.thuc.rooms.repository.TripRepository;
 import com.thuc.rooms.service.ITripService;
 import com.thuc.rooms.utils.TripEnum;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 @Service
 @RequiredArgsConstructor
 public class TripServiceImpl implements ITripService {
     private final TripRepository tripRepository;
     private final Logger log = LoggerFactory.getLogger(TripServiceImpl.class);
+    @PersistenceContext
+    private EntityManager entityManager;
     @Override
     public List<TripDto> getAllTrips(String trip) {
         log.debug("Requested to get all trips for {} successfully", trip);
@@ -28,5 +37,18 @@ public class TripServiceImpl implements ITripService {
     @Override
     public List<TripTypeDto> getAllTripTypes() {
         return TripEnum.getTrips();
+    }
+
+    @Override
+    public List<String> getDestinationsBySearch(String keyword) {
+        String sqlTrips = "SELECT name FROM trip WHERE UNACCENT(name) ILIKE UNACCENT(:keyword)";
+        String sqlCtities = "SELECT name FROM cities WHERE UNACCENT(name) ILIKE UNACCENT(:keyword)";
+        Query queryTrips = entityManager.createNativeQuery(sqlTrips,String.class);
+        Query queryCtities= entityManager.createNativeQuery(sqlCtities,String.class);
+        queryTrips.setParameter("keyword","%"+ keyword+"%");
+        queryCtities.setParameter("keyword","%"+ keyword+"%");
+        List<String> trips = queryTrips.getResultList();
+        List<String> cities = queryCtities.getResultList();
+        return Stream.concat(trips.stream(), cities.stream()).distinct().toList();
     }
 }

@@ -3,6 +3,7 @@ package com.thuc.rooms.dto;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class PropertyDto {
+public class PropertyDto implements Serializable {
     private Integer id;
 
     private String name;
@@ -43,4 +44,8 @@ public class PropertyDto {
     private Double distanceFromCenter;
 
     private Double distanceFromTrip;
+
+    private String cityName;
+
+    private Integer cityId;
 }

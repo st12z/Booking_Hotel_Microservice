@@ -12,7 +12,12 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
-
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      connect-timeout: 2s
+      timeout: 4s
 server:
   port: 8080
 

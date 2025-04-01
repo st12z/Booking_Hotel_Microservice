@@ -23,6 +23,8 @@ public class PropertyConverter {
                 .distanceFromCenter(property.getDistanceFromCenter())
                 .distanceFromTrip(property.getDistanceFromTrip())
                 .slug(property.getSlug())
+                .cityName(property.getCity().getName())
+                .cityId(property.getCity().getId())
                 .build();
     }
 }

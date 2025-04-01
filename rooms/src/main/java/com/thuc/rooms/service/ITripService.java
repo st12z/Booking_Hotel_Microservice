@@ -9,4 +9,6 @@ public interface ITripService {
     public List<TripDto> getAllTrips(String trip);
 
     List<TripTypeDto> getAllTripTypes();
+
+    List<String> getDestinationsBySearch(String keyword);
 }

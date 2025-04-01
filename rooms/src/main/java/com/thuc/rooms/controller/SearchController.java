@@ -7,8 +7,11 @@ import com.thuc.rooms.service.ISearchService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api/search")
@@ -18,16 +21,21 @@ public class SearchController {
     private final Logger log = LoggerFactory.getLogger(SearchController.class);
     @GetMapping("")
     public ResponseEntity<?> search(
-            @RequestBody(required = true) SearchDto searchDto,
-            @RequestParam(required=true,defaultValue="1") int pageNo,
-            @RequestParam(required=true,defaultValue="5") int pageSize
+            @RequestParam String destination,
+            @RequestParam(required = false)  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime checkIn,
+            @RequestParam(required = false)  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime checkOut,
+            @RequestParam(required = false)  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Integer quantityBeds,
+            @RequestParam(defaultValue="1") int pageNo,
+            @RequestParam(defaultValue="10") int pageSize
     ) {
+        SearchDto searchDto = new SearchDto(destination, checkIn, checkOut, quantityBeds);
         log.debug("Requested to search with {}", searchDto);
         SuccessResponseDto successResponseDto = SuccessResponseDto.builder()
                 .code(PropertyConstant.STATUS_200)
                 .message(PropertyConstant.MESSAGE_200)
-                .data(searchService.getPropertiesBySearchV2(pageNo,pageSize,searchDto))
+                .data(searchService.getPropertiesBySearchV1(pageNo,pageSize,searchDto))
                 .build();
         return ResponseEntity.ok().body(successResponseDto);
     }
+
 }

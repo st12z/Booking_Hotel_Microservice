@@ -3,12 +3,14 @@ package com.thuc.rooms.dto;
 
 import lombok.*;
 
+import java.io.Serializable;
+
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class RoomTypeDto {
+public class RoomTypeDto implements Serializable {
     private Integer id;
 
     private Integer propertyId;

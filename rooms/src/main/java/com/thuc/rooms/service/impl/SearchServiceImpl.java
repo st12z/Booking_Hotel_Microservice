@@ -4,25 +4,20 @@ import com.thuc.rooms.converter.PropertyConverter;
 import com.thuc.rooms.dto.PageResponseDto;
 import com.thuc.rooms.dto.PropertyDto;
 import com.thuc.rooms.dto.SearchDto;
-import com.thuc.rooms.entity.City;
 import com.thuc.rooms.entity.Property;
-import com.thuc.rooms.entity.Trip;
 import com.thuc.rooms.repository.CityRepository;
 import com.thuc.rooms.repository.PropertyRepository;
 import com.thuc.rooms.repository.TripRepository;
 import com.thuc.rooms.service.ISearchService;
+import com.thuc.rooms.service.IRedisService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,12 +30,19 @@ public class SearchServiceImpl implements ISearchService {
     private final CityRepository cityRepository;
     private final TripRepository tripRepository;
     private final Logger log = LoggerFactory.getLogger(SearchServiceImpl.class);
+    private final IRedisService redisService;
     @PersistenceContext
     private EntityManager entityManager;
     // Use NativeQuery
     @Override
     public PageResponseDto<List<PropertyDto>> getPropertiesBySearchV1(int pageNo,int pageSize,SearchDto searchDto) {
         log.debug("Requested to getPropertiesBySearchV1 with {} successfully",searchDto);
+        String key = String.format("search:%s",searchDto);
+        if(redisService.getData(key)!=null){
+            return PageResponseDto.<List<PropertyDto>>builder()
+                    .dataPage((List<PropertyDto>) redisService.getData(key))
+                    .build();
+        }
         StringBuilder sql = new StringBuilder(" SELECT * FROM properties p WHERE 1=1 ");
         Map<String,Object> parameters = new HashMap<>();
         if(searchDto.getDestination() != null && !searchDto.getDestination().isEmpty()) {
@@ -49,7 +51,7 @@ public class SearchServiceImpl implements ISearchService {
             sql.append(" OR EXISTS (SELECT 1 FROM trip tr WHERE  p.city_id = tr.city_id and unaccent(name) ILIKE unaccent(:destination)))");
             parameters.put("destination",(String)('%'+searchDto.getDestination()+'%'));
         }
-        if(searchDto.getCheckOut() !=null && searchDto.getCheckIn()!=null) {
+        if(searchDto.getCheckOut() !=null  && searchDto.getCheckIn()!=null) {
             sql.append(" AND EXISTS (SELECT 1 FROM rooms r WHERE r.property_id = p.id " +
                     "AND (r.check_out <:checkIn OR (r.check_in is null AND r.check_out is null)))"
             );
@@ -62,6 +64,12 @@ public class SearchServiceImpl implements ISearchService {
         Query countQuery = entityManager.createNativeQuery(sql.toString().replace("SELECT *","SELECT COUNT(*)"));
         parameters.forEach(countQuery::setParameter);
         Long total = (Long)countQuery.getSingleResult();
+
+        Query allQuery = entityManager.createNativeQuery(sql.toString(),Property.class);
+        parameters.forEach(allQuery::setParameter);
+        List<Property> propertiesAll = allQuery.getResultList();
+        List<PropertyDto> propertyDtoAll = propertiesAll.stream().map(PropertyConverter::toPropertyDto).toList();
+        redisService.saveData(key,propertyDtoAll);
         sql.append(" LIMIT :limit OFFSET :offset ");
         int limit = pageSize;
         int offset = pageSize*(pageNo-1);
@@ -77,6 +85,7 @@ public class SearchServiceImpl implements ISearchService {
                 .pageSize(pageSize)
                 .total(total)
                 .build();
+
     }
     // Use JPQL
     @Override

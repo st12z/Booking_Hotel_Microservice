@@ -15,17 +15,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/trips")
-public class TripController {
+@RequestMapping("/api/destinations")
+public class DestinationController {
     private final ITripService tripService;
-    private final Logger log = LoggerFactory.getLogger(TripController.class);
+    private final Logger log = LoggerFactory.getLogger(DestinationController.class);
     @GetMapping("")
-    public ResponseEntity<?> getAllTrips(@RequestParam(required = false,defaultValue = "") String trip) {
-        log.debug("Requested to getAllTrips with trip {}", trip);
+    public ResponseEntity<?> getDestinationsBySearch(@RequestParam(required = false,defaultValue = "") String keyword) {
+        log.debug("Requested to getDestinationsBySearch with search {}", keyword);
         SuccessResponseDto response = SuccessResponseDto.builder()
                 .message(TripConstant.MESSAGE_200)
                 .code(TripConstant.STATUS_200)
-                .data(tripService.getAllTrips(trip))
+                .data(tripService.getDestinationsBySearch(keyword))
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
