@@ -48,4 +48,6 @@ public class PropertyDto implements Serializable {
     private String cityName;
 
     private Integer cityId;
+
+    private List<RoomTypeDto> roomTypes;
 }

@@ -1,5 +1,6 @@
 package com.thuc.rooms.entity;
 
+import com.thuc.rooms.utils.StringConverter;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,6 +28,10 @@ public class RoomType extends BaseEntity{
     private List<Room> rooms;
 
     private String name;
+
+    @Convert(converter = StringConverter.class)
+    @Column(columnDefinition = "jsonb")
+    private List<String> facilities;
 
     private Integer price;
 

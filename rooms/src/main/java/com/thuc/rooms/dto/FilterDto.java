@@ -14,7 +14,7 @@ public class FilterDto {
     private List<String> distance;
     private List<String> facilities;
     private List<String> propertyType;
-    private List<String> rating;
+    private List<Integer> rating;
     private List<String> reviewScore;
     private Integer quantityBeds;
 }

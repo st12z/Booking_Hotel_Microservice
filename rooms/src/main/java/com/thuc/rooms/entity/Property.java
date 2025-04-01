@@ -1,7 +1,7 @@
 package com.thuc.rooms.entity;
 
 import com.thuc.rooms.utils.ConvertToSlug;
-import com.thuc.rooms.utils.StringListConverter;
+import com.thuc.rooms.utils.StringConverter;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -40,12 +40,12 @@ public class Property extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String overview;
 
-    @Convert(converter = StringListConverter.class)
-    @Column(columnDefinition = "TEXT[]")
+    @Convert(converter = StringConverter.class)
+    @Column(columnDefinition = "jsonb")
     private List <String> facilities;
 
-    @Convert(converter = StringListConverter.class)
-    @Column(columnDefinition = "TEXT[]")
+    @Convert(converter = StringConverter.class)
+    @Column(columnDefinition = "jsonb")
     private List <String> images;
 
     private Integer numReviews;
@@ -66,6 +66,9 @@ public class Property extends BaseEntity {
 
     @OneToMany(mappedBy = "property")
     private List<Room> rooms;
+
+    @OneToMany(mappedBy = "property")
+    private List<RoomType> roomTypes;
 
     private String slug;
 

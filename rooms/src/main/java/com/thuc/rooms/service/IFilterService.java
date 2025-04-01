@@ -8,5 +8,5 @@ import com.thuc.rooms.dto.SearchDto;
 import java.util.List;
 
 public interface IFilterService {
-    PageResponseDto<List<PropertyDto>> filterByCondition(SearchDto searchDto, FilterDto filter);
+    PageResponseDto<List<PropertyDto>> filterByCondition(SearchDto searchDto, FilterDto filter,int pageNo,int pageSize);
 }

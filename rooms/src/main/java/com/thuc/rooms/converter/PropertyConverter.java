@@ -4,6 +4,8 @@ package com.thuc.rooms.converter;
 import com.thuc.rooms.dto.PropertyDto;
 import com.thuc.rooms.entity.Property;
 
+import java.util.stream.Collectors;
+
 public class PropertyConverter {
     public static PropertyDto toPropertyDto(Property property) {
         return PropertyDto.builder()
@@ -25,6 +27,7 @@ public class PropertyConverter {
                 .slug(property.getSlug())
                 .cityName(property.getCity().getName())
                 .cityId(property.getCity().getId())
+                .roomTypes(property.getRoomTypes().stream().map(RoomTypeConverter::toRoomTypDto).toList())
                 .build();
     }
 }

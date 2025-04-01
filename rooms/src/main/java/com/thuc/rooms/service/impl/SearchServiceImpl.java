@@ -9,7 +9,7 @@ import com.thuc.rooms.repository.CityRepository;
 import com.thuc.rooms.repository.PropertyRepository;
 import com.thuc.rooms.repository.TripRepository;
 import com.thuc.rooms.service.ISearchService;
-import com.thuc.rooms.service.IRedisService;
+import com.thuc.rooms.service.IRedisPropertyService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
@@ -30,7 +30,7 @@ public class SearchServiceImpl implements ISearchService {
     private final CityRepository cityRepository;
     private final TripRepository tripRepository;
     private final Logger log = LoggerFactory.getLogger(SearchServiceImpl.class);
-    private final IRedisService redisService;
+    private final IRedisPropertyService redisService;
     @PersistenceContext
     private EntityManager entityManager;
     // Use NativeQuery
@@ -38,11 +38,6 @@ public class SearchServiceImpl implements ISearchService {
     public PageResponseDto<List<PropertyDto>> getPropertiesBySearchV1(int pageNo,int pageSize,SearchDto searchDto) {
         log.debug("Requested to getPropertiesBySearchV1 with {} successfully",searchDto);
         String key = String.format("search:%s",searchDto);
-        if(redisService.getData(key)!=null){
-            return PageResponseDto.<List<PropertyDto>>builder()
-                    .dataPage((List<PropertyDto>) redisService.getData(key))
-                    .build();
-        }
         StringBuilder sql = new StringBuilder(" SELECT * FROM properties p WHERE 1=1 ");
         Map<String,Object> parameters = new HashMap<>();
         if(searchDto.getDestination() != null && !searchDto.getDestination().isEmpty()) {
@@ -64,12 +59,11 @@ public class SearchServiceImpl implements ISearchService {
         Query countQuery = entityManager.createNativeQuery(sql.toString().replace("SELECT *","SELECT COUNT(*)"));
         parameters.forEach(countQuery::setParameter);
         Long total = (Long)countQuery.getSingleResult();
-
         Query allQuery = entityManager.createNativeQuery(sql.toString(),Property.class);
         parameters.forEach(allQuery::setParameter);
         List<Property> propertiesAll = allQuery.getResultList();
         List<PropertyDto> propertyDtoAll = propertiesAll.stream().map(PropertyConverter::toPropertyDto).toList();
-        redisService.saveData(key,propertyDtoAll);
+        if(redisService.getData(key)==null) redisService.saveData(key,propertyDtoAll);
         sql.append(" LIMIT :limit OFFSET :offset ");
         int limit = pageSize;
         int offset = pageSize*(pageNo-1);

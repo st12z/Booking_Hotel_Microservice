@@ -56,7 +56,7 @@ public class SearchController {
         SuccessResponseDto successResponseDto = SuccessResponseDto.builder()
                 .code(PropertyConstant.STATUS_200)
                 .message(PropertyConstant.MESSAGE_200)
-                .data(filterService.filterByCondition(searchDto,filter))
+                .data(filterService.filterByCondition(searchDto,filter,pageNo,pageSize))
                 .build();
         return ResponseEntity.ok().body(successResponseDto);
     }
