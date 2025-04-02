@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface PropertyRepository extends JpaRepository<Property,String> {
     List<Property> findByCityId(int cityId);
+
+    Property findBySlug(String slug);
 }

@@ -9,4 +9,6 @@ import java.util.List;
 
 public interface IPropertyService {
     List<PropertyDto> getAllProperties(String slugCity);
+
+    PropertyDto getPropertyBySlug(String slug);
 }

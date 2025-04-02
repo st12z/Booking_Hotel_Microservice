@@ -37,5 +37,14 @@ public class PropertyServiceImpl implements IPropertyService {
         return properties.stream().map(PropertyConverter::toPropertyDto).toList();
     }
 
+    @Override
+    public PropertyDto getPropertyBySlug(String slug) {
+        Property property = propertyRepository.findBySlug(slug);
+        if(property == null){
+            throw new ResourceNotFoundException("Property","Slug",slug);
+        }
+        return PropertyConverter.toPropertyDto(property);
+    }
+
 
 }
