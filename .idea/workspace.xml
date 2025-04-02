@@ -5,9 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="51d15752-74e9-4b1e-bbb6-eccb5a2b114f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/FilterCriteria.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/PropertySearchCriteria.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/utils/StringConverter.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../BÀI15.drawio - draw.io_files/.idea/BÀI15.drawio - draw.io_files.iml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../SpringOauth2/.idea/.gitignore" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../SpringOauth2/.idea/SpringOauth2.iml" afterDir="false" />
@@ -482,19 +479,9 @@
       <change afterPath="$PROJECT_DIR$/../thymeleaf-project/thymeleaf-project/src/main/resources/templates/register_form.html" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../thymeleaf-project/thymeleaf-project/src/main/resources/templates/test.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/SearchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/SearchController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/converter/PropertyConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/converter/PropertyConverter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/FilterDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/FilterDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/PropertyDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/PropertyDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/entity/Property.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/entity/Property.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/entity/RoomType.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/entity/RoomType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/IFilterService.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/IFilterService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/IRedisService.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/IRedisPropertyService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/converter/RoomTypeConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/converter/RoomTypeConverter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/RoomTypeDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/RoomTypeDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/FilterServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/FilterServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/RedisServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/RedisPropertyServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/SearchServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/SearchServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/utils/StringListConverter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rooms/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -574,7 +561,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.GatewayserverApplication">
+  <component name="RunManager" selected="Spring Boot.RoomsApplication">
     <configuration name="EurekaserverApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="eurekaserver" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.thuc.eurekaserver.EurekaserverApplication" />
@@ -653,11 +640,23 @@
       <workItem from="1743326717274" duration="3063000" />
       <workItem from="1743481063243" duration="52000" />
       <workItem from="1743493061605" duration="4437000" />
-      <workItem from="1743497871784" duration="20946000" />
+      <workItem from="1743497871784" duration="22198000" />
+      <workItem from="1743558068240" duration="2399000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/FilterServiceImpl.java</url>
+          <line>77</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

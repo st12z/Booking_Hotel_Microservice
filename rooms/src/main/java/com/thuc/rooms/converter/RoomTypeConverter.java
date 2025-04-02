@@ -14,6 +14,7 @@ public class RoomTypeConverter {
                 .price(roomType.getPrice())
                 .discount(roomType.getDiscount())
                 .maxGuests(roomType.getMaxGuests())
+                .numBeds(roomType.getNumBeds())
                 .build();
     }
 }

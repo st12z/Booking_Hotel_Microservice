@@ -26,4 +26,6 @@ public class RoomTypeDto implements Serializable {
     private Integer area;
 
     private Integer discount;
+
+    private Integer numBeds;
 }

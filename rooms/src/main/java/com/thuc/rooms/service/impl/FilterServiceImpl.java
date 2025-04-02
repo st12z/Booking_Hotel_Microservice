@@ -31,6 +31,7 @@ public class FilterServiceImpl implements IFilterService {
     public PageResponseDto<List<PropertyDto>> filterByCondition(SearchDto searchDto, FilterDto filter,int pageNo,int pageSize) {
         log.debug("filtering by condition with search:{} and filter:{}", searchDto, filter);
         List<Integer> ids = getIdsPropertyInRedis(searchDto) !=null ? getIdsPropertyInRedis(searchDto) : null;
+        log.debug("ids:{}", ids);
         if(ids!=null){
             List<FilterCriteria> filterCriterias = getFilterCriteria(filter,ids);
             List<PropertyDto> propertyDtos=getPropertyByCriteria(filterCriterias,filter,pageNo,pageSize);
@@ -57,10 +58,16 @@ public class FilterServiceImpl implements IFilterService {
         filterCriterias.forEach(propertySearchCriteria);
         log.debug("get property by condition:{}", propertySearchCriteria);
         Predicate predicate = builder.and(predicates.toArray(new Predicate[0]));
+        Join<RoomType,Property> roomTypePropertyJoin=root.join("roomTypes",JoinType.INNER);
+
         if(filter.getBudget()!=null){
-            Join<Property, RoomType> propertyRoomTypeJoin = root.join("roomTypes", JoinType.INNER);
-            Predicate predicateJoin = builder.lessThanOrEqualTo(propertyRoomTypeJoin.get("price"),filter.getBudget());
-            predicate = builder.and(predicate,predicateJoin);
+            Predicate predicatePrice = builder.lessThanOrEqualTo(roomTypePropertyJoin.get("price"),filter.getBudget());
+            predicate = builder.and(predicate,predicatePrice);
+        }
+
+        if(filter.getQuantityBeds()!=null){
+            Predicate predicateNumbeds = builder.equal(roomTypePropertyJoin.get("numBeds"),filter.getQuantityBeds());
+            predicate = builder.and(predicate,predicateNumbeds);
         }
         query.where(predicate);
         List<Property> properties = entityManager.createQuery(query)
@@ -80,10 +87,15 @@ public class FilterServiceImpl implements IFilterService {
         PropertySearchCriteria propertySearchCriteria = new PropertySearchCriteria(builder,predicates,root);
         filterCriterias.forEach(propertySearchCriteria);
         Predicate predicate = builder.and(predicates.toArray(new Predicate[0]));
+        Join<RoomType,Property> roomTypePropertyJoin=root.join("roomTypes",JoinType.INNER);
         if(filter.getBudget()!=null){
-            Join<RoomType,Property> roomTypePropertyJoin=root.join("roomTypes",JoinType.INNER);
-            Predicate predicateJoin = builder.lessThanOrEqualTo(roomTypePropertyJoin.get("price"),filter.getBudget());
-            predicate = builder.and(predicate,predicateJoin);
+            Predicate predicatePrice = builder.lessThanOrEqualTo(roomTypePropertyJoin.get("price"),filter.getBudget());
+            predicate = builder.and(predicate,predicatePrice);
+        }
+
+        if(filter.getQuantityBeds()!=null){
+            Predicate predicateNumbeds = builder.equal(roomTypePropertyJoin.get("numBeds"),filter.getQuantityBeds());
+            predicate = builder.and(predicate,predicateNumbeds);
         }
         query.where(predicate);
         return (long) entityManager.createQuery(query)
@@ -109,7 +121,7 @@ public class FilterServiceImpl implements IFilterService {
         if(ids!=null && ids.size()>0){
             filterCriteriaList.add(new FilterCriteria("id","IN",ids));
         }
-        if(filterDto.getRating()!=null) filterCriteriaList.add(new FilterCriteria("ratingStar","IN",filterDto.getRating()));
+        if(filterDto.getRating()!=null && !filterDto.getRating().isEmpty()) filterCriteriaList.add(new FilterCriteria("ratingStar","IN",filterDto.getRating()));
         if(filterDto.getPropertyType()!=null && !filterDto.getPropertyType().isEmpty())filterCriteriaList.add(new FilterCriteria("propertyType","IN",filterDto.getPropertyType()));
         if(filterDto.getDistance() !=null && !filterDto.getDistance().isEmpty()){
             for(String distance:filterDto.getDistance()){
