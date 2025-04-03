@@ -2,6 +2,7 @@ package com.thuc.rooms.service.impl;
 
 import com.thuc.rooms.converter.RoomTypeConverter;
 import com.thuc.rooms.dto.RoomTypeDto;
+import com.thuc.rooms.dto.SearchDto;
 import com.thuc.rooms.entity.Property;
 import com.thuc.rooms.entity.RoomType;
 import com.thuc.rooms.exception.ResourceNotFoundException;
@@ -41,6 +42,39 @@ public class RoomTypeServiceImpl implements IRoomTypeService {
         sql.append(" AND EXISTS (SELECT 1 FROM rooms r WHERE rt.id = r.room_type_id AND (r.check_out <:currentDateTime OR r.check_out is null)) ");
         Query query = entityManager.createNativeQuery(sql.toString(), RoomType.class);
         query.setParameter("currentDateTime", currentDateTime);
+        query.setParameter("propertyId", property.getId());
+        List<RoomType> roomTypes = query.getResultList();
+        return roomTypes.stream().map(RoomTypeConverter::toRoomTypDto).toList();
+
+    }
+
+    @Override
+    public List<RoomTypeDto> getAllRoomTypesBySearch(String slugProperty,SearchDto searchDto) {
+        logger.debug("Requested to getAllRoomTypesBySearch successfully");
+        Property property = propertyRepository.findBySlug(slugProperty);
+        if(property == null) {
+            throw new ResourceNotFoundException("Property","Slug",slugProperty);
+        }
+        StringBuilder sql = new StringBuilder("SELECT * FROM room_type rt WHERE rt.property_id=:propertyId ") ;
+        if(searchDto.getQuantityBeds()!=null){
+            sql.append(" AND rt.num_beds=:quantityBeds");
+        }
+        if(searchDto.getCheckIn()!=null ){
+            sql.append(" AND EXISTS (SELECT 1 FROM rooms r WHERE r.room_type_id=rt.id AND (r.check_out <:checkIn OR r.check_out is null))");
+        }
+        else{
+            sql.append(" AND EXISTS (SELECT 1 FROM rooms r WHERE r.room_type_id=rt.id AND (r.check_out <:currentDateTime OR r.check_out is null))");
+        }
+        Query query = entityManager.createNativeQuery(sql.toString(), RoomType.class);
+        if(searchDto.getCheckIn()!=null ){
+            query.setParameter("checkIn", searchDto.getCheckIn());
+        }
+        else{
+            query.setParameter("currentDateTime", LocalDateTime.now());
+        }
+        if(searchDto.getQuantityBeds()!=null){
+            query.setParameter("quantityBeds", searchDto.getQuantityBeds());
+        }
         query.setParameter("propertyId", property.getId());
         List<RoomType> roomTypes = query.getResultList();
         return roomTypes.stream().map(RoomTypeConverter::toRoomTypDto).toList();

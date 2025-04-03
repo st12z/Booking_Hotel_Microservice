@@ -1,6 +1,7 @@
 package com.thuc.rooms.controller;
 
 import com.thuc.rooms.constants.RoomTypeConstant;
+import com.thuc.rooms.dto.SearchDto;
 import com.thuc.rooms.dto.SuccessResponseDto;
 import com.thuc.rooms.service.IRoomTypeService;
 import lombok.RequiredArgsConstructor;
@@ -8,10 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/roomtypes")
@@ -29,5 +27,16 @@ public class RoomTypeController {
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
-
+    @PostMapping("")
+    public ResponseEntity<?> getRoomTypesBySearch(
+            @RequestParam String slugProperty,
+            @RequestBody SearchDto searchDto) {
+        log.debug("Request to search room types with : {}", searchDto);
+        SuccessResponseDto response = SuccessResponseDto.builder()
+                .code(RoomTypeConstant.STATUS_200)
+                .message(RoomTypeConstant.MESSAGE_200)
+                .data(roomTypeService.getAllRoomTypesBySearch(slugProperty,searchDto))
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 }

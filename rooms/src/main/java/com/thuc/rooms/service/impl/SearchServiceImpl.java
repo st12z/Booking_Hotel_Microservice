@@ -52,9 +52,9 @@ public class SearchServiceImpl implements ISearchService {
             );
             parameters.put("checkIn",searchDto.getCheckIn());
         }
-        if(searchDto.getQuantityBed()!=null){
+        if(searchDto.getQuantityBeds()!=null){
             sql.append(" AND EXISTS (SELECT 1 FROM room_type rt WHERE rt.property_id=p.id AND num_beds = :quantityBed) ");
-            parameters.put("quantityBed",searchDto.getQuantityBed());
+            parameters.put("quantityBed",searchDto.getQuantityBeds());
         }
         Query countQuery = entityManager.createNativeQuery(sql.toString().replace("SELECT *","SELECT COUNT(*)"));
         parameters.forEach(countQuery::setParameter);
@@ -98,9 +98,9 @@ public class SearchServiceImpl implements ISearchService {
             sql.append(" AND EXISTS(SELECT 1 FROM Room r WHERE r.property=p AND (r.checkOut<:checkIn OR (r.checkOut is null AND r.checkIn is null)))");
             parameters.put("checkIn",searchDto.getCheckIn());
         }
-        if(searchDto.getQuantityBed()!=null){
+        if(searchDto.getQuantityBeds()!=null){
             sql.append(" AND EXISTS(SELECT 1 FROM RoomType rt WHERE rt.property=p AND rt.numBeds = :quantityBed) ");
-            parameters.put("quantityBed",searchDto.getQuantityBed());
+            parameters.put("quantityBed",searchDto.getQuantityBeds());
         }
         Query countQuery = entityManager.createQuery(sql.toString().replace("SELECT p","SELECT COUNT(p)"),Long.class);
         parameters.forEach(countQuery::setParameter);
