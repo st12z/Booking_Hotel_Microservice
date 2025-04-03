@@ -15,6 +15,8 @@ public class RoomTypeConverter {
                 .discount(roomType.getDiscount())
                 .maxGuests(roomType.getMaxGuests())
                 .numBeds(roomType.getNumBeds())
+                .freeServices(roomType.getFreeServices())
+                .status(roomType.getStatus())
                 .build();
     }
 }

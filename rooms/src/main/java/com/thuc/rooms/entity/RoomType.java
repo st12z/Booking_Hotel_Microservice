@@ -31,7 +31,7 @@ public class RoomType extends BaseEntity{
 
     @Convert(converter = StringConverter.class)
     @Column(columnDefinition = "jsonb")
-    private List<String> facilities;
+    private List<String> freeServices;
 
     private Integer price;
 
@@ -44,4 +44,8 @@ public class RoomType extends BaseEntity{
     private Integer discount;
 
     private Integer numBeds;
+
+    private Boolean status;
+
+
 }

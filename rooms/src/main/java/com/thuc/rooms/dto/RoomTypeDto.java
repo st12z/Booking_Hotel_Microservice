@@ -4,6 +4,7 @@ package com.thuc.rooms.dto;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Builder
 @AllArgsConstructor
@@ -28,4 +29,10 @@ public class RoomTypeDto implements Serializable {
     private Integer discount;
 
     private Integer numBeds;
+
+    private List<String> freeServices;
+
+    private Boolean status;
+
+    private Integer remain;
 }

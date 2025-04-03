@@ -27,7 +27,6 @@ public class PropertyConverter {
                 .slug(property.getSlug())
                 .cityName(property.getCity().getName())
                 .cityId(property.getCity().getId())
-                .roomTypes(property.getRoomTypes().stream().map(RoomTypeConverter::toRoomTypDto).toList())
                 .build();
     }
 }

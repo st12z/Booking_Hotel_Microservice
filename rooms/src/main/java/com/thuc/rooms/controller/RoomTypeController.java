@@ -20,13 +20,14 @@ public class RoomTypeController {
     private final IRoomTypeService roomTypeService;
     private final Logger log = LoggerFactory.getLogger(RoomTypeController.class);
     @GetMapping("")
-    public ResponseEntity<?> getRoomTypes(@RequestParam int propertyId) {
-        log.debug("Request to get RoomTypes : {}", propertyId);
+    public ResponseEntity<?> getRoomTypes(@RequestParam String slugProperty) {
+        log.debug("Request to get RoomTypes slugProperty with {}", slugProperty);
         SuccessResponseDto response = SuccessResponseDto.builder()
                 .code(RoomTypeConstant.STATUS_200)
                 .message(RoomTypeConstant.MESSAGE_200)
-                .data(roomTypeService.getAllRoomTypes(propertyId))
+                .data(roomTypeService.getAllRoomTypes(slugProperty))
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
 }
