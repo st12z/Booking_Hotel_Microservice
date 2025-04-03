@@ -60,15 +60,16 @@ public class FilterServiceImpl implements IFilterService {
         Predicate predicate = builder.and(predicates.toArray(new Predicate[0]));
         Join<RoomType,Property> roomTypePropertyJoin=root.join("roomTypes",JoinType.INNER);
 
-        if(filter.getBudget()!=null){
+        if(filter.getBudget()!=null && filter.getBudget()!=0){
             Predicate predicatePrice = builder.lessThanOrEqualTo(roomTypePropertyJoin.get("price"),filter.getBudget());
             predicate = builder.and(predicate,predicatePrice);
         }
 
-        if(filter.getQuantityBeds()!=null){
+        if(filter.getQuantityBeds()!=null && filter.getQuantityBeds()!=0){
             Predicate predicateNumbeds = builder.equal(roomTypePropertyJoin.get("numBeds"),filter.getQuantityBeds());
             predicate = builder.and(predicate,predicateNumbeds);
         }
+        query.select(root).distinct(true);
         query.where(predicate);
         List<Property> properties = entityManager.createQuery(query)
                 .setFirstResult((pageNo-1)*pageSize)
@@ -81,26 +82,25 @@ public class FilterServiceImpl implements IFilterService {
     // total
     private Long getTotalElements(List<FilterCriteria> filterCriterias, FilterDto filter, int pageNo, int pageSize) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Property> query = builder.createQuery(Property.class);
+        CriteriaQuery<Long> query = builder.createQuery(Long.class);
         Root<Property> root = query.from(Property.class);
         List<Predicate> predicates = new ArrayList<>();
         PropertySearchCriteria propertySearchCriteria = new PropertySearchCriteria(builder,predicates,root);
         filterCriterias.forEach(propertySearchCriteria);
         Predicate predicate = builder.and(predicates.toArray(new Predicate[0]));
         Join<RoomType,Property> roomTypePropertyJoin=root.join("roomTypes",JoinType.INNER);
-        if(filter.getBudget()!=null){
+        if(filter.getBudget()!=null && filter.getBudget()!=0){
             Predicate predicatePrice = builder.lessThanOrEqualTo(roomTypePropertyJoin.get("price"),filter.getBudget());
             predicate = builder.and(predicate,predicatePrice);
         }
 
-        if(filter.getQuantityBeds()!=null){
+        if(filter.getQuantityBeds()!=null && filter.getQuantityBeds()!=0){
             Predicate predicateNumbeds = builder.equal(roomTypePropertyJoin.get("numBeds"),filter.getQuantityBeds());
             predicate = builder.and(predicate,predicateNumbeds);
         }
+        query.select(builder.countDistinct(root));
         query.where(predicate);
-        return (long) entityManager.createQuery(query)
-                .getResultList()
-                .size();
+        return entityManager.createQuery(query).getSingleResult();
     }
     // get ids in redis
     private List<Integer> getIdsPropertyInRedis(SearchDto searchDto){

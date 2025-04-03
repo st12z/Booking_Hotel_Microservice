@@ -31,7 +31,7 @@ public enum HotelFacility {
     HotelFacility(String description) {
         this.description = description;
     }
-    public List<String> getFacilities() {
+    public static List<String> getFacilities() {
         List<String> facilities = new ArrayList<String>();
         for(HotelFacility hotelFacility : HotelFacility.values()) {
             facilities.add(hotelFacility.description);
