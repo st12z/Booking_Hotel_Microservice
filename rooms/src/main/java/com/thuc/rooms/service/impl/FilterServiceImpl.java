@@ -9,6 +9,7 @@ import com.thuc.rooms.service.IFilterService;
 import com.thuc.rooms.service.IRedisPropertyService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Tuple;
 import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -51,14 +52,14 @@ public class FilterServiceImpl implements IFilterService {
     // get list
     private List<PropertyDto> getPropertyByCriteria(List<FilterCriteria> filterCriterias,FilterDto filter,int pageNo,int pageSize) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Property> query = builder.createQuery(Property.class);
+        CriteriaQuery<Tuple> query = builder.createTupleQuery();
         Root<Property> root = query.from(Property.class);
         List<Predicate> predicates = new ArrayList<>();
         PropertySearchCriteria propertySearchCriteria = new PropertySearchCriteria(builder,predicates,root);
         filterCriterias.forEach(propertySearchCriteria);
         log.debug("get property by condition:{}", propertySearchCriteria);
         Predicate predicate = builder.and(predicates.toArray(new Predicate[0]));
-        Join<RoomType,Property> roomTypePropertyJoin=root.join("roomTypes",JoinType.INNER);
+        Join<Property,RoomType> roomTypePropertyJoin=root.join("roomTypes",JoinType.INNER);
 
         if(filter.getBudget()!=null && filter.getBudget()!=0){
             Predicate predicatePrice = builder.lessThanOrEqualTo(roomTypePropertyJoin.get("price"),filter.getBudget());
@@ -69,14 +70,49 @@ public class FilterServiceImpl implements IFilterService {
             Predicate predicateNumbeds = builder.equal(roomTypePropertyJoin.get("numBeds"),filter.getQuantityBeds());
             predicate = builder.and(predicate,predicateNumbeds);
         }
-        query.select(root).distinct(true);
-        query.where(predicate);
-        List<Property> properties = entityManager.createQuery(query)
+
+        if(filter.getSortCondition()!=null && !filter.getSortCondition().isEmpty()){
+            String split[]=filter.getSortCondition().split("-");
+            String key= split[0];
+            String order=split[1];
+            Subquery<Integer> maxPriceSubquery = query.subquery(Integer.class);
+            Root<RoomType> roomTypeRoot = maxPriceSubquery.from(RoomType.class);
+            maxPriceSubquery.select(builder.max(roomTypeRoot.get("price")))
+                    .where(builder.equal(roomTypeRoot.get("property"), root));
+
+            if (key.equals("price")) {
+                query.multiselect(root,maxPriceSubquery.getSelection());
+                if(order.equals("asc")){
+                    query.orderBy(builder.asc(maxPriceSubquery.getSelection()));
+                }
+                else{
+                    query.orderBy(builder.desc(maxPriceSubquery.getSelection()));
+                }
+            }
+            else{
+                Path<?>sortPath=root.get(key);
+                if(order.equals("asc")){
+                    query.orderBy(builder.asc(sortPath));
+                }
+                else{
+                    query.orderBy(builder.desc(sortPath));
+                }
+            }
+
+        }
+        query.where(predicate).distinct(true);
+        query.groupBy(root.get("id"));
+
+
+        List<Tuple> tuples = entityManager.createQuery(query)
                 .setFirstResult((pageNo-1)*pageSize)
                 .setMaxResults(pageSize)
                 .getResultList();
 
-        return properties.stream().map(PropertyConverter::toPropertyDto).toList();
+        return tuples.stream().map(tuple->{
+            Property property = tuple.get(0,Property.class);
+            return PropertyConverter.toPropertyDto(property);
+        }).toList();
     }
 
     // total
@@ -88,7 +124,7 @@ public class FilterServiceImpl implements IFilterService {
         PropertySearchCriteria propertySearchCriteria = new PropertySearchCriteria(builder,predicates,root);
         filterCriterias.forEach(propertySearchCriteria);
         Predicate predicate = builder.and(predicates.toArray(new Predicate[0]));
-        Join<RoomType,Property> roomTypePropertyJoin=root.join("roomTypes",JoinType.INNER);
+        Join<Property,RoomType> roomTypePropertyJoin=root.join("roomTypes",JoinType.INNER);
         if(filter.getBudget()!=null && filter.getBudget()!=0){
             Predicate predicatePrice = builder.lessThanOrEqualTo(roomTypePropertyJoin.get("price"),filter.getBudget());
             predicate = builder.and(predicate,predicatePrice);

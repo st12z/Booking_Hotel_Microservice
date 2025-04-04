@@ -17,4 +17,5 @@ public class FilterDto {
     private List<Integer> rating;
     private List<String> reviewScore;
     private Integer quantityBeds;
+    private String sortCondition;
 }
