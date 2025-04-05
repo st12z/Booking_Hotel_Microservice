@@ -11,4 +11,6 @@ public interface IPropertyService {
     List<PropertyDto> getAllProperties(String slugCity);
 
     PropertyDto getPropertyBySlug(String slug);
+
+    List<PropertyDto> getPropertiesBySlugs(List<String> slugs);
 }

@@ -11,4 +11,6 @@ public interface ITripService {
     List<TripTypeDto> getAllTripTypes();
 
     List<String> getDestinationsBySearch(String keyword);
+
+    List<Object> getDestinationsBySuggest(List<String> destinations);
 }

@@ -6,7 +6,9 @@ import com.thuc.rooms.entity.Property;
 import com.thuc.rooms.entity.RoomType;
 import com.thuc.rooms.exception.ResourceNotFoundException;
 import com.thuc.rooms.service.IFilterService;
+import com.thuc.rooms.service.IPropertyService;
 import com.thuc.rooms.service.IRedisPropertyService;
+import com.thuc.rooms.service.ISearchService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Tuple;
@@ -26,25 +28,28 @@ import java.util.stream.Collectors;
 public class FilterServiceImpl implements IFilterService {
     private final IRedisPropertyService redisService;
     private final Logger log = LoggerFactory.getLogger(FilterServiceImpl.class);
+    private final ISearchService searchService;
     @PersistenceContext
     private EntityManager entityManager;
     @Override
     public PageResponseDto<List<PropertyDto>> filterByCondition(SearchDto searchDto, FilterDto filter,int pageNo,int pageSize) {
         log.debug("filtering by condition with search:{} and filter:{}", searchDto, filter);
         List<Integer> ids = getIdsPropertyInRedis(searchDto) !=null ? getIdsPropertyInRedis(searchDto) : null;
-        log.debug("ids:{}", ids);
-        if(ids!=null){
-            List<FilterCriteria> filterCriterias = getFilterCriteria(filter,ids);
-            List<PropertyDto> propertyDtos=getPropertyByCriteria(filterCriterias,filter,pageNo,pageSize);
-            Long total = getTotalElements(filterCriterias,filter,pageNo,pageSize);
-            return PageResponseDto.<List<PropertyDto>>builder()
-                    .dataPage(propertyDtos)
-                    .total(total)
-                    .pageSize(pageSize)
-                    .pageNo(pageNo)
-                    .build();
+        if(ids==null){
+            PageResponseDto<List<PropertyDto>> response = searchService.getPropertiesBySearchV1(pageNo,pageSize,searchDto);
+            ids = getIdsPropertyInRedis(searchDto);
         }
-        throw new RuntimeException("please search before filter");
+        log.debug("ids:{}", ids);
+        List<FilterCriteria> filterCriterias = getFilterCriteria(filter,ids);
+        List<PropertyDto> propertyDtos=getPropertyByCriteria(filterCriterias,filter,pageNo,pageSize);
+        Long total = getTotalElements(filterCriterias,filter,pageNo,pageSize);
+        return PageResponseDto.<List<PropertyDto>>builder()
+                .dataPage(propertyDtos)
+                .total(total)
+                .pageSize(pageSize)
+                .pageNo(pageNo)
+                .build();
+
 
     }
 

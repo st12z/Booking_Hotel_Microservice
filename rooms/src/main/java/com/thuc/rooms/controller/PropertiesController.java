@@ -2,13 +2,17 @@ package com.thuc.rooms.controller;
 
 
 import com.thuc.rooms.constants.PropertyConstant;
+import com.thuc.rooms.dto.PropertyDto;
 import com.thuc.rooms.dto.SuccessResponseDto;
 import com.thuc.rooms.service.IPropertyService;
+import jakarta.ws.rs.POST;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/properties")
@@ -33,6 +37,16 @@ public class PropertiesController {
                 .message(PropertyConstant.MESSAGE_200)
                 .code(PropertyConstant.STATUS_200)
                 .data(propertyService.getPropertyBySlug(slug))
+                .build();
+        return ResponseEntity.ok(response);
+    }
+    @PostMapping("")
+    public ResponseEntity<?> addProperty(@RequestBody List<String> slugs) {
+        logger.debug("Request to get properties with list slugs {}", slugs);
+        SuccessResponseDto response =SuccessResponseDto.builder()
+                .message(PropertyConstant.MESSAGE_200)
+                .code(PropertyConstant.STATUS_200)
+                .data(propertyService.getPropertiesBySlugs(slugs))
                 .build();
         return ResponseEntity.ok(response);
     }

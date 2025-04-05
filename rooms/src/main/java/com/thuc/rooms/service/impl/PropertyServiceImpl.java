@@ -9,12 +9,14 @@ import com.thuc.rooms.exception.ResourceNotFoundException;
 import com.thuc.rooms.repository.CityRepository;
 import com.thuc.rooms.repository.PropertyRepository;
 import com.thuc.rooms.service.IPropertyService;
+import com.thuc.rooms.service.IRedisPropertyService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -25,6 +27,7 @@ public class PropertyServiceImpl implements IPropertyService {
     private final PropertyRepository propertyRepository;
     private final CityRepository cityRepository;
     private final Logger log = LoggerFactory.getLogger(PropertyServiceImpl.class);
+    private final IRedisPropertyService redisPropertyService;
     @Override
     public List<PropertyDto> getAllProperties(String slugCity) {
         Optional<City> cityOptional = cityRepository.findBySlug(slugCity);
@@ -44,6 +47,22 @@ public class PropertyServiceImpl implements IPropertyService {
             throw new ResourceNotFoundException("Property","Slug",slug);
         }
         return PropertyConverter.toPropertyDto(property);
+    }
+
+    @Override
+    public List<PropertyDto> getPropertiesBySlugs(List<String> slugs) {
+        List<PropertyDto> propertyDtos = new ArrayList<>();
+        String key = String.join(",", slugs);
+        if(redisPropertyService.getData(key) !=null && !redisPropertyService.getData(key).isEmpty()){
+            return redisPropertyService.getData(key);
+        }
+        if(slugs != null && !slugs.isEmpty()){
+            for(String slug : slugs){
+                propertyDtos.add(getPropertyBySlug(slug));
+            }
+            redisPropertyService.saveData(key, propertyDtos);
+        }
+        return propertyDtos;
     }
 
 

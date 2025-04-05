@@ -20,11 +20,11 @@ public class RedisPropertyServiceImpl implements IRedisPropertyService {
     private final ObjectMapper objectMapper;
     private final Logger logger = LoggerFactory.getLogger(RedisPropertyServiceImpl.class);
     @Override
-    public void saveData(String key, Object value) {
+    public void saveData(String key, List<PropertyDto> value) {
         try{
             logger.debug("Saving data to redis...");
             String json = objectMapper.writeValueAsString(value);
-            redisTemplate.opsForValue().set(key, json);
+            redisTemplate.opsForValue().set(key, json,1,TimeUnit.HOURS);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -35,6 +35,9 @@ public class RedisPropertyServiceImpl implements IRedisPropertyService {
         try{
             logger.debug("Getting data to redis...");
             String json =(String) redisTemplate.opsForValue().get(key);
+            if(json == null){
+                return null;
+            }
             return objectMapper.readValue(json, new TypeReference<List<PropertyDto>>() {});
         }catch (Exception e){
             e.printStackTrace();

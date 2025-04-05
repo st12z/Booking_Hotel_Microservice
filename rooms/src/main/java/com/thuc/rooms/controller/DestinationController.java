@@ -8,10 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,6 +27,16 @@ public class DestinationController {
                 .data(tripService.getDestinationsBySearch(keyword))
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+    @PostMapping
+    public ResponseEntity<?> getDestinationsBySuggest(@RequestBody List<String> destinations){
+        log.debug("Requested to getDestinationsBySuggest with destinations {}", destinations);
+        SuccessResponseDto response = SuccessResponseDto.builder()
+                .message("Get destinations by suggest successfully")
+                .code(200)
+                .data(tripService.getDestinationsBySuggest(destinations))
+                .build();
+        return ResponseEntity.ok(response);
     }
 
 }
