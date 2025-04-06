@@ -3,7 +3,6 @@ package com.thuc.rooms.service.impl;
 import com.thuc.rooms.converter.DiscountConverter;
 import com.thuc.rooms.dto.DiscountDto;
 import com.thuc.rooms.entity.Discount;
-import com.thuc.rooms.repository.DiscountRepository;
 import com.thuc.rooms.service.IDiscountService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;

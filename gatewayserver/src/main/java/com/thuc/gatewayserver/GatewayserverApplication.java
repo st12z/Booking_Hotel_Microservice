@@ -23,7 +23,14 @@ public class GatewayserverApplication {
 						)
 						.uri("lb://ROOMS")
 				)
-
+				.route(p->p
+						.path("/bookinghotel/users/**")
+						.filters(f->f
+								.rewritePath("/bookinghotel/users/(?<segment>.*)","/${segment}")
+						)
+						.uri("lb://USERS")
+				)
 				.build();
+
 	}
 }

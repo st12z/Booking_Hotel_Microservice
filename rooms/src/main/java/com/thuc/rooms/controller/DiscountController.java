@@ -2,7 +2,6 @@ package com.thuc.rooms.controller;
 
 import com.thuc.rooms.constants.DiscountConstant;
 import com.thuc.rooms.dto.SuccessResponseDto;
-import com.thuc.rooms.repository.DiscountRepository;
 import com.thuc.rooms.service.IDiscountService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;

@@ -10,11 +10,20 @@
         <module name="eurekaserver" />
         <module name="gatewayserver" />
       </profile>
-      <profile name="Annotation profile for rooms" enabled="true">
+      <profile name="Annotation profile for users" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath>
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
+        </processorPath>
+        <module name="users" />
+      </profile>
+      <profile name="Annotation profile for rooms" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
         </processorPath>
         <module name="room-service" />
@@ -26,6 +35,7 @@
       <module name="eurekaserver" options="-parameters" />
       <module name="gatewayserver" options="-parameters" />
       <module name="room-service" options="-parameters" />
+      <module name="users" options="-parameters" />
     </option>
   </component>
 </project>

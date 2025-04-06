@@ -7,7 +7,12 @@ spring:
         locator:
           lower-case-service-id: true
           enabled: false # Tự động cấu hình các route gateway
-
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # download public certificates de resourceserver ket noi authserver validate token
+          jwk-set-uri: http://localhost:7080/realms/master/protocol/openid-connect/certs
 management:
   endpoints:
     web:
