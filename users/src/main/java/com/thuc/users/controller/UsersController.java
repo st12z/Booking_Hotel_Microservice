@@ -29,4 +29,8 @@ public class UsersController {
                 .build();
         return ResponseEntity.ok(response);
     }
+    @GetMapping
+    public String hello() {
+        return "Hello World";
+    }
 }

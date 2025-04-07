@@ -78,29 +78,31 @@ public class FilterServiceImpl implements IFilterService {
 
         if(filter.getSortCondition()!=null && !filter.getSortCondition().isEmpty()){
             String split[]=filter.getSortCondition().split("-");
-            String key= split[0];
-            String order=split[1];
-            Subquery<Integer> maxPriceSubquery = query.subquery(Integer.class);
-            Root<RoomType> roomTypeRoot = maxPriceSubquery.from(RoomType.class);
-            maxPriceSubquery.select(builder.max(roomTypeRoot.get("price")))
-                    .where(builder.equal(roomTypeRoot.get("property"), root));
+            if(split.length>=2){
+                String key= split[0];
+                String order=split[1];
+                Subquery<Integer> maxPriceSubquery = query.subquery(Integer.class);
+                Root<RoomType> roomTypeRoot = maxPriceSubquery.from(RoomType.class);
+                maxPriceSubquery.select(builder.max(roomTypeRoot.get("price")))
+                        .where(builder.equal(roomTypeRoot.get("property"), root));
 
-            if (key.equals("price")) {
-                query.multiselect(root,maxPriceSubquery.getSelection());
-                if(order.equals("asc")){
-                    query.orderBy(builder.asc(maxPriceSubquery.getSelection()));
+                if (key.equals("price")) {
+                    query.multiselect(root,maxPriceSubquery.getSelection());
+                    if(order.equals("asc")){
+                        query.orderBy(builder.asc(maxPriceSubquery.getSelection()));
+                    }
+                    else{
+                        query.orderBy(builder.desc(maxPriceSubquery.getSelection()));
+                    }
                 }
                 else{
-                    query.orderBy(builder.desc(maxPriceSubquery.getSelection()));
-                }
-            }
-            else{
-                Path<?>sortPath=root.get(key);
-                if(order.equals("asc")){
-                    query.orderBy(builder.asc(sortPath));
-                }
-                else{
-                    query.orderBy(builder.desc(sortPath));
+                    Path<?>sortPath=root.get(key);
+                    if(order.equals("asc")){
+                        query.orderBy(builder.asc(sortPath));
+                    }
+                    else{
+                        query.orderBy(builder.desc(sortPath));
+                    }
                 }
             }
 

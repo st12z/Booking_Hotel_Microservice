@@ -11,6 +11,7 @@ spring:
       ddl-auto: update
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
+
 server:
   port: 8071
 eureka:
@@ -25,3 +26,10 @@ eureka:
 logging:
   level:
     eureka: debug
+
+keycloak:
+  auth-server-url: http://localhost:7080
+  client-id: create-account-keycloak
+  client-secret: fdD5N5XzbJiLsN3lrL8SiEB5kqCNJ20H
+  grant-type: client_credentials
+  realm: master
