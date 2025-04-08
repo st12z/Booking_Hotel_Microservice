@@ -25,11 +25,19 @@ eureka:
 
 logging:
   level:
-    eureka: debug
+    com.thuc.users: debug
 
-keycloak:
+keycloak-credential:
   auth-server-url: http://localhost:7080
   client-id: create-account-keycloak
   client-secret: fdD5N5XzbJiLsN3lrL8SiEB5kqCNJ20H
   grant-type: client_credentials
   realm: master
+
+keycloak-authorization:
+  token-endpoint: http://localhost:7080/realms/master/protocol/openid-connect/token
+  client-id: booking-hotel
+  client-secret: iwHgKCzbMy9ZO6Qo8sicpSTC3kgGXFRP
+  grant-type: authorization_code
+  realm: master
+  redirect-uri: http://localhost:3000/callback

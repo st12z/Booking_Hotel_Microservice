@@ -1,8 +1,9 @@
 package com.thuc.users.service;
 
-import com.thuc.users.dto.requestDto.UserRequestDto;
-import com.thuc.users.entity.UserEntity;
+import java.util.Map;
 
 public interface IKeycloakService {
-    public void createUser(UserEntity user) ;
+    public Map<String,String> getToken(String code);
+
+    Map<String, String> getAccessTokenByRefresh();
 }

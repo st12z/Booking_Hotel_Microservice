@@ -8,6 +8,7 @@ import com.thuc.users.entity.UserEntity;
 import com.thuc.users.exception.ResourceAlreadyException;
 import com.thuc.users.repository.RoleRepository;
 import com.thuc.users.repository.UserRepository;
+import com.thuc.users.service.IKeycloakAccountService;
 import com.thuc.users.service.IKeycloakService;
 import com.thuc.users.service.IUsersService;
 import com.thuc.users.utils.RoleEnum;
@@ -18,12 +19,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 public class UsersServiceImpl implements IUsersService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final IKeycloakAccountService keycloakAccountService;
     private final IKeycloakService keycloakService;
     private final RoleRepository roleRepository;
     private final Logger logger = LoggerFactory.getLogger(UsersServiceImpl.class);
@@ -39,7 +42,17 @@ public class UsersServiceImpl implements IUsersService {
         userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
         userEntity.setRoles(List.of(roleUser));
         UserEntity saveUser= userRepository.save(userEntity);
-        keycloakService.createUser(saveUser);
+        keycloakAccountService.createUser(user);
         return UsersConverter.toUserDto(saveUser);
+    }
+
+    @Override
+    public Map<String,String> getToken(String code) {
+        return keycloakService.getToken(code);
+    }
+
+    @Override
+    public Map<String, String> getAccessTokenByRefresh() {
+        return keycloakService.getAccessTokenByRefresh();
     }
 }
