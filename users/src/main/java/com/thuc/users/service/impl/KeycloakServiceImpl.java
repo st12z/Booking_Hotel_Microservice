@@ -30,6 +30,9 @@ public class KeycloakServiceImpl implements IKeycloakService {
     @Value("${keycloak-authorization.token-endpoint}")
     private String tokenEndpoint;
 
+    @Value("${keycloak-authorization.logout-endpoint}")
+    private String logoutEndpoint;
+
     @Value("${keycloak-authorization.client-id}")
     private String clientId;
 
@@ -84,15 +87,7 @@ public class KeycloakServiceImpl implements IKeycloakService {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         Cookie[] cookies = request.getCookies();
         log.debug("cookies :{}",cookies);
-        String refreshToken = null;
-        if(cookies != null && cookies.length > 0) {
-            for (Cookie cookie : cookies) {
-                if(cookie.getName().equals("refresh_token")) {
-                    refreshToken = cookie.getValue();
-                    break;
-                }
-            }
-        }
+        String refreshToken = getRefreshToken();
         if(refreshToken == null) {
             throw new RuntimeException("Refresh token not found");
         }
@@ -125,5 +120,42 @@ public class KeycloakServiceImpl implements IKeycloakService {
         }catch (Exception e){
             throw new RuntimeException("Refresh token not valid");
         }
+    }
+
+    @Override
+    public void logout() {
+        String refreshToken = getRefreshToken();
+        try{
+            if(refreshToken != null) {
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+                MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+                params.add("client_id", clientId);
+                params.add("client_secret", clientSecret);
+                params.add("refresh_token", refreshToken);
+
+                HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(params, headers);
+                RestTemplate restTemplate = new RestTemplate();
+
+                restTemplate.postForEntity(logoutEndpoint, entity, String.class);
+            }
+        }catch (Exception e){
+
+        }
+    }
+    private String getRefreshToken() {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        Cookie[] cookies = request.getCookies();
+        log.debug("cookies :{}",cookies);
+        String refreshToken = null;
+        if(cookies != null && cookies.length > 0) {
+            for (Cookie cookie : cookies) {
+                if(cookie.getName().equals("refresh_token")) {
+                    refreshToken = cookie.getValue();
+                    break;
+                }
+            }
+        }
+        return refreshToken;
     }
 }

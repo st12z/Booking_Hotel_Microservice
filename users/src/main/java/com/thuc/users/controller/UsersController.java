@@ -83,6 +83,7 @@ public class UsersController {
         cookie.setPath("/");
         cookie.setMaxAge(0);
         response.addCookie(cookie);
+        usersService.logout();
         SuccessResponseDto success = SuccessResponseDto.builder()
                 .code(UsersConstant.STATUS_200)
                 .message("Đăng xuất thành công!")

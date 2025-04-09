@@ -36,6 +36,7 @@ keycloak-credential:
 
 keycloak-authorization:
   token-endpoint: http://localhost:7080/realms/master/protocol/openid-connect/token
+  logout-endpoint: http://localhost:7080/realms/master/protocol/openid-connect/logout
   client-id: booking-hotel
   client-secret: iwHgKCzbMy9ZO6Qo8sicpSTC3kgGXFRP
   grant-type: authorization_code

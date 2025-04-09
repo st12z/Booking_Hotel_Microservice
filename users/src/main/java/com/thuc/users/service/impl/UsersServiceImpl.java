@@ -55,4 +55,9 @@ public class UsersServiceImpl implements IUsersService {
     public Map<String, String> getAccessTokenByRefresh() {
         return keycloakService.getAccessTokenByRefresh();
     }
+
+    @Override
+    public void logout() {
+        keycloakService.logout();
+    }
 }

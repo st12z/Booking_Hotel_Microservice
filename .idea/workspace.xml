@@ -480,6 +480,11 @@
       <change afterPath="$PROJECT_DIR$/../thymeleaf-project/thymeleaf-project/src/main/resources/templates/test.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/controller/UsersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/controller/UsersController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/service/IKeycloakService.java" beforeDir="false" afterPath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/service/IKeycloakService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/service/IUsersService.java" beforeDir="false" afterPath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/service/IUsersService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/service/impl/KeycloakServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/service/impl/KeycloakServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/service/impl/UsersServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/service/impl/UsersServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/users/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -676,7 +681,7 @@
       <workItem from="1744031615701" duration="9352000" />
       <workItem from="1744084174045" duration="28202000" />
       <workItem from="1744195379075" duration="1540000" />
-      <workItem from="1744204591699" duration="2002000" />
+      <workItem from="1744204591699" duration="3414000" />
     </task>
     <servers />
   </component>
