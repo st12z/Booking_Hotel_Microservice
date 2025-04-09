@@ -2,16 +2,19 @@ package com.thuc.users.controller;
 
 import com.thuc.users.constant.UsersConstant;
 import com.thuc.users.dto.requestDto.UserRequestDto;
+import com.thuc.users.dto.responseDto.ErrorResponseDto;
 import com.thuc.users.dto.responseDto.SuccessResponseDto;
 import com.thuc.users.dto.responseDto.UserDto;
 import com.thuc.users.service.IUsersService;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -56,10 +59,33 @@ public class UsersController {
     @GetMapping("/refresh-token")
     public ResponseEntity<?> getAccessTokenByRefresh() {
         log.debug("Getting access token by refresh token");
+
+        try{
+            SuccessResponseDto success = SuccessResponseDto.builder()
+                    .code(UsersConstant.STATUS_200)
+                    .message(UsersConstant.MESSAGE_200)
+                    .data(usersService.getAccessTokenByRefresh())
+                    .build();
+            return ResponseEntity.ok(success);
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorResponseDto.builder()
+                            .code(UsersConstant.STATUS_404)
+                            .error(e.getMessage())
+                            .build());
+        }
+    }
+    @GetMapping("/logout")
+    public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
+        log.debug("Logging out");
+        Cookie cookie = new Cookie("refresh_token", null);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(false);
+        cookie.setPath("/");
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
         SuccessResponseDto success = SuccessResponseDto.builder()
                 .code(UsersConstant.STATUS_200)
-                .message(UsersConstant.MESSAGE_200)
-                .data(usersService.getAccessTokenByRefresh())
+                .message("Đăng xuất thành công!")
                 .build();
         return ResponseEntity.ok(success);
     }
