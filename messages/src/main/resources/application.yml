@@ -11,13 +11,7 @@ spring:
           group: ${spring.application.name}
         sendEmail-out-0:
           destination: communication-sent
-          consumer:
-            max-attempts: 3
-            back-off-initial-interval: 2000
-            back-off-multiplier: 2.0
-            default-retryable: true
-            retryable-exceptions:
-              java.lang.RuntimeException: true
+
   mail:
     host: smtp.gmail.com
     username: ckp2004vn@gmail.com
