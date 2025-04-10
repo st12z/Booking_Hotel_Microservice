@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: messages
+  cloud:
+    function:
+      definition: sendEmail
+    stream:
+      bindings:
+        sendEmail-in-0:
+          destination: send-communication
+          group: ${spring.application.name}
+        sendEmail-out-0:
+          destination: communication-sent
+  mail:
+    host: smtp.gmail.com
+    username: ckp2004vn@gmail.com
+    password: kltqohttmkznubrc
+    port: 587
+    properties:
+      smtp:
+        auth: true
+      mail:
+        smtp:
+          starttls:
+            enable: true
+  rabbitmq:
+    port: 5672
+    host: localhost
+    username: guest
+    password: guest
+server:
+  port: 9000
+logging:
+  level:
+    com.thuc.messages: debug
