@@ -27,6 +27,7 @@ public class CustomMailSender {
             helper.setText(content, true);
             mailSender.send(mimeMessage);
         }catch (Exception e){
+            logger.debug("Error sending mail to {}", email);
             throw new RuntimeException(e);
         }
 
