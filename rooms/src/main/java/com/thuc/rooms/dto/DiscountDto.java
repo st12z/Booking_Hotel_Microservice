@@ -1,4 +1,4 @@
-package com.thuc.rooms.dto;
+package com.thuc.messages.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
 @Builder
 @Data
 @AllArgsConstructor

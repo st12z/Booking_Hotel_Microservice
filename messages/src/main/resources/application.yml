@@ -9,9 +9,15 @@ spring:
         sendEmail-in-0:
           destination: send-communication
           group: ${spring.application.name}
+          consumer:
+            max-attempts: 3 #
+            back-off-initial-interval: 2000 # đợi 2s retry lần đaầu
+            back-off-multiplier: 2.0 # x2 khi retry
+            default-retryable: true # retry tất cả lỗi
+            retryable-exceptions:
+              java.lang.RuntimeException: true
         sendEmail-out-0:
           destination: communication-sent
-
   mail:
     host: smtp.gmail.com
     username: ckp2004vn@gmail.com
@@ -29,8 +35,10 @@ spring:
     host: localhost
     username: guest
     password: guest
+
 server:
   port: 9000
+
 logging:
   level:
     com.thuc.messages: debug

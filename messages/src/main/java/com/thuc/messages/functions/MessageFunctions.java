@@ -18,14 +18,19 @@ public class MessageFunctions {
     @Bean
     public Function<UserDto, String> sendEmail(){
         return userDto->{
-            log.debug("send email with userDto={}", userDto.toString());
-            String subject = "Tạo tài khoản";
-            String content = "<h3>Tạo tại khoản thành công</h3>" +
-                    "<h3>Email:" +userDto.email()+"<h3/>"+
-                    "<h3>Mật khẩu:"+userDto.password()+"<h3/>"
-                    ;
-            mailSender.sendMail(userDto.email(),content,subject);
-            return userDto.email();
+            try{
+                log.debug("send email with userDto={}", userDto.toString());
+                String subject = "Tạo tài khoản";
+                String content = "<h3>Tạo tại khoản thành công</h3>" +
+                        "<h3>Email:" +userDto.email()+"<h3/>"+
+                        "<h3>Mật khẩu:"+userDto.password()+"<h3/>"
+                        ;
+                mailSender.sendMail(userDto.email(),content,subject);
+                return userDto.email();
+            }catch (Exception e){
+                log.debug("send email failed with {}", userDto.toString());
+                throw new RuntimeException(e);
+            }
         };
     }
 }

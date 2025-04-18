@@ -1,5 +1,7 @@
-package com.thuc.rooms.constants;
+package com.thuc.messages.constants;
 
-public class DiscountConstant extends BaseConstant{
+
+
+public class DiscountConstant extends BaseConstant {
     public static final String MESSAGE_201= "Discount created successfully";
 }

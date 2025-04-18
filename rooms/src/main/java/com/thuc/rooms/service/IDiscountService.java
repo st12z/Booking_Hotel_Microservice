@@ -1,6 +1,6 @@
-package com.thuc.rooms.service;
+package com.thuc.messages.service;
 
-import com.thuc.rooms.dto.DiscountDto;
+import com.thuc.messages.dto.DiscountDto;
 
 import java.util.List;
 
