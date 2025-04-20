@@ -1,4 +1,5 @@
 package com.thuc.BookingService.service;
 
-public class IBookingService {
+public interface IBookingService {
+
 }

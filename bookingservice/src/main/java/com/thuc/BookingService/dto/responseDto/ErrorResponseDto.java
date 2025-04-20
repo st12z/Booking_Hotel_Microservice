@@ -1,4 +1,4 @@
-package com.thuc.rooms.dto;
+package com.thuc.BookingService.dto.responseDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

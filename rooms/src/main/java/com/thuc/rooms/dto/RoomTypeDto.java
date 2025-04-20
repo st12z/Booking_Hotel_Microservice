@@ -34,5 +34,4 @@ public class RoomTypeDto implements Serializable {
 
     private Boolean status;
 
-    private Integer remain;
 }

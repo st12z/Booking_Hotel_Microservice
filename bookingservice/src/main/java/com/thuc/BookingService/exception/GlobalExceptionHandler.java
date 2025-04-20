@@ -1,7 +1,6 @@
-package com.thuc.rooms.exception;
+package com.thuc.BookingService.exception;
 
-import com.thuc.rooms.dto.ErrorResponseDto;
-import jakarta.servlet.http.HttpServletRequest;
+import com.thuc.BookingService.dto.responseDto.ErrorResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

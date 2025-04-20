@@ -48,4 +48,5 @@ public class UserRequestDto {
     private String city;
 
     private String address;
+
 }

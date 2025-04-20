@@ -50,4 +50,6 @@ public class UserEntity extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name="role_id")
     )
     private List<RoleEntity> roles;
+
+    private Boolean sendEmail;
 }

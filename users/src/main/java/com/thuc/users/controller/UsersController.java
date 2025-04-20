@@ -90,4 +90,14 @@ public class UsersController {
                 .build();
         return ResponseEntity.ok(success);
     }
+    @GetMapping("/info-user")
+    public ResponseEntity<?> getUserInfo(@RequestHeader("X-User-Email") String email) {
+        log.debug("Getting user info");
+        UserDto user = usersService.getUserByEmail(email);
+        SuccessResponseDto success = SuccessResponseDto.builder()
+                .message(UsersConstant.MESSAGE_200)
+                .code(UsersConstant.STATUS_200)
+                .data(user).build();
+        return ResponseEntity.ok(success);
+    }
 }

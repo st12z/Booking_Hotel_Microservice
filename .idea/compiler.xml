@@ -9,6 +9,15 @@
         <outputRelativeToContentRoot value="true" />
         <module name="eurekaserver" />
       </profile>
+      <profile name="Annotation profile for messages" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath>
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
+        </processorPath>
+        <module name="messages" />
+      </profile>
       <profile name="Annotation profile for users" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -16,7 +25,9 @@
         <processorPath>
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
         </processorPath>
+        <module name="gatewayserver" />
         <module name="users" />
+        <module name="BookingService" />
       </profile>
       <profile name="Annotation profile for rooms" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -27,21 +38,14 @@
         </processorPath>
         <module name="room-service" />
       </profile>
-      <profile name="Annotation profile for gatewayserver" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath>
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
-        </processorPath>
-        <module name="gatewayserver" />
-      </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="BookingService" options="-parameters" />
       <module name="eurekaserver" options="-parameters" />
       <module name="gatewayserver" options="-parameters" />
+      <module name="messages" options="-parameters" />
       <module name="room-service" options="-parameters" />
       <module name="users" options="-parameters" />
     </option>

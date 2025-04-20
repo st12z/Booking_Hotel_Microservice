@@ -6,6 +6,7 @@ import com.thuc.users.dto.responseDto.UserDto;
 import com.thuc.users.entity.RoleEntity;
 import com.thuc.users.entity.UserEntity;
 import com.thuc.users.exception.ResourceAlreadyException;
+import com.thuc.users.exception.ResourceNotFoundException;
 import com.thuc.users.repository.RoleRepository;
 import com.thuc.users.repository.UserRepository;
 import com.thuc.users.service.IKeycloakAccountService;
@@ -15,6 +16,7 @@ import com.thuc.users.utils.RoleEnum;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +32,7 @@ public class UsersServiceImpl implements IUsersService {
     private final IKeycloakService keycloakService;
     private final RoleRepository roleRepository;
     private final Logger logger = LoggerFactory.getLogger(UsersServiceImpl.class);
+    private final StreamBridge streamBridge;
     @Override
     public UserDto createUser(UserRequestDto user) {
         logger.debug("Creating a new user");
@@ -43,7 +46,14 @@ public class UsersServiceImpl implements IUsersService {
         userEntity.setRoles(List.of(roleUser));
         UserEntity saveUser= userRepository.save(userEntity);
         keycloakAccountService.createUser(user);
+        sendCommunication(user);
         return UsersConverter.toUserDto(saveUser);
+    }
+
+    private void sendCommunication(UserRequestDto user) {
+        logger.debug("Sending communication with {}",user);
+        var result = streamBridge.send("sendCommunication-out-0",user);
+        logger.debug("Received communication with {}",result);
     }
 
     @Override
@@ -59,5 +69,14 @@ public class UsersServiceImpl implements IUsersService {
     @Override
     public void logout() {
         keycloakService.logout();
+    }
+
+    @Override
+    public UserDto getUserByEmail(String email) {
+        UserEntity userEntity = userRepository.findByEmail(email);
+        if(userEntity == null) {
+            throw new ResourceNotFoundException("User", email);
+        }
+        return UsersConverter.toUserDto(userEntity);
     }
 }

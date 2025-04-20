@@ -16,9 +16,9 @@ import java.time.LocalDateTime;
 public class SearchDto implements Serializable {
 
     private String destination;
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime checkIn;
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime checkOut;
     private Integer quantityBeds;
 }

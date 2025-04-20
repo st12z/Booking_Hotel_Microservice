@@ -1,4 +1,4 @@
-package com.thuc.rooms.exception;
+package com.thuc.BookingService.exception;
 
 public class ResourceAlreadyExistsException extends RuntimeException{
     public ResourceAlreadyExistsException(String resource,String field,String value) {

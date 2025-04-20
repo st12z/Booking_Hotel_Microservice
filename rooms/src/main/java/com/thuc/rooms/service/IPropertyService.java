@@ -13,4 +13,6 @@ public interface IPropertyService {
     PropertyDto getPropertyBySlug(String slug);
 
     List<PropertyDto> getPropertiesBySlugs(List<String> slugs);
+
+    PropertyDto getPropertyById(Integer id);
 }

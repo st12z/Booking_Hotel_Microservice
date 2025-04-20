@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PropertyRepository extends JpaRepository<Property,String> {
+public interface PropertyRepository extends JpaRepository<Property,Integer> {
     List<Property> findByCityId(int cityId);
 
     Property findBySlug(String slug);

@@ -5,9 +5,11 @@ import com.thuc.rooms.dto.PropertyDto;
 import com.thuc.rooms.dto.SearchDto;
 import com.thuc.rooms.entity.City;
 import com.thuc.rooms.entity.Property;
+import com.thuc.rooms.entity.RoomType;
 import com.thuc.rooms.exception.ResourceNotFoundException;
 import com.thuc.rooms.repository.CityRepository;
 import com.thuc.rooms.repository.PropertyRepository;
+import com.thuc.rooms.repository.RoomTypeRepository;
 import com.thuc.rooms.service.IPropertyService;
 import com.thuc.rooms.service.IRedisPropertyService;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +30,7 @@ public class PropertyServiceImpl implements IPropertyService {
     private final CityRepository cityRepository;
     private final Logger log = LoggerFactory.getLogger(PropertyServiceImpl.class);
     private final IRedisPropertyService redisPropertyService;
+    private final RoomTypeRepository roomTypeRepository;
     @Override
     public List<PropertyDto> getAllProperties(String slugCity) {
         Optional<City> cityOptional = cityRepository.findBySlug(slugCity);
@@ -64,6 +67,13 @@ public class PropertyServiceImpl implements IPropertyService {
         }
         return propertyDtos;
     }
+
+    @Override
+    public PropertyDto getPropertyById(Integer id) {
+        Property property = propertyRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Property","id",String.valueOf(id)));
+        return PropertyConverter.toPropertyDto(property);
+    }
+
 
 
 }

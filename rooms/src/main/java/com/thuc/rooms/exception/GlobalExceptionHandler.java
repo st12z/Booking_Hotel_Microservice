@@ -35,13 +35,23 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponseDto);
     }
     @ExceptionHandler(ResourceAlreadyExistsException.class)
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public ResponseEntity<ErrorResponseDto> handleResouseAlreadyExistException(ResourceNotFoundException e, WebRequest request) {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorResponseDto> handleResourceAlreadyExistException(ResourceAlreadyExistsException e, WebRequest request) {
         ErrorResponseDto errorResponseDto = new ErrorResponseDto();
         errorResponseDto.setCode(HttpStatus.NOT_FOUND.value());
         errorResponseDto.setError(e.getMessage());
         errorResponseDto.setPath(request.getDescription(false).replace("uri=",""));
         errorResponseDto.setTime(LocalDateTime.now());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponseDto);
+    }
+    @ExceptionHandler(BadRequestCustomException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorResponseDto> handleBadRequestCustomException(BadRequestCustomException e, WebRequest request) {
+        ErrorResponseDto errorResponseDto = new ErrorResponseDto();
+        errorResponseDto.setCode(HttpStatus.BAD_REQUEST.value());
+        errorResponseDto.setError(e.getMessage());
+        errorResponseDto.setPath(request.getDescription(false).replace("uri=",""));
+        errorResponseDto.setTime(LocalDateTime.now());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponseDto);
     }
 }

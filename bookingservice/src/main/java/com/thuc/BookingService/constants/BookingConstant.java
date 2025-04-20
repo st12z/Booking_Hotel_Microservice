@@ -1,6 +1,5 @@
-package com.thuc.rooms.constants;
+package com.thuc.BookingService.constants;
 
-public class TripConstant extends BaseConstant{
-    public static final String MESSAGE_201= "Property created successfully";
+public class BookingConstant extends BaseConstant{
 
 }

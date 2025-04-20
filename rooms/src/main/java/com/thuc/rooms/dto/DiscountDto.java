@@ -1,4 +1,4 @@
-package com.thuc.messages.dto;
+package com.thuc.rooms.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

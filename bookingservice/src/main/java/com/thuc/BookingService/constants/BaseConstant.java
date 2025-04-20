@@ -1,4 +1,4 @@
-package com.thuc.rooms.constants;
+package com.thuc.BookingService.constants;
 
 public class BaseConstant {
     public static final int STATUS_200= 200;

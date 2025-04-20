@@ -1,6 +1,6 @@
-package com.thuc.messages.repository;
+package com.thuc.rooms.repository;
 
-import com.thuc.messages.entity.Discount;
+import com.thuc.rooms.entity.Discount;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

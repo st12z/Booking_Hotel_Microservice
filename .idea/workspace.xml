@@ -211,6 +211,72 @@
       <change afterPath="$PROJECT_DIR$/../order-service/order-service/src/main/java/com/thuc/order_service/repository/OrderRepository.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../order-service/order-service/src/main/java/com/thuc/order_service/service/OrderService.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../order-service/order-service/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/.idea/.name" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/.idea/photo-sharing-v1.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/public/favicon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/public/images/kenobi1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/public/images/kenobi2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/public/images/kenobi3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/public/images/kenobi4.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/public/images/ludgate1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/public/images/malcolm1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/public/images/malcolm2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/public/images/ouster.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/public/images/ripley1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/public/images/ripley2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/public/images/took1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/public/images/took2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/public/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/public/logo192.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/public/logo512.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/public/manifest.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/public/robots.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/App.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/App.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/App.test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/components/TopBar/index.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/components/TopBar/styles.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/components/UserDetail/index.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/components/UserDetail/styles.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/components/UserList/index.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/components/UserList/styles.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/components/UserPhotos/CommentItem.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/components/UserPhotos/CommentItem.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/components/UserPhotos/PhotoItem.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/components/UserPhotos/PhotoItem.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/components/UserPhotos/index.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/components/UserPhotos/styles.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/images/icon-comment.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/images/icon-like.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/images/images-icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/images/kenobi1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/images/kenobi2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/images/kenobi3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/images/kenobi4.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/images/ludgate1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/images/malcolm1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/images/malcolm2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/images/ouster.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/images/ripley1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/images/ripley2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/images/time-icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/images/took1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/images/took2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/index.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/lib/fetchModelData.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/logo.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/modelData/models.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/reportWebVitals.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/setupTests.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/utils/getDay.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../photo-sharing-v1/photo-sharing-v1/src/utils/getTime.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../product-service/product-service/docker-compose.yml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../product-service/product-service/src/main/java/com/thuc/product_service/controller/ProductController.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../product-service/product-service/src/main/java/com/thuc/product_service/dto/ProductRequest.java" afterDir="false" />
@@ -478,11 +544,65 @@
       <change afterPath="$PROJECT_DIR$/../thymeleaf-project/thymeleaf-project/src/main/resources/templates/fragments.html" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../thymeleaf-project/thymeleaf-project/src/main/resources/templates/register_form.html" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../thymeleaf-project/thymeleaf-project/src/main/resources/templates/test.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookingservice/src/main/java/com/thuc/BookingService/constants/BaseConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookingservice/src/main/java/com/thuc/BookingService/constants/BaseConstant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookingservice/src/main/java/com/thuc/BookingService/constants/BookingConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookingservice/src/main/java/com/thuc/BookingService/constants/BookingConstant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookingservice/src/main/java/com/thuc/BookingService/controller/BookingControllers.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookingservice/src/main/java/com/thuc/BookingService/controller/BookingControllers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookingservice/src/main/java/com/thuc/BookingService/dto/responseDto/ErrorResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookingservice/src/main/java/com/thuc/BookingService/dto/responseDto/ErrorResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookingservice/src/main/java/com/thuc/BookingService/dto/responseDto/SuccessResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookingservice/src/main/java/com/thuc/BookingService/dto/responseDto/SuccessResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookingservice/src/main/java/com/thuc/BookingService/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookingservice/src/main/java/com/thuc/BookingService/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookingservice/src/main/java/com/thuc/BookingService/exception/ResourceAlreadyExistsException.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookingservice/src/main/java/com/thuc/BookingService/exception/ResourceAlreadyExistsException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookingservice/src/main/java/com/thuc/BookingService/exception/ResourceNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookingservice/src/main/java/com/thuc/BookingService/exception/ResourceNotFoundException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookingservice/src/main/java/com/thuc/BookingService/service/IBookingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookingservice/src/main/java/com/thuc/BookingService/service/IBookingService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookingservice/src/main/java/com/thuc/BookingService/service/client/RoomsFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookingservice/src/main/java/com/thuc/BookingService/service/client/RoomsFeignClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookingservice/src/main/java/com/thuc/BookingService/service/client/UsersFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookingservice/src/main/java/com/thuc/BookingService/service/client/UsersFeignClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookingservice/src/main/java/com/thuc/BookingService/service/impl/BookingServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookingservice/src/main/java/com/thuc/BookingService/service/impl/BookingServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookingservice/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/bookingservice/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gatewayserver/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/gatewayserver/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gatewayserver/src/main/java/com/thuc/gatewayserver/GatewayserverApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/gatewayserver/src/main/java/com/thuc/gatewayserver/GatewayserverApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gatewayserver/src/main/java/com/thuc/gatewayserver/config/AddUserInfoFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/gatewayserver/src/main/java/com/thuc/gatewayserver/config/AddUserInfoFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gatewayserver/src/main/java/com/thuc/gatewayserver/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/gatewayserver/src/main/java/com/thuc/gatewayserver/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/RoomsApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/RoomsApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/config/RedisConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/config/RedisConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/constants/DiscountConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/constants/DiscountConstant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/DiscountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/DiscountController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/PropertiesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/PropertiesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/RoomTypeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/RoomTypeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/converter/DiscountConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/converter/DiscountConverter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/CheckRoomDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/CheckRoomDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/DiscountDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/DiscountDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/RoomTypeDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/RoomTypeDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/SearchDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/SearchDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/UserDiscountDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/UserDiscountDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/entity/Discount.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/entity/Discount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/entity/UserDiscount.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/entity/UserDiscount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/exception/BadRequestCustomException.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/exception/BadRequestCustomException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/repository/DiscountRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/repository/DiscountRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/repository/PropertyRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/repository/PropertyRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/repository/RoomTypeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/repository/RoomTypeRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/repository/UserDiscountRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/repository/UserDiscountRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/IDiscountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/IDiscountService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/IPropertyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/IPropertyService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/IRedisHoldRooms.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/IRedisHoldRooms.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/IRoomTypeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/IRoomTypeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/DiscountServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/DiscountServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/PropertyServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/PropertyServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/RedisHoldRoomsImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/RedisHoldRoomsImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/RoomTypeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/RoomTypeServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/users/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/UsersApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/UsersApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/controller/UsersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/controller/UsersController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/service/IKeycloakService.java" beforeDir="false" afterPath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/service/IKeycloakService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/dto/requestDto/UserRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/dto/requestDto/UserRequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/entity/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/entity/UserEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/functions/UsersFunctions.java" beforeDir="false" afterPath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/functions/UsersFunctions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/repository/UserRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/service/IUsersService.java" beforeDir="false" afterPath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/service/IUsersService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/service/impl/KeycloakServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/service/impl/KeycloakServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/service/impl/UsersServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/service/impl/UsersServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/users/src/main/resources/application.yml" afterDir="false" />
     </list>
@@ -522,11 +642,14 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Maven.BookingService [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.BookingService [package].executor&quot;: &quot;Run&quot;,
     &quot;Maven.eurekaserver [clean,package].executor&quot;: &quot;Run&quot;,
     &quot;Maven.eurekaserver [clean].executor&quot;: &quot;Run&quot;,
     &quot;Maven.eurekaserver [install].executor&quot;: &quot;Run&quot;,
     &quot;Maven.eurekaserver [package].executor&quot;: &quot;Run&quot;,
     &quot;Maven.gatewayserver [clean,package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.rooms [clean,package].executor&quot;: &quot;Run&quot;,
     &quot;Maven.users [clean,package].executor&quot;: &quot;Run&quot;,
     &quot;Maven.users [clean].executor&quot;: &quot;Run&quot;,
     &quot;Maven.users [package].executor&quot;: &quot;Run&quot;,
@@ -536,14 +659,16 @@
     &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.BookingServiceApplication.executor&quot;: &quot;Debug&quot;,
     &quot;Spring Boot.EurekaserverApplication.executor&quot;: &quot;Debug&quot;,
     &quot;Spring Boot.GatewayserverApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.MessagesApplication.executor&quot;: &quot;Debug&quot;,
     &quot;Spring Boot.RoomServiceAppliction.executor&quot;: &quot;Debug&quot;,
     &quot;Spring Boot.RoomsApplication.executor&quot;: &quot;Debug&quot;,
     &quot;Spring Boot.UsersApplication.executor&quot;: &quot;Debug&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/T/Downloads/Booking_Hotel_Microservice/users&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/T/Downloads/Booking_Hotel_Microservice/messages/src/main/java/com/thuc/messages&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -560,12 +685,28 @@
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\T\Downloads\Booking_Hotel_Microservice\messages\src\main\java\com\thuc\messages" />
+      <recent name="C:\Users\T\Downloads\Booking_Hotel_Microservice\messages\src\main\java\com\thuc\messages\dto" />
+      <recent name="C:\Users\T\Downloads\Booking_Hotel_Microservice\messages\src\main\java\com\thuc\messages\constants" />
+      <recent name="C:\Users\T\Downloads\Booking_Hotel_Microservice\messages\src\main\java\com\thuc\messages\entity" />
+      <recent name="C:\Users\T\Downloads\Booking_Hotel_Microservice\bookingservice\src\main\java\com\thuc\BookingService" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.thuc.rooms.repository" />
+      <recent name="com.thuc.rooms.service" />
+      <recent name="com.thuc.rooms.service.impl" />
+      <recent name="com.thuc.rooms.dto" />
+      <recent name="com.thuc.rooms.constants" />
+    </key>
+  </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
-      <command value="mvn clean package" />
       <command value="mvn install" />
-      <command value="mvn package" />
+      <command value="mvn clean package" />
       <command value="mvn clean" />
+      <command value="mvn package" />
     </option>
   </component>
   <component name="RunDashboard">
@@ -578,7 +719,15 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.GatewayserverApplication">
+  <component name="RunManager" selected="Spring Boot.RoomsApplication">
+    <configuration name="BookingServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="BookingService" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.thuc.BookingService.BookingServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="EurekaserverApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="eurekaserver" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.thuc.eurekaserver.EurekaserverApplication" />
@@ -590,6 +739,13 @@
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="gatewayserver" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.thuc.gatewayserver.GatewayserverApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MessagesApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="messages" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.thuc.messages.MessagesApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -632,6 +788,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Spring Boot.BookingServiceApplication" />
+      <item itemvalue="Spring Boot.EurekaserverApplication" />
+      <item itemvalue="Spring Boot.GatewayserverApplication" />
+      <item itemvalue="Spring Boot.MessagesApplication" />
+      <item itemvalue="Spring Boot.RoomsApplication" />
+      <item itemvalue="Spring Boot.UsersApplication" />
+    </list>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -681,7 +845,23 @@
       <workItem from="1744031615701" duration="9352000" />
       <workItem from="1744084174045" duration="28202000" />
       <workItem from="1744195379075" duration="1540000" />
-      <workItem from="1744204591699" duration="3414000" />
+      <workItem from="1744204591699" duration="9484000" />
+      <workItem from="1744268666526" duration="12707000" />
+      <workItem from="1744292231338" duration="8981000" />
+      <workItem from="1744334099275" duration="4345000" />
+      <workItem from="1744356929897" duration="10240000" />
+      <workItem from="1744378076994" duration="5805000" />
+      <workItem from="1744444581616" duration="3860000" />
+      <workItem from="1744462453737" duration="1000" />
+      <workItem from="1744465561359" duration="4384000" />
+      <workItem from="1744510417352" duration="14068000" />
+      <workItem from="1744713413662" duration="1265000" />
+      <workItem from="1744765923290" duration="19046000" />
+      <workItem from="1744936676726" duration="3212000" />
+      <workItem from="1744940282348" duration="534000" />
+      <workItem from="1744990417747" duration="1000000" />
+      <workItem from="1745077337814" duration="911000" />
+      <workItem from="1745112460293" duration="3283000" />
     </task>
     <servers />
   </component>

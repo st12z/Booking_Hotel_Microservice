@@ -30,7 +30,7 @@ public class PropertiesController {
                 .build();
         return ResponseEntity.ok(response);
     }
-    @GetMapping("{slug}")
+    @GetMapping("/slug/{slug}")
     public ResponseEntity<?> getProperties(@PathVariable String slug) {
         logger.debug("Request to get properties for city {}", slug);
         SuccessResponseDto response =SuccessResponseDto.builder()
@@ -50,5 +50,14 @@ public class PropertiesController {
                 .build();
         return ResponseEntity.ok(response);
     }
-
+    @GetMapping("/id/{id}")
+    public ResponseEntity<?> getPropertyId(@PathVariable Integer id) {
+        logger.debug("Request to get properties by  id {}", id);
+        SuccessResponseDto response = SuccessResponseDto.builder()
+                .message(PropertyConstant.MESSAGE_200)
+                .code(PropertyConstant.STATUS_200)
+                .data(propertyService.getPropertyById(id))
+                .build();
+        return ResponseEntity.ok(response);
+    }
 }

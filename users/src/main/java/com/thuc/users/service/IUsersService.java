@@ -14,4 +14,6 @@ public interface IUsersService {
     Map<String,String> getAccessTokenByRefresh();
 
     void logout();
+
+    UserDto getUserByEmail(String email);
 }

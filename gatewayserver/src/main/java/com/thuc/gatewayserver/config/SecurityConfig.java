@@ -30,7 +30,6 @@ public class SecurityConfig {
                 .authorizeExchange(exchange ->
                     exchange
                             .anyExchange().permitAll()
-
                 )
                 .oauth2ResourceServer(oAuth2ResourceServerSpec -> oAuth2ResourceServerSpec
                         .jwt(jwt->jwt.jwtAuthenticationConverter(grantedAuthoritiesExtractor()))

@@ -1,4 +1,4 @@
-package com.thuc.messages.constants;
+package com.thuc.rooms.constants;
 
 
 

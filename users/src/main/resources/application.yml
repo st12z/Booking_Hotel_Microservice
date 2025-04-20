@@ -6,14 +6,46 @@ spring:
     username: postgres
     password: Anhthucdz1234!
     driver-class-name: org.postgresql.Driver
+    hikari:
+      # Cấu hình tối ưu cho Connection Pool
+      minimum-idle: 5         # Số kết nối tối thiểu luôn tồn tại trong pool
+      maximum-pool-size: 20   # Số kết nối tối đa trong pool
+      idle-timeout: 300000    # Thời gian tối đa (ms) cho các kết nối không hoạt động trước khi đóng (5 phút)
+      max-lifetime: 1800000   # Thời gian tối đa (ms) sống của kết nối (30 phút)
+      connection-timeout: 30000 # Thời gian tối đa (ms) để nhận được kết nối từ pool (30 giây)
+      validation-timeout: 5000 # Thời gian tối đa (ms) để kiểm tra tính hợp lệ của kết nối (5 giây)
+      leak-detection-threshold: 15000 # Thời gian (ms) để phát hiện rò rỉ kết nối (15 giây)
+      connection-test-query: SELECT 1 # Câu truy vấn để kiểm tra tính hợp lệ của kết nối
   jpa:
     hibernate:
       ddl-auto: update
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
+  cloud:
+    function:
+      definition: updateCommunication
+    stream:
+      bindings:
+        sendCommunication-out-0:
+          destination: send-communication
+        updateCommunication-in-0:
+          destination: communication-sent
+          group: ${spring.application.name}
+          consumer:
+            max-attempts: 3 #
+            back-off-initial-interval: 2000 # đợi 2s retry lần đaầu
+            back-off-multiplier: 2.0 # x2 khi retry
+            default-retryable: true # retry tất cả lỗi
+            retryable-exceptions:
+              java.lang.RuntimeException: true
 
+  rabbitmq:
+    port: 5672
+    host: localhost
+    username: guest
+    password: guest
 server:
-  port: 8071
+  port: 8082
 eureka:
   instance:
     prefer-ip-address: true
