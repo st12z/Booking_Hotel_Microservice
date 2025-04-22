@@ -23,6 +23,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -118,15 +119,20 @@ public class RoomTypeServiceImpl implements IRoomTypeService {
     //           : + B giu 2 trong thoi gian 8-2 ->9/2
     @Override
     public Integer checkEnoughRooms(CheckRoomDto checkRoomDto) {
+
         try{
             String key = getKeyFromCheckRoomDto(checkRoomDto);
             int countRemainRooms = getQuantityRoomsRemain(checkRoomDto); // so luong phong con lai trong db trong thoi gian cua checkRoomDto
             int countRoomsInRedis = getTotalRoomsInRedis(checkRoomDto);
+            logger.debug("-----------------");
+            logger.debug("Thread name: {}",Thread.currentThread().getName());
+            logger.debug("email: {}",checkRoomDto.getEmail());
             logger.debug("countRemainRooms: {}",countRemainRooms);
             logger.debug("countRoomsInRedis: {}",countRoomsInRedis);
             int actutalAvailable = countRemainRooms - countRoomsInRedis;
             logger.debug("actutalAvailable: {}",actutalAvailable);
             logger.debug("quantity from request:{}",checkRoomDto.getQuantity());
+            logger.debug("-----------------");
             if(actutalAvailable< checkRoomDto.getQuantity()) {
                 redisHoldRooms.deleteData(key);
             }
@@ -136,7 +142,42 @@ public class RoomTypeServiceImpl implements IRoomTypeService {
             throw new RuntimeException(e.getMessage());
         }
     }
+    @Override
+    public boolean holdRooms(List<CheckRoomDto> roomReversed) {
+        boolean check=checkEnoughRoomsAgain(roomReversed);
+        logger.debug("check :{}",check);
+        if(check){
+            for(CheckRoomDto checkRoomDto : roomReversed){
+                redisHoldRooms.saveData(getKeyFromCheckRoomDto(checkRoomDto),checkRoomDto);
+            }
+            return true;
+        }
+        return false;
+    }
 
+    private boolean checkEnoughRoomsAgain(List<CheckRoomDto> roomReversed) {
+        for(CheckRoomDto checkRoomDto : roomReversed){
+            boolean getLock = false;
+            RLock lock = redissonClient.getLock(getLockKeyFromCheckRoomDto(checkRoomDto));
+            try{
+                getLock = lock.tryLock(10,5,TimeUnit.SECONDS);
+                if(!getLock){
+                    throw new RuntimeException("Lock is locked! Please try again");
+                }
+                int actutalAvailable = checkEnoughRooms(checkRoomDto);
+                if(actutalAvailable < checkRoomDto.getQuantity()) {
+                    return false;
+                }
+            }catch (InterruptedException e){
+                throw new RuntimeException("Failure get lock");
+            }finally {
+                if(lock.isLocked() && lock.isHeldByCurrentThread()){
+                    lock.unlock();
+                }
+            }
+        }
+        return true;
+    }
 
     private String getLockKeyFromCheckRoomDto(CheckRoomDto checkRoomDto) {
         return String.format("lock|room|%d",checkRoomDto.getRoomTypeId());
@@ -147,6 +188,8 @@ public class RoomTypeServiceImpl implements IRoomTypeService {
         RoomType roomType = roomTypeRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("RoomType","id",String.valueOf(id)));
         return RoomTypeConverter.toRoomTypDto(roomType);
     }
+
+
 
     private String getKeyFromCheckRoomDto(CheckRoomDto checkRoomDto) {
         return String.format("hold|room|%d|%s|%s|%s",

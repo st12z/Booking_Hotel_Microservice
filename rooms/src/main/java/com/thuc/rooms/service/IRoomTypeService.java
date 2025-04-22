@@ -14,4 +14,6 @@ public interface IRoomTypeService {
     Integer checkEnoughRooms(CheckRoomDto checkRoomDto);
 
     RoomTypeDto getRoomTypeById(Integer id);
+
+    boolean holdRooms(List<CheckRoomDto> roomReversed);
 }

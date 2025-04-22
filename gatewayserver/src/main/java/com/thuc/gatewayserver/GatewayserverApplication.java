@@ -31,11 +31,11 @@ public class GatewayserverApplication {
 						.uri("lb://USERS")
 				)
 				.route(p -> p
-						.path("/bookinghotel/booking/**")  // Định nghĩa route khi URL bắt đầu bằng "/bookinghotel/booking/"
+						.path("/bookinghotel/bookings/**")  // Định nghĩa route khi URL bắt đầu bằng "/bookinghotel/booking/"
 						.filters(f -> f
-								.rewritePath("/bookinghotel/booking/(?<segment>.*)", "/${segment}") // Chuyển hướng URL
+								.rewritePath("/bookinghotel/bookings/(?<segment>.*)", "/${segment}") // Chuyển hướng URL
 						)
-						.uri("lb://BOOKINGSERVICE")
+						.uri("lb://BOOKINGS")
 				)
 				.build();
 

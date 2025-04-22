@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/roomtypes")
 @RequiredArgsConstructor
@@ -41,7 +43,7 @@ public class RoomTypeController {
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
-    // dung apache bench test api dong thoi
+    // test api concurrency by python
     @PostMapping("/check-room")
     public ResponseEntity<?> checkEnoughRooms(@RequestBody @Valid CheckRoomDto checkRoomDto) {
         log.debug("Request to check enough rooms with {}", checkRoomDto);
@@ -52,6 +54,27 @@ public class RoomTypeController {
                 .build();
         return ResponseEntity.ok(response);
     }
+    // hold room
+    @PostMapping("/hold-rooms")
+    public ResponseEntity<?> holdRooms(@RequestBody List<CheckRoomDto> roomReversed){
+        log.debug("Request to hold rooms with {}", roomReversed);
+        boolean check = roomTypeService.holdRooms(roomReversed);
+        SuccessResponseDto response = SuccessResponseDto.builder()
+                .data(check)
+                .build();
+        if(check){
+            response.setCode(RoomTypeConstant.STATUS_200);
+            response.setMessage(RoomTypeConstant.MESSAGE_200);
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+
+        }
+        else{
+            response.setCode(RoomTypeConstant.STATUS_400);
+            response.setMessage(RoomTypeConstant.MESSAGE_400);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getRoomTypeById(@PathVariable Integer id) {
         log.debug("Request to get RoomType by id {}", id);
