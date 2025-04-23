@@ -5,20 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="51d15752-74e9-4b1e-bbb6-eccb5a2b114f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/entity/BaseEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/entity/Drivers.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/entity/Vehicles.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/repository/DriversRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/repository/VehiclesRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/IDriversService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/IVehiclesService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/impl/DriversServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/impl/VehiclesServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/utils/CarStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/utils/CarType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/utils/DriverStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/entity/DiscountCars.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/entity/UserDiscountCars.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/controller/DriverControllers.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/controller/VehicleControllers.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/dto/responseDto/DriversDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/DiscountCarsController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/converter/DiscountCarsConverter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/DiscountCarsDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/UserDiscountCarDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/repository/DiscountCarsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/repository/UserDiscountCarsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/IDiscountCarsService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/DiscountCarsServiceImpl.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../BÀI15.drawio - draw.io_files/.idea/BÀI15.drawio - draw.io_files.iml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../SpringOauth2/.idea/.gitignore" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../SpringOauth2/.idea/SpringOauth2.iml" afterDir="false" />
@@ -558,37 +555,14 @@
       <change afterPath="$PROJECT_DIR$/../thymeleaf-project/thymeleaf-project/src/main/resources/templates/fragments.html" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../thymeleaf-project/thymeleaf-project/src/main/resources/templates/register_form.html" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../thymeleaf-project/thymeleaf-project/src/main/resources/templates/test.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookingservice/.gitattributes" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/.gitattributes" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookingservice/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookingservice/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookingservice/mvnw" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/mvnw" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookingservice/mvnw.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/mvnw.cmd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookingservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookingservice/src/main/java/com/thuc/BookingService/BookingServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/BookingsApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookingservice/src/main/java/com/thuc/BookingService/constants/BaseConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/constants/BaseConstant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookingservice/src/main/java/com/thuc/BookingService/constants/BookingConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/constants/BookingConstant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookingservice/src/main/java/com/thuc/BookingService/controller/BookingControllers.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/controller/BookingControllers.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookingservice/src/main/java/com/thuc/BookingService/dto/responseDto/ErrorResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/dto/responseDto/ErrorResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookingservice/src/main/java/com/thuc/BookingService/dto/responseDto/SuccessResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/dto/responseDto/SuccessResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookingservice/src/main/java/com/thuc/BookingService/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/exception/GlobalExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookingservice/src/main/java/com/thuc/BookingService/exception/ResourceAlreadyExistsException.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/exception/ResourceAlreadyExistsException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookingservice/src/main/java/com/thuc/BookingService/exception/ResourceNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/exception/ResourceNotFoundException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookingservice/src/main/java/com/thuc/BookingService/service/IBookingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/IBookingService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookingservice/src/main/java/com/thuc/BookingService/service/client/RoomsFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/client/RoomsFeignClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookingservice/src/main/java/com/thuc/BookingService/service/client/UsersFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/client/UsersFeignClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookingservice/src/main/java/com/thuc/BookingService/service/impl/BookingServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/impl/BookingServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookingservice/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookingservice/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookingservice/src/test/java/com/thuc/BookingService/BookingServiceApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/test/java/com/thuc/bookings/BookingServiceApplicationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gatewayserver/src/main/java/com/thuc/gatewayserver/GatewayserverApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/gatewayserver/src/main/java/com/thuc/gatewayserver/GatewayserverApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/constants/BaseConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/constants/BaseConstant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/RoomTypeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/RoomTypeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/IRoomTypeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/IRoomTypeService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/RoomTypeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/RoomTypeServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/repository/DriversRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/repository/DriversRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/repository/VehiclesRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/repository/VehiclesRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/IDriversService.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/IDriversService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/impl/DriversServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/impl/DriversServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/impl/VehiclesServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/impl/VehiclesServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/entity/DiscountCars.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/entity/DiscountCars.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/entity/UserDiscountCars.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/entity/UserDiscountCars.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -649,7 +623,7 @@
     "Spring Boot.BookingServiceApplication.executor": "Debug",
     "Spring Boot.EurekaserverApplication.executor": "Debug",
     "Spring Boot.GatewayserverApplication.executor": "Debug",
-    "Spring Boot.MessagesApplication.executor": "Debug",
+    "Spring Boot.MessagesApplication.executor": "Run",
     "Spring Boot.RoomServiceAppliction.executor": "Debug",
     "Spring Boot.RoomsApplication.executor": "Debug",
     "Spring Boot.UsersApplication.executor": "Debug",
@@ -706,7 +680,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.BookingApplication">
+  <component name="RunManager" selected="Spring Boot.GatewayserverApplication">
     <configuration name="BookingApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="bookings" />
@@ -777,11 +751,11 @@
     </configuration>
     <list>
       <item itemvalue="Spring Boot.BookingApplication" />
+      <item itemvalue="Spring Boot.UsersApplication" />
       <item itemvalue="Spring Boot.EurekaserverApplication" />
       <item itemvalue="Spring Boot.GatewayserverApplication" />
       <item itemvalue="Spring Boot.MessagesApplication" />
       <item itemvalue="Spring Boot.RoomsApplication" />
-      <item itemvalue="Spring Boot.UsersApplication" />
     </list>
   </component>
   <component name="SharedIndexes">
@@ -852,7 +826,8 @@
       <workItem from="1745142586238" duration="2166000" />
       <workItem from="1745196630421" duration="2978000" />
       <workItem from="1745214334048" duration="2689000" />
-      <workItem from="1745331114766" duration="4414000" />
+      <workItem from="1745331114766" duration="5166000" />
+      <workItem from="1745371087940" duration="4092000" />
     </task>
     <servers />
   </component>

@@ -17,18 +17,22 @@ public class DiscountCars extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private int quantity;
+
     @Column(nullable = false, unique = true)
     private String code;
 
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    private LocalDateTime start_date;
+    private LocalDateTime startDate;
 
-    private LocalDateTime end_date;
+    private LocalDateTime endDate;
 
     private String images;
 
     private Boolean isActive;
+
+    private int discountValue;
 
 }
