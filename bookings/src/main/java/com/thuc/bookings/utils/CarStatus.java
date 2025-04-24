@@ -4,9 +4,9 @@ import lombok.Getter;
 
 @Getter
 public enum CarStatus {
-    AVAILABLE("available"),
-    BUSY("busy"),
-    INACTIVE("inactive");
+    AVAILABLE("AVAILABLE"),
+    BUSY("BUSY"),
+    INACTIVE("INACTIVE");
     private String value;
     private CarStatus(String value) {
         this.value = value;

@@ -5,9 +5,9 @@ import lombok.Getter;
 
 @Getter
 public enum DriverStatus {
-    ACTIVE("active"),
-    OFFLINE("offline"),
-    BUSY("busy");
+    ACTIVE("ACTIVE"),
+    OFFLINE("OFFLINE"),
+    BUSY("BUSY");
     private String value;
 
     DriverStatus(String value) {

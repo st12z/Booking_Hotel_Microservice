@@ -18,6 +18,7 @@ public class Vehicles {
 
     private String licensePlate;
 
+    @Column(columnDefinition = "TEXT")
     private String images;
 
     private Double latitude;
@@ -28,10 +29,16 @@ public class Vehicles {
 
     private int price;
 
-    private CarStatus carStatus;
+    private int quantity;
 
+    private int star;
+
+    @Enumerated(EnumType.STRING)
+    private CarStatus status;
+
+    @Enumerated(EnumType.STRING)
     private CarType carType;
     @OneToOne
-    @JoinColumn(name = "vehicle_id")
+    @JoinColumn(name = "driver_id")
     private Drivers driver;
 }

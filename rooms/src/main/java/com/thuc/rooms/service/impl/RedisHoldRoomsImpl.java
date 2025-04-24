@@ -18,7 +18,7 @@ public class RedisHoldRoomsImpl implements IRedisHoldRooms {
     public void saveData(String key, CheckRoomDto checkRoomDto) {
         try{
             String json = objectMapper.writeValueAsString(checkRoomDto.getQuantity());
-            redisTemplate.opsForValue().set(key,json,5, TimeUnit.MINUTES);
+            redisTemplate.opsForValue().set(key,json,10, TimeUnit.MINUTES);
         }catch (Exception e){
             throw new RuntimeException(e.getMessage());
         }

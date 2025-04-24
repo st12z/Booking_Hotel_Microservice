@@ -33,6 +33,7 @@ spring:
     host: localhost
     username: guest
     password: guest
+    connection-timeout: 5s
 server:
   port: 8080
 

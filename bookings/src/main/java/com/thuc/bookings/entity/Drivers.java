@@ -21,6 +21,7 @@ public class Drivers {
 
     private String phoneNumber;
 
+    @Enumerated(EnumType.STRING)
     private DriverStatus status;
 
     @OneToOne(mappedBy = "driver")
