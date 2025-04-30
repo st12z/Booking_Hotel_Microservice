@@ -1,6 +1,6 @@
-package com.thuc.bookings.exception;
+package com.thuc.payments.exception;
 
-import com.thuc.bookings.dto.responseDto.ErrorResponseDto;
+import com.thuc.payments.dto.ErrorResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

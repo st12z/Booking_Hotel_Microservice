@@ -1,4 +1,4 @@
-package com.thuc.rooms.dto;
+package com.thuc.bookings.dto.requestDto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotEmpty;
@@ -39,4 +39,6 @@ public class BookingRoomTypeDto {
 
     @NotNull(message = "roomTypeId is not null")
     private int roomTypeId;
+
+    private int propertyId;
 }

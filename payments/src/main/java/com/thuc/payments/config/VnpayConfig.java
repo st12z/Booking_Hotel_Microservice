@@ -1,10 +1,8 @@
-package com.thuc.bookings.config;
+package com.thuc.payments.config;
 
-import com.thuc.bookings.utils.VnpayUtil;
+import com.thuc.payments.utils.VnpayUtil;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,6 +11,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
+
 @Data
 @Configuration
 public class VnpayConfig {

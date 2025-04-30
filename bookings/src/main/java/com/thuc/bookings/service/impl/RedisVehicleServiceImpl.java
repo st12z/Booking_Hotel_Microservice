@@ -17,7 +17,7 @@ public class RedisVehicleServiceImpl implements IRedisVehicleService {
     @Override
     public void saveData(String key, VehicleRequestDto vehicleDto) {
         try{
-            String json = objectMapper.writeValueAsString(vehicleDto.getVehicleId());
+            String json = objectMapper.writeValueAsString(1);
             redisTemplate.opsForValue().set(key, json,10, TimeUnit.MINUTES);
         }catch (Exception e){
             throw new RuntimeException(e);

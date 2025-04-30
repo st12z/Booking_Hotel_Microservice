@@ -1,13 +1,13 @@
 package com.thuc.rooms.service.impl;
 
 import com.thuc.rooms.converter.RoomTypeConverter;
-import com.thuc.rooms.dto.CheckRoomDto;
-import com.thuc.rooms.dto.RoomTypeDto;
-import com.thuc.rooms.dto.SearchDto;
+import com.thuc.rooms.dto.*;
 import com.thuc.rooms.entity.Property;
+import com.thuc.rooms.entity.Room;
 import com.thuc.rooms.entity.RoomType;
 import com.thuc.rooms.exception.ResourceNotFoundException;
 import com.thuc.rooms.repository.PropertyRepository;
+import com.thuc.rooms.repository.RoomRepository;
 import com.thuc.rooms.repository.RoomTypeRepository;
 import com.thuc.rooms.service.IRedisHoldRooms;
 import com.thuc.rooms.service.IRoomTypeService;
@@ -38,6 +38,7 @@ public class RoomTypeServiceImpl implements IRoomTypeService {
     private final RedisTemplate<String,Object> redisTemplate;
     private final IRedisHoldRooms redisHoldRooms;
     private final RedissonClient redissonClient;
+    private final RoomRepository roomRepository;
     @PersistenceContext
     private EntityManager entityManager;
     // Trả về room type mà còn phòng đến tại thời điểm bây giờ
@@ -155,6 +156,55 @@ public class RoomTypeServiceImpl implements IRoomTypeService {
         return false;
     }
 
+    @Override
+    public boolean checkHoldRooms(BookingDto bookingDto) {
+        try{
+           boolean check = true;
+           for(BookingRoomTypeDto roomTypeDto : bookingDto.getRoomTypes()){
+               CheckRoomDto checkRoomDto = CheckRoomDto.builder()
+                       .checkIn(roomTypeDto.getCheckIn())
+                       .checkOut(roomTypeDto.getCheckOut())
+                       .roomTypeId(roomTypeDto.getRoomTypeId())
+                       .email(bookingDto.getUserEmail())
+                       .quantity(roomTypeDto.getQuantityRooms())
+                       .build();
+               String key = getKeyFromCheckRoomDto(checkRoomDto);
+               logger.debug("169-key exists: {}",key);
+               if(!redisTemplate.hasKey(key)){
+                   return false;
+               }
+           }
+           return check;
+        }catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Override
+    public List<Integer> getAvailableRooms(BookingRoomTypeDto bookingRoomTypeDto, int propertyId) {
+        StringBuilder builder = new StringBuilder("SELECT rooms.room_number FROM rooms WHERE 1=1 ");
+        builder.append(" AND rooms.property_id =:propertyId ");
+        builder.append(" AND rooms.room_type_id =:roomTypeId ");
+        builder.append(" AND ((rooms.check_in is NULL AND rooms.check_out is null) OR NOT(rooms.check_in > :checkOut AND rooms.check_out < :checkIn))");
+        builder.append(" LIMIT 2 ");
+        Query query = entityManager.createNativeQuery(builder.toString(),Integer.class);
+        query.setParameter("propertyId",propertyId);
+        query.setParameter("checkIn",bookingRoomTypeDto.getCheckIn());
+        query.setParameter("checkOut",bookingRoomTypeDto.getCheckOut());
+        query.setParameter("roomTypeId",bookingRoomTypeDto.getRoomTypeId());
+        List<Integer> roomNumbers = (List<Integer>) query.getResultList();
+        return roomNumbers;
+    }
+
+    @Override
+    public boolean confirmBooking(BookingRoomConfirmDto bookingRoomConfirmDto) {
+        for(int roomNumber : bookingRoomConfirmDto.getNumRooms()){
+
+        }
+        return true;
+    }
+
+
     private boolean checkEnoughRoomsAgain(List<CheckRoomDto> roomReversed) {
         for(CheckRoomDto checkRoomDto : roomReversed){
             boolean getLock = false;
@@ -182,6 +232,8 @@ public class RoomTypeServiceImpl implements IRoomTypeService {
     private String getLockKeyFromCheckRoomDto(CheckRoomDto checkRoomDto) {
         return String.format("lock|room|%d",checkRoomDto.getRoomTypeId());
     }
+
+
 
     @Override
     public RoomTypeDto getRoomTypeById(Integer id) {

@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: payments
+  cloud:
+    stream:
+      bindings:
+        sendPayment-out-0:
+          destination: send-update-status
+  rabbitmq:
+    username: guest
+    password: guest
+    host: localhost
+    connection-timeout: 5s
+    port: 5672
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://localhost:8070/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+
+payment:
+  vnpay:
+    vnp_PayUrl: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
+    vnp_TmnCode: 58X4B4HP
+    secretKey: VRLDWNVWDNPCOEPBZUTWSEDQAGXJCNGZ
+    vnp_ReturnUrl: http://localhost:8072/bookinghotel/payments/api/payments/vn-pay-callback
+    vnp_Version: 2.1.0
+    vnp_Command: pay
+    orderType: other
+
+
+server:
+  port: 8083
+
+logging:
+  level:
+    com.thuc.payments: debug

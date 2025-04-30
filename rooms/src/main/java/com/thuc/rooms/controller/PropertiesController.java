@@ -21,9 +21,9 @@ public class PropertiesController {
     private final IPropertyService propertyService;
     private final Logger logger = LoggerFactory.getLogger(PropertiesController.class);
     @GetMapping("")
-    public ResponseEntity<?> getAllProperties(@RequestParam String slugCity) {
+    public ResponseEntity<SuccessResponseDto<List<PropertyDto>>> getAllProperties(@RequestParam String slugCity) {
         logger.debug("Request to get all properties for city {}", slugCity);
-        SuccessResponseDto response = SuccessResponseDto.builder()
+        SuccessResponseDto<List<PropertyDto>> response = SuccessResponseDto.<List<PropertyDto>>builder()
                 .code(PropertyConstant.STATUS_200)
                 .message(PropertyConstant.MESSAGE_200)
                 .data(propertyService.getAllProperties(slugCity))
@@ -31,9 +31,9 @@ public class PropertiesController {
         return ResponseEntity.ok(response);
     }
     @GetMapping("/slug/{slug}")
-    public ResponseEntity<?> getProperties(@PathVariable String slug) {
+    public ResponseEntity<SuccessResponseDto<PropertyDto>> getProperties(@PathVariable String slug) {
         logger.debug("Request to get properties for city {}", slug);
-        SuccessResponseDto response =SuccessResponseDto.builder()
+        SuccessResponseDto<PropertyDto> response =SuccessResponseDto.<PropertyDto>builder()
                 .message(PropertyConstant.MESSAGE_200)
                 .code(PropertyConstant.STATUS_200)
                 .data(propertyService.getPropertyBySlug(slug))
@@ -41,9 +41,10 @@ public class PropertiesController {
         return ResponseEntity.ok(response);
     }
     @PostMapping("")
-    public ResponseEntity<?> addProperty(@RequestBody List<String> slugs) {
+    public ResponseEntity<SuccessResponseDto<List<PropertyDto>>> addProperty(@RequestBody List<String> slugs) {
         logger.debug("Request to get properties with list slugs {}", slugs);
-        SuccessResponseDto response =SuccessResponseDto.builder()
+        SuccessResponseDto<List<PropertyDto>> response =SuccessResponseDto
+                .<List<PropertyDto>>builder()
                 .message(PropertyConstant.MESSAGE_200)
                 .code(PropertyConstant.STATUS_200)
                 .data(propertyService.getPropertiesBySlugs(slugs))
@@ -53,7 +54,7 @@ public class PropertiesController {
     @GetMapping("/id/{id}")
     public ResponseEntity<?> getPropertyId(@PathVariable Integer id) {
         logger.debug("Request to get properties by  id {}", id);
-        SuccessResponseDto response = SuccessResponseDto.builder()
+        SuccessResponseDto<PropertyDto> response = SuccessResponseDto.<PropertyDto>builder()
                 .message(PropertyConstant.MESSAGE_200)
                 .code(PropertyConstant.STATUS_200)
                 .data(propertyService.getPropertyById(id))

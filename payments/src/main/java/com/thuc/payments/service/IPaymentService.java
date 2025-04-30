@@ -1,9 +1,10 @@
-package com.thuc.bookings.service;
+package com.thuc.payments.service;
 
 
-import com.thuc.bookings.dto.requestDto.BookingDto;
+import com.thuc.payments.dto.BookingDto;
+import com.thuc.payments.dto.PaymentResponseDto;
 import jakarta.servlet.http.HttpServletRequest;
 
 public interface IPaymentService {
-    public String getUrlPayment(HttpServletRequest request, BookingDto bookingDto);
+    public PaymentResponseDto getUrlPayment(HttpServletRequest request, BookingDto bookingDto);
 }

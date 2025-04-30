@@ -1,4 +1,4 @@
-package com.thuc.bookings.exception;
+package com.thuc.payments.exception;
 
 public class ResourceNotFoundException extends RuntimeException {
     public ResourceNotFoundException(String resource, String field,String value) {

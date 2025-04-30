@@ -20,19 +20,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/users")
 @RequiredArgsConstructor
 public class UsersController {
     private final Logger log = LoggerFactory.getLogger(UsersController.class);
     private final IUsersService usersService;
     @PostMapping("/register")
-    public ResponseEntity<?> createUser(@RequestBody @Valid UserRequestDto user) {
+    public ResponseEntity<SuccessResponseDto<UserDto>> createUser(@RequestBody @Valid UserRequestDto user) {
         log.debug("Creating use with request: {}", user);
         UserDto userDto = usersService.createUser(user);
-        SuccessResponseDto response = SuccessResponseDto.builder()
+        SuccessResponseDto<UserDto> response = SuccessResponseDto.<UserDto>builder()
                 .code(UsersConstant.STATUS_201)
                 .data(userDto)
                 .message(UsersConstant.MESSAGE_201)
@@ -49,7 +50,7 @@ public class UsersController {
         cookie.setPath("/");
         cookie.setMaxAge(3600*24);
         response.addCookie(cookie);
-        SuccessResponseDto success = SuccessResponseDto.builder()
+        SuccessResponseDto<?> success = SuccessResponseDto.builder()
                 .code(UsersConstant.STATUS_200)
                 .message(UsersConstant.MESSAGE_200)
                 .data(result)
@@ -61,7 +62,7 @@ public class UsersController {
         log.debug("Getting access token by refresh token");
 
         try{
-            SuccessResponseDto success = SuccessResponseDto.builder()
+            SuccessResponseDto<?> success = SuccessResponseDto.builder()
                     .code(UsersConstant.STATUS_200)
                     .message(UsersConstant.MESSAGE_200)
                     .data(usersService.getAccessTokenByRefresh())
@@ -84,7 +85,7 @@ public class UsersController {
         cookie.setMaxAge(0);
         response.addCookie(cookie);
         usersService.logout();
-        SuccessResponseDto success = SuccessResponseDto.builder()
+        SuccessResponseDto<?> success = SuccessResponseDto.builder()
                 .code(UsersConstant.STATUS_200)
                 .message("Đăng xuất thành công!")
                 .build();
@@ -94,7 +95,7 @@ public class UsersController {
     public ResponseEntity<?> getUserInfo(@RequestHeader("X-User-Email") String email) {
         log.debug("Getting user info");
         UserDto user = usersService.getUserByEmail(email);
-        SuccessResponseDto success = SuccessResponseDto.builder()
+        SuccessResponseDto<?> success = SuccessResponseDto.builder()
                 .message(UsersConstant.MESSAGE_200)
                 .code(UsersConstant.STATUS_200)
                 .data(user).build();

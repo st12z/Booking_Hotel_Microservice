@@ -11,12 +11,28 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
   data:
     redis:
       port: 6379
       host: localhost
       connect-timeout: 2s
       timeout: 5s
+  cloud:
+    function:
+      definition: sendPayment
+    stream:
+      bindings:
+        sendPayment-in-0:
+          destination: send-update-status
+          group: ${spring.application.name}
+        sendPayment-out-0:
+          destination: send-confirm-bill
+
+
+
 server:
   port: 8081
 eureka:

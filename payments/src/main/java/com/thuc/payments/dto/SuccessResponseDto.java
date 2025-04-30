@@ -1,4 +1,4 @@
-package com.thuc.bookings.dto.responseDto;
+package com.thuc.payments.dto;
 
 import lombok.*;
 
@@ -9,8 +9,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SuccessResponseDto implements Serializable {
+public class SuccessResponseDto<T> implements Serializable {
     private int code;
     private String message;
-    private Object data;
+    private T data;
 }

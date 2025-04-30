@@ -1,4 +1,4 @@
-package com.thuc.bookings.constants;
+package com.thuc.payments.constant;
 
 public class BaseConstant {
     public static final int STATUS_200= 200;
@@ -9,5 +9,4 @@ public class BaseConstant {
     public static final int STATUS_403= 403;
     public static final int STATUS_400 = 400;
     public static final String MESSAGE_200= "Request processed successfully";
-
 }

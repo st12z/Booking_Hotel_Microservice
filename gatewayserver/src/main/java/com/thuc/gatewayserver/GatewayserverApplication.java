@@ -37,6 +37,13 @@ public class GatewayserverApplication {
 						)
 						.uri("lb://BOOKINGS")
 				)
+				.route(p-> p
+						.path("/bookinghotel/payments/**")
+						.filters(f-> f
+								.rewritePath("/bookinghotel/payments/(?<segment>.*)","/${segment}")
+						)
+						.uri("lb://PAYMENTS")
+				)
 				.build();
 
 	}

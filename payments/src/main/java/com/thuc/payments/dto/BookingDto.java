@@ -1,4 +1,4 @@
-package com.thuc.bookings.dto.requestDto;
+package com.thuc.payments.dto;
 
 
 import jakarta.validation.constraints.Email;
@@ -61,4 +61,8 @@ public class BookingDto {
     @NotBlank(message = "userEmail must have value")
     @Email
     private String userEmail;
+
+    private int discountHotelId;
+
+    private int discountCarId;
 }

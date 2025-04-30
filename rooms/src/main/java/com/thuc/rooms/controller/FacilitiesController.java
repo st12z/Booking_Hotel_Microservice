@@ -9,14 +9,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/facilities")
 public class FacilitiesController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @GetMapping
-    public ResponseEntity<?> getFacilities() {
+    public ResponseEntity<SuccessResponseDto<List<String>>> getFacilities() {
         logger.debug("getFacilities...");
-        SuccessResponseDto successResponseDto =SuccessResponseDto.builder()
+        SuccessResponseDto<List<String>> successResponseDto =SuccessResponseDto.<List<String>>builder()
                 .message("success")
                 .code(200)
                 .data(HotelFacility.getFacilities())

@@ -5,14 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="51d15752-74e9-4b1e-bbb6-eccb5a2b114f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/config/RedisConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/constants/VehicleConstant.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/converter/VehicleConverter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/dto/requestDto/FilterDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/dto/requestDto/VehicleRequestDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/dto/responseDto/VehicleDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/IRedisVehicleService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/impl/RedisVehicleServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pv/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pv/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pv/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pv/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pv/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pv/pv.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pv/src/Main.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../BÀI15.drawio - draw.io_files/.idea/BÀI15.drawio - draw.io_files.iml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../SpringOauth2/.idea/.gitignore" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../SpringOauth2/.idea/SpringOauth2.iml" afterDir="false" />
@@ -553,20 +552,95 @@
       <change afterPath="$PROJECT_DIR$/../thymeleaf-project/thymeleaf-project/src/main/resources/templates/register_form.html" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../thymeleaf-project/thymeleaf-project/src/main/resources/templates/test.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bookings/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/BookingsApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/BookingsApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/constants/BaseConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/constants/BaseConstant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/constants/BookingConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/constants/BookingConstant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/controller/BookingControllers.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/controller/BookingControllers.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/controller/VehicleControllers.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/controller/VehicleControllers.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/entity/Drivers.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/entity/Drivers.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/entity/Vehicles.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/entity/Vehicles.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/converter/BillConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/converter/BillConverter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/converter/BookingCarsConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/converter/BookingCarsConverter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/converter/BookingRoomsConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/converter/BookingRoomsConverter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/dto/requestDto/BookingCarsRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/dto/requestDto/BookingCarsRequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/dto/requestDto/BookingDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/dto/requestDto/BookingDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/dto/requestDto/BookingRoomTypeDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/dto/requestDto/BookingRoomTypeDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/dto/requestDto/VehicleRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/dto/requestDto/VehicleRequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/dto/responseDto/BillDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/dto/responseDto/BillDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/dto/responseDto/BookingRoomConfirmDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/dto/responseDto/BookingRoomConfirmDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/dto/responseDto/PaymentResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/dto/responseDto/PaymentResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/dto/responseDto/SuccessResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/dto/responseDto/SuccessResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/entity/Bill.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/entity/Bill.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/entity/BookingCars.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/entity/BookingCars.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/entity/BookingRooms.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/entity/BookingRooms.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/functions/BookingFunctions.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/functions/BookingFunctions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/repository/BillRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/repository/BillRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/repository/BookingCarsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/repository/BookingCarsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/repository/BookingRoomsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/repository/BookingRoomsRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/repository/VehiclesRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/repository/VehiclesRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/IBookingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/IBookingService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/IPaymentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/IPaymentService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/IVehiclesService.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/IVehiclesService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/client/PaymentsFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/client/PaymentsFeignClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/client/RoomsFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/client/RoomsFeignClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/impl/BookingServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/impl/BookingServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/impl/RedisVehicleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/impl/RedisVehicleServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/impl/VehiclesServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/impl/VehiclesServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/utils/CarStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/utils/CarStatus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/utils/CarType.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/utils/CarType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/utils/DriverStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/utils/DriverStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/utils/BillStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/utils/BillStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/utils/StringConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/utils/StringConverter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/utils/VnpayUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/utils/VnpayUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bookings/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/RedisHoldRoomsImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/RedisHoldRoomsImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rooms/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gatewayserver/src/main/java/com/thuc/gatewayserver/GatewayserverApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/gatewayserver/src/main/java/com/thuc/gatewayserver/GatewayserverApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messages/src/main/java/com/thuc/messages/dto/BillDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/messages/src/main/java/com/thuc/messages/dto/BillDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messages/src/main/java/com/thuc/messages/functions/MessageFunctions.java" beforeDir="false" afterPath="$PROJECT_DIR$/messages/src/main/java/com/thuc/messages/functions/MessageFunctions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messages/src/main/java/com/thuc/messages/utils/BillStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/messages/src/main/java/com/thuc/messages/utils/BillStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messages/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/messages/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payments/src/main/java/com/thuc/payments/config/VnpayConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/payments/src/main/java/com/thuc/payments/config/VnpayConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payments/src/main/java/com/thuc/payments/constant/BaseConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/payments/src/main/java/com/thuc/payments/constant/BaseConstant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payments/src/main/java/com/thuc/payments/constant/PaymentConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/payments/src/main/java/com/thuc/payments/constant/PaymentConstant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payments/src/main/java/com/thuc/payments/controller/PaymentControllers.java" beforeDir="false" afterPath="$PROJECT_DIR$/payments/src/main/java/com/thuc/payments/controller/PaymentControllers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payments/src/main/java/com/thuc/payments/dto/BookingDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/payments/src/main/java/com/thuc/payments/dto/BookingDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payments/src/main/java/com/thuc/payments/dto/BookingRoomTypeDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/payments/src/main/java/com/thuc/payments/dto/BookingRoomTypeDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payments/src/main/java/com/thuc/payments/dto/ErrorResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/payments/src/main/java/com/thuc/payments/dto/ErrorResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payments/src/main/java/com/thuc/payments/dto/PaymentResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/payments/src/main/java/com/thuc/payments/dto/PaymentResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payments/src/main/java/com/thuc/payments/dto/SuccessResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/payments/src/main/java/com/thuc/payments/dto/SuccessResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payments/src/main/java/com/thuc/payments/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/payments/src/main/java/com/thuc/payments/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payments/src/main/java/com/thuc/payments/exception/ResourceAlreadyExistsException.java" beforeDir="false" afterPath="$PROJECT_DIR$/payments/src/main/java/com/thuc/payments/exception/ResourceAlreadyExistsException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payments/src/main/java/com/thuc/payments/exception/ResourceNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/payments/src/main/java/com/thuc/payments/exception/ResourceNotFoundException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payments/src/main/java/com/thuc/payments/service/IPaymentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/payments/src/main/java/com/thuc/payments/service/IPaymentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payments/src/main/java/com/thuc/payments/service/impl/PaymentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/payments/src/main/java/com/thuc/payments/service/impl/PaymentServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payments/src/main/java/com/thuc/payments/utils/VnpayUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/payments/src/main/java/com/thuc/payments/utils/VnpayUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payments/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/payments/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/RoomsApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/RoomsApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/CityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/CityController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/DestinationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/DestinationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/DiscountCarsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/DiscountCarsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/DiscountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/DiscountController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/FacilitiesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/FacilitiesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/PropertiesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/PropertiesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/RoomTypeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/RoomTypeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/SearchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/SearchController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/TripController.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/TripController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/TripTypeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/TripTypeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/BookingCarsRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/BookingCarsRequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/BookingDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/BookingDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/BookingRoomConfirmDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/BookingRoomConfirmDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/BookingRoomTypeDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/BookingRoomTypeDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/CheckRoomDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/CheckRoomDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/SuccessResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/SuccessResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/repository/RoomRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/repository/RoomRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/IDiscountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/IDiscountService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/IRoomTypeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/IRoomTypeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/RoomTypeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/RoomTypeServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/users/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/UsersApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/UsersApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/controller/UsersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/controller/UsersController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/dto/responseDto/SuccessResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/dto/responseDto/SuccessResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/users/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -578,8 +652,9 @@
       <list>
         <option value="Exception" />
         <option value="Enum" />
-        <option value="Interface" />
+        <option value="Record" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -602,68 +677,70 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Maven.BookingService [clean].executor": "Run",
-    "Maven.BookingService [package].executor": "Run",
-    "Maven.bookings [clean].executor": "Run",
-    "Maven.bookings [package].executor": "Run",
-    "Maven.eurekaserver [clean,package].executor": "Run",
-    "Maven.eurekaserver [clean].executor": "Run",
-    "Maven.eurekaserver [install].executor": "Run",
-    "Maven.eurekaserver [package].executor": "Run",
-    "Maven.gatewayserver [clean,package].executor": "Run",
-    "Maven.rooms [clean,package].executor": "Run",
-    "Maven.users [clean,package].executor": "Run",
-    "Maven.users [clean].executor": "Run",
-    "Maven.users [package].executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "Spring Boot.BookingApplication.executor": "Debug",
-    "Spring Boot.BookingServiceApplication.executor": "Debug",
-    "Spring Boot.EurekaserverApplication.executor": "Debug",
-    "Spring Boot.GatewayserverApplication.executor": "Run",
-    "Spring Boot.MessagesApplication.executor": "Run",
-    "Spring Boot.RoomServiceAppliction.executor": "Debug",
-    "Spring Boot.RoomsApplication.executor": "Debug",
-    "Spring Boot.UsersApplication.executor": "Debug",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/T/Downloads/Booking_Hotel_Microservice/bookings",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.41034484",
-    "run.configurations.included.in.services": "true",
-    "settings.editor.selected.configurable": "reference.projectsettings.compiler.annotationProcessors",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Maven.BookingService [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.BookingService [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.bookings [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.bookings [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.eurekaserver [clean,package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.eurekaserver [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.eurekaserver [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.eurekaserver [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.gatewayserver [clean,package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.payments [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.rooms [clean,package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.users [clean,package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.users [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.users [package].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.BookingApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.BookingServiceApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.EurekaserverApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.GatewayserverApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.MessagesApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.PaymentsApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.RoomServiceAppliction.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.RoomsApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.UsersApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/T/Downloads/Booking_Hotel_Microservice/payments/src/main/java/com/thuc/payments/dto&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.41034484&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.annotationProcessors&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\T\Downloads\Booking_Hotel_Microservice\payments\src\main\java\com\thuc\payments\dto" />
+      <recent name="C:\Users\T\Downloads\Booking_Hotel_Microservice\payments\src\main\java\com\thuc\payments" />
+      <recent name="C:\Users\T\Downloads\Booking_Hotel_Microservice\bookings\src\main\java\com\thuc\bookings\dto\requestDto" />
       <recent name="C:\Users\T\Downloads\Booking_Hotel_Microservice\messages\src\main\java\com\thuc\messages" />
       <recent name="C:\Users\T\Downloads\Booking_Hotel_Microservice\messages\src\main\java\com\thuc\messages\dto" />
-      <recent name="C:\Users\T\Downloads\Booking_Hotel_Microservice\messages\src\main\java\com\thuc\messages\constants" />
-      <recent name="C:\Users\T\Downloads\Booking_Hotel_Microservice\messages\src\main\java\com\thuc\messages\entity" />
-      <recent name="C:\Users\T\Downloads\Booking_Hotel_Microservice\bookingservice\src\main\java\com\thuc\BookingService" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.thuc.rooms.repository" />
-      <recent name="com.thuc.rooms.service" />
-      <recent name="com.thuc.rooms.service.impl" />
+      <recent name="com.thuc.bookings.dto.responseDto" />
       <recent name="com.thuc.rooms.dto" />
-      <recent name="com.thuc.rooms.constants" />
+      <recent name="com.thuc.bookings.utils" />
+      <recent name="com.thuc.payments.config" />
+      <recent name="com.thuc.payments.service.impl" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -684,7 +761,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.UsersApplication">
+  <component name="RunManager" selected="Spring Boot.MessagesApplication">
     <configuration name="BookingApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="bookings" />
@@ -711,6 +788,13 @@
     <configuration name="MessagesApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="messages" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.thuc.messages.MessagesApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PaymentsApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="payments" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.thuc.payments.PaymentsApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -755,11 +839,12 @@
     </configuration>
     <list>
       <item itemvalue="Spring Boot.BookingApplication" />
-      <item itemvalue="Spring Boot.UsersApplication" />
       <item itemvalue="Spring Boot.EurekaserverApplication" />
       <item itemvalue="Spring Boot.GatewayserverApplication" />
       <item itemvalue="Spring Boot.MessagesApplication" />
+      <item itemvalue="Spring Boot.PaymentsApplication" />
       <item itemvalue="Spring Boot.RoomsApplication" />
+      <item itemvalue="Spring Boot.UsersApplication" />
     </list>
   </component>
   <component name="SharedIndexes">
@@ -833,11 +918,46 @@
       <workItem from="1745331114766" duration="5166000" />
       <workItem from="1745371087940" duration="8216000" />
       <workItem from="1745420796292" duration="3482000" />
-      <workItem from="1745499751267" duration="7521000" />
+      <workItem from="1745499751267" duration="9371000" />
+      <workItem from="1745571753907" duration="3000" />
+      <workItem from="1745594812698" duration="19000" />
+      <workItem from="1745594930862" duration="1960000" />
+      <workItem from="1745721082916" duration="945000" />
+      <workItem from="1745741045683" duration="9860000" />
+      <workItem from="1745803565888" duration="1500000" />
+      <workItem from="1745805089565" duration="37000" />
+      <workItem from="1745851763896" duration="3835000" />
+      <workItem from="1745858230148" duration="2772000" />
+      <workItem from="1745892330663" duration="9109000" />
+      <workItem from="1745911610723" duration="18563000" />
+      <workItem from="1745976906544" duration="10425000" />
+      <workItem from="1746021579841" duration="11215000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/RoomsApplication.java</url>
+          <line>5</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

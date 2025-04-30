@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/discount-cars")
 @RequiredArgsConstructor
@@ -18,9 +20,9 @@ public class DiscountCarsController {
     private final IDiscountCarsService discountCarsService;
     private final Logger logger = LoggerFactory.getLogger(DiscountCarsController.class);
     @GetMapping("")
-    public ResponseEntity<?> getAllDiscountCars() {
+    public ResponseEntity<SuccessResponseDto<List<DiscountCarsDto>>> getAllDiscountCars() {
         logger.debug("Request to get all discount cars");
-        SuccessResponseDto response = SuccessResponseDto.builder()
+        SuccessResponseDto<List<DiscountCarsDto>> response = SuccessResponseDto.<List<DiscountCarsDto>>builder()
                 .code(DiscountConstant.STATUS_200)
                 .message(DiscountConstant.MESSAGE_200)
                 .data(discountCarsService.getAllDiscountCars())
@@ -28,9 +30,9 @@ public class DiscountCarsController {
         return ResponseEntity.ok(response);
     }
     @GetMapping("/my-discounts/{email}")
-    public ResponseEntity<?> getMyDiscountCars(@PathVariable String email) {
+    public ResponseEntity<SuccessResponseDto<List<DiscountCarsDto>>> getMyDiscountCars(@PathVariable String email) {
         logger.debug("Request to get my discount cars");
-        SuccessResponseDto response = SuccessResponseDto.builder()
+        SuccessResponseDto<List<DiscountCarsDto>> response = SuccessResponseDto.<List<DiscountCarsDto>>builder()
                 .code(DiscountConstant.STATUS_200)
                 .message(DiscountConstant.MESSAGE_200)
                 .data(discountCarsService.getAllMyDiscounts(email))
@@ -38,9 +40,9 @@ public class DiscountCarsController {
         return ResponseEntity.ok(response);
     }
     @PostMapping("/save-discount")
-    public ResponseEntity<?> saveDiscountCars(@RequestBody UserDiscountCarDto userDiscountCarDto) {
+    public ResponseEntity<SuccessResponseDto<UserDiscountCarDto>> saveDiscountCars(@RequestBody UserDiscountCarDto userDiscountCarDto) {
         logger.debug("Request to save discount cars");
-        SuccessResponseDto response = SuccessResponseDto.builder()
+        SuccessResponseDto<UserDiscountCarDto> response = SuccessResponseDto.<UserDiscountCarDto>builder()
                 .code(DiscountConstant.STATUS_200)
                 .message(DiscountConstant.MESSAGE_200)
                 .data(discountCarsService.saveDiscount(userDiscountCarDto))

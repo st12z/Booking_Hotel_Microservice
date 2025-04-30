@@ -1,6 +1,8 @@
 package com.thuc.bookings.service.impl;
 
 import com.thuc.bookings.converter.VehicleConverter;
+import com.thuc.bookings.dto.requestDto.BookingCarsRequestDto;
+import com.thuc.bookings.dto.requestDto.BookingDto;
 import com.thuc.bookings.dto.requestDto.FilterDto;
 import com.thuc.bookings.dto.requestDto.VehicleRequestDto;
 import com.thuc.bookings.dto.responseDto.VehicleDto;
@@ -113,6 +115,24 @@ public class VehiclesServiceImpl implements IVehiclesService {
         redisVehicleService.deleteData(getKeyFromVehicleDto(vehicleDto));
         return true;
     }
+
+    @Override
+    public boolean checkVehicle(BookingDto bookingDto) {
+        List<Integer> choosedCar = bookingDto.getBookingCars().stream().map(BookingCarsRequestDto::getId).toList();
+        if(!choosedCar.isEmpty()){
+            for(int id : choosedCar){
+                VehicleRequestDto vehicleRequestDto = new VehicleRequestDto(bookingDto.getUserEmail(),id);
+                String key = getKeyFromVehicleDto(vehicleRequestDto);
+                logger.debug("key {}", key);
+                logger.debug("key in redis :{}", redisTemplate.hasKey(key));
+                if(!redisTemplate.hasKey(key)){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     private int totalQuantityInDB(VehicleRequestDto vehicleDto) {
         Vehicles vehicles = vehiclesRepository.findById(vehicleDto.getVehicleId()).
                 orElseThrow(()-> new ResourceNotFoundException("Vehicle","id",String.valueOf(vehicleDto.getVehicleId())));

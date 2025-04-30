@@ -1,6 +1,8 @@
-package com.thuc.bookings.dto.requestDto;
+package com.thuc.rooms.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor

@@ -1,4 +1,5 @@
-package com.thuc.rooms.dto;
+package com.thuc.bookings.dto.requestDto;
+
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -17,8 +18,8 @@ import java.util.List;
 @AllArgsConstructor
 public class BookingDto {
     private String addressDetail;
-    private String bookingForWho;
-    private List<Integer> choosedCar;
+    private int bookingForWho;
+    private List<BookingCarsRequestDto> bookingCars;
     private String city;
     private String country;
     private int discountCar;
@@ -57,7 +58,12 @@ public class BookingDto {
 
     private String specialMessage;
 
+
     @NotBlank(message = "userEmail must have value")
     @Email
     private String userEmail;
+
+    private int discountHotelId;
+
+    private int discountCarId;
 }

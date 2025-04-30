@@ -1,4 +1,4 @@
-package com.thuc.payments.dto;
+package com.thuc.bookings.dto.responseDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

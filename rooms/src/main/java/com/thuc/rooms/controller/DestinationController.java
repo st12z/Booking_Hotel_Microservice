@@ -19,9 +19,9 @@ public class DestinationController {
     private final ITripService tripService;
     private final Logger log = LoggerFactory.getLogger(DestinationController.class);
     @GetMapping("")
-    public ResponseEntity<?> getDestinationsBySearch(@RequestParam(required = false,defaultValue = "") String keyword) {
+    public ResponseEntity<SuccessResponseDto<List<String>>> getDestinationsBySearch(@RequestParam(required = false,defaultValue = "") String keyword) {
         log.debug("Requested to getDestinationsBySearch with search {}", keyword);
-        SuccessResponseDto response = SuccessResponseDto.builder()
+        SuccessResponseDto<List<String>> response = SuccessResponseDto.<List<String>>builder()
                 .message(TripConstant.MESSAGE_200)
                 .code(TripConstant.STATUS_200)
                 .data(tripService.getDestinationsBySearch(keyword))
@@ -29,9 +29,9 @@ public class DestinationController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
     @PostMapping
-    public ResponseEntity<?> getDestinationsBySuggest(@RequestBody List<String> destinations){
+    public ResponseEntity<SuccessResponseDto<List<Object>>> getDestinationsBySuggest(@RequestBody List<String> destinations){
         log.debug("Requested to getDestinationsBySuggest with destinations {}", destinations);
-        SuccessResponseDto response = SuccessResponseDto.builder()
+        SuccessResponseDto<List<Object>> response = SuccessResponseDto.<List<Object>>builder()
                 .message("Get destinations by suggest successfully")
                 .code(200)
                 .data(tripService.getDestinationsBySuggest(destinations))

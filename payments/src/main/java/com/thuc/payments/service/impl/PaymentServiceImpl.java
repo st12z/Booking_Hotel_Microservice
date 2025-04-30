@@ -1,19 +1,19 @@
-package com.thuc.bookings.service.impl;
+package com.thuc.payments.service.impl;
 
-import com.thuc.bookings.config.VnpayConfig;
-import com.thuc.bookings.dto.requestDto.BookingDto;
-import com.thuc.bookings.service.IPaymentService;
-import com.thuc.bookings.utils.VnpayUtil;
+
+import com.thuc.payments.config.VnpayConfig;
+import com.thuc.payments.dto.BookingDto;
+import com.thuc.payments.dto.PaymentResponseDto;
+import com.thuc.payments.service.IPaymentService;
+import com.thuc.payments.utils.VnpayUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -22,7 +22,7 @@ public class PaymentServiceImpl implements IPaymentService {
     private final VnpayConfig vnpayConfig;
     private final Logger log = LoggerFactory.getLogger(PaymentServiceImpl.class);
     @Override
-    public String getUrlPayment(HttpServletRequest request,BookingDto bookingDto) {
+    public PaymentResponseDto getUrlPayment(HttpServletRequest request, BookingDto bookingDto) {
         Map<String,String> params = vnpayConfig.getVNPayConfig(request);
         log.debug("params: params={}", params);
         int amount = bookingDto.getNewTotalPayment();
@@ -64,6 +64,9 @@ public class PaymentServiceImpl implements IPaymentService {
         String vnp_SecureHash= VnpayUtil.hmacSHA512(vnpayConfig.getSecretKey(), hashData.toString());
         queryUrl+= "&vnp_SecureHash="+vnp_SecureHash;
         String paymentUrl = vnpayConfig.getVnp_PayUrl() +"?"+ queryUrl;
-        return paymentUrl;
+        return PaymentResponseDto.builder()
+                .billCode(params.get("vnp_TxnRef"))
+                .paymentUrl(paymentUrl)
+                .build();
     }
 }

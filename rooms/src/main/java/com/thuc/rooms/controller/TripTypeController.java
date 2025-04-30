@@ -2,6 +2,7 @@ package com.thuc.rooms.controller;
 
 import com.thuc.rooms.constants.TripConstant;
 import com.thuc.rooms.dto.SuccessResponseDto;
+import com.thuc.rooms.dto.TripTypeDto;
 import com.thuc.rooms.service.ITripService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/triptypes")
@@ -20,9 +23,10 @@ public class TripTypeController {
     private final ITripService tripService;
     private final Logger log = LoggerFactory.getLogger(TripTypeController.class);
     @GetMapping("")
-    public ResponseEntity<?> getAllTrips() {
+    public ResponseEntity<SuccessResponseDto<List<TripTypeDto>>> getAllTrips() {
         log.debug("Requested to getAllTripTypes");
-        SuccessResponseDto response = SuccessResponseDto.builder()
+        SuccessResponseDto<List<TripTypeDto>> response = SuccessResponseDto
+                .<List<TripTypeDto>>builder()
                 .message(TripConstant.MESSAGE_200)
                 .code(TripConstant.STATUS_200)
                 .data(tripService.getAllTripTypes())

@@ -1,6 +1,7 @@
 package com.thuc.rooms.controller;
 
 import com.thuc.rooms.constants.DiscountConstant;
+import com.thuc.rooms.dto.DiscountDto;
 import com.thuc.rooms.dto.SuccessResponseDto;
 import com.thuc.rooms.dto.UserDiscountDto;
 import com.thuc.rooms.service.IDiscountService;
@@ -12,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequestMapping("/api/discounts")
 @RestController
 @RequiredArgsConstructor
@@ -19,9 +22,9 @@ public class DiscountController {
     private final Logger logger = LoggerFactory.getLogger(DiscountController.class);
     private final IDiscountService discountService;
     @GetMapping("")
-    public ResponseEntity<?> getAllDiscounts() {
+    public ResponseEntity<SuccessResponseDto<List<DiscountDto>>> getAllDiscounts() {
         logger.debug("Request to get all discounts");
-        SuccessResponseDto response = SuccessResponseDto.builder()
+        SuccessResponseDto<List<DiscountDto>> response = SuccessResponseDto.<List<DiscountDto>>builder()
                 .code(DiscountConstant.STATUS_200)
                 .message(DiscountConstant.MESSAGE_200)
                 .data(discountService.getAllDiscounts())
@@ -29,9 +32,9 @@ public class DiscountController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
     @PostMapping("/save")
-    public ResponseEntity<?> saveDiscount(@RequestBody UserDiscountDto userDiscountDto) {
+    public ResponseEntity<SuccessResponseDto<UserDiscountDto> > saveDiscount(@RequestBody UserDiscountDto userDiscountDto) {
         logger.info("UserDiscountDto: {}", userDiscountDto);
-        SuccessResponseDto success = SuccessResponseDto.builder()
+        SuccessResponseDto<UserDiscountDto> success = SuccessResponseDto.<UserDiscountDto>builder()
                 .code(200)
                 .message("Save discount success")
                 .data(discountService.saveDiscount(userDiscountDto))
@@ -39,9 +42,9 @@ public class DiscountController {
         return ResponseEntity.ok(success);
     }
     @GetMapping("/my-discounts/{email}")
-    public ResponseEntity<?> getMyDiscounts(@PathVariable @Email String email){
+    public ResponseEntity<SuccessResponseDto<List<DiscountDto>>> getMyDiscounts(@PathVariable @Email String email){
         logger.debug("Request to get my discounts with email {}", email);
-        SuccessResponseDto response = SuccessResponseDto.builder()
+        SuccessResponseDto<List<DiscountDto>> response = SuccessResponseDto.<List<DiscountDto>>builder()
                 .code(DiscountConstant.STATUS_200)
                 .message(DiscountConstant.MESSAGE_200)
                 .data(discountService.getMyDiscountsByEmail(email))
