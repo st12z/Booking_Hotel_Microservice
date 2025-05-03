@@ -58,5 +58,8 @@ public class Bill extends BaseEntity{
     @Column(columnDefinition = "TEXT")
     private String specialMessage;
 
+    private int discountHotelId;
+
+    private int discountCarId;
 
 }

@@ -1,8 +1,7 @@
 package com.thuc.rooms.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,20 +11,29 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookingRoomConfirmDto {
+@Builder
+public class BookingRoomsDto {
+    private Integer id;
+
     private int roomTypeId;
 
-    private int propertyId;
+    private int quantityRooms;
 
     private List<Integer> numRooms;
 
-    private String userEmail;
+    private int billId;
 
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime checkIn;
 
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime checkOut;
 
+    private int dayStays;
 
+    private int originPayment;
+
+    private int promotion;
+
+    private int newPayment;
+
+    private int propertyId;
 }

@@ -21,11 +21,15 @@ public class BookingRooms {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "room_type_id")
     private int roomTypeId;
+
+    @Column(name = "property_id")
+    private int propertyId;
 
     private int quantityRooms;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "num_rooms", joinColumns = @JoinColumn(name = "booking_room_id"))
     @Column(name = "room_number")
     private List<Integer> numRooms;
@@ -43,6 +47,7 @@ public class BookingRooms {
     private int promotion;
 
     private int newPayment;
+
 
 
 }

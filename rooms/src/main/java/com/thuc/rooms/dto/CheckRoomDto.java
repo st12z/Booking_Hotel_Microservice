@@ -32,4 +32,6 @@ public class CheckRoomDto {
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime checkOut;
 
+    private Integer propertyId;
+
 }

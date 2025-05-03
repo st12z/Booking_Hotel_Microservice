@@ -53,4 +53,8 @@ public class BillDto {
     private BillStatus billStatus;
 
     private String specialMessage;
+
+    private int discountCarId;
+
+    private int discountHotelId;
 }

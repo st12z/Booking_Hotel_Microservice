@@ -2,15 +2,12 @@ package com.thuc.rooms.service.impl;
 
 import com.thuc.rooms.converter.RoomTypeConverter;
 import com.thuc.rooms.dto.*;
-import com.thuc.rooms.entity.Property;
-import com.thuc.rooms.entity.Room;
-import com.thuc.rooms.entity.RoomType;
+import com.thuc.rooms.entity.*;
 import com.thuc.rooms.exception.ResourceNotFoundException;
-import com.thuc.rooms.repository.PropertyRepository;
-import com.thuc.rooms.repository.RoomRepository;
-import com.thuc.rooms.repository.RoomTypeRepository;
+import com.thuc.rooms.repository.*;
 import com.thuc.rooms.service.IRedisHoldRooms;
 import com.thuc.rooms.service.IRoomTypeService;
+import com.thuc.rooms.service.client.BookingsFeignClient;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
@@ -19,13 +16,13 @@ import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cglib.core.Local;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 // class check phòng của 1 property
@@ -39,6 +36,9 @@ public class RoomTypeServiceImpl implements IRoomTypeService {
     private final IRedisHoldRooms redisHoldRooms;
     private final RedissonClient redissonClient;
     private final RoomRepository roomRepository;
+    private final UserDiscountRepository userDiscountRepository;
+    private final UserDiscountCarsRepository userDiscountCarsRepository;
+    private final BookingsFeignClient bookingsFeignClient;
     @PersistenceContext
     private EntityManager entityManager;
     // Trả về room type mà còn phòng đến tại thời điểm bây giờ
@@ -48,19 +48,24 @@ public class RoomTypeServiceImpl implements IRoomTypeService {
     public List<RoomTypeDto> getAllRoomTypes(String slugProperty) {
         logger.debug("Requested to getAllRoomTypes successfully");
         Property property = propertyRepository.findBySlug(slugProperty);
+
         if(property == null) {
             throw new ResourceNotFoundException("Property","Slug",slugProperty);
         }
-        LocalDateTime currentDateTime = LocalDateTime.now();
-        StringBuilder sql =new StringBuilder("SELECT * FROM room_type rt WHERE rt.property_id=:propertyId ") ;
-        sql.append(" AND EXISTS (SELECT 1 FROM rooms r WHERE rt.id = r.room_type_id AND (r.check_out <:currentDateTime OR r.check_out is null)) ");
-        Query query = entityManager.createNativeQuery(sql.toString(), RoomType.class);
-        query.setParameter("currentDateTime", currentDateTime);
-        query.setParameter("propertyId", property.getId());
-        List<RoomType> roomTypes = query.getResultList();
-        return roomTypes.stream().map(RoomTypeConverter::toRoomTypDto).toList();
+        int propertyId= property.getId();
+        List<BookingRoomsDto> bookingRoomsDtos = getBookingRooms(null,propertyId);
+        logger.debug("bookingRoomDtos :{}",bookingRoomsDtos);
 
+        List<RoomType> roomTypes = roomTypeRepository.findByPropertyId(propertyId);
+        logger.debug("roomTypes :{}",roomTypes);
+        List<RoomTypeDto> result = roomTypes.stream().filter(rt -> {
+            return checkBookingRooms(rt.getId(),propertyId,bookingRoomsDtos,null,null);
+
+        }).map(RoomTypeConverter::toRoomTypDto).toList();
+        return result;
     }
+
+
     // Tìm kiếm phòng có sẵn của 1 property theo điều kiện checkin, checkout
     @Override
     public List<RoomTypeDto> getAllRoomTypesBySearch(String slugProperty,SearchDto searchDto) {
@@ -69,42 +74,22 @@ public class RoomTypeServiceImpl implements IRoomTypeService {
         if(property == null) {
             throw new ResourceNotFoundException("Property","Slug",slugProperty);
         }
+        int propertyId = property.getId();
         StringBuilder sql = new StringBuilder("SELECT * FROM room_type rt WHERE rt.property_id=:propertyId ") ;
         if(searchDto.getQuantityBeds()!=null){
             sql.append(" AND rt.num_beds=:quantityBeds");
         }
-        if(searchDto.getCheckIn()!=null ){
-            sql.append(" AND ( EXISTS (SELECT 1 FROM rooms r WHERE r.room_type_id=rt.id AND (r.check_out <:checkIn OR (r.check_in is null AND r.check_out is null))) ");
-        }
-        else{
-            sql.append(" AND ( EXISTS (SELECT 1 FROM rooms r WHERE r.room_type_id=rt.id AND (r.check_out <:currentDateTime OR (r.check_in is null AND r.check_out is null)))");
-        }
-        if(searchDto.getCheckOut()!=null){
-            sql.append(" OR EXISTS (SELECT 1 FROM rooms r WHERE r.room_type_id=rt.id AND (r.check_in >:checkOut OR (r.check_in is null AND r.check_out is null))))");
-        }
-        else{
-            sql.append(" OR EXISTS (SELECT 1 FROM rooms r WHERE r.room_type_id=rt.id AND (r.check_in >:currentDateTime OR (r.check_in is null AND r.check_out is null))))");
-        }
         Query query = entityManager.createNativeQuery(sql.toString(), RoomType.class);
-        if(searchDto.getCheckIn()!=null ){
-            query.setParameter("checkIn", searchDto.getCheckIn());
-        }
-        else{
-            query.setParameter("currentDateTime", LocalDateTime.now());
-        }
-        if(searchDto.getCheckOut()!=null ){
-            query.setParameter("checkOut", searchDto.getCheckOut());
-        }
-        else{
-            query.setParameter("currentDateTime", LocalDateTime.now());
-        }
         if(searchDto.getQuantityBeds()!=null){
             query.setParameter("quantityBeds", searchDto.getQuantityBeds());
         }
-
-        query.setParameter("propertyId", property.getId());
+        query.setParameter("propertyId", propertyId);
         List<RoomType> roomTypes = query.getResultList();
-        return roomTypes.stream().map(RoomTypeConverter::toRoomTypDto).toList();
+        List<BookingRoomsDto> bookingRoomsDtos = getBookingRooms(null,propertyId);
+        List<RoomTypeDto> result = roomTypes.stream().filter(rt -> {
+            return checkBookingRooms(rt.getId(),propertyId,bookingRoomsDtos,searchDto.getCheckIn(),searchDto.getCheckOut());
+        }).map(RoomTypeConverter::toRoomTypDto).toList();
+        return result;
 
     }
     // kiem tra xem du phong khong
@@ -179,28 +164,70 @@ public class RoomTypeServiceImpl implements IRoomTypeService {
             throw new RuntimeException(e.getMessage());
         }
     }
-
+    // Tìm hai phòng trống
     @Override
     public List<Integer> getAvailableRooms(BookingRoomTypeDto bookingRoomTypeDto, int propertyId) {
-        StringBuilder builder = new StringBuilder("SELECT rooms.room_number FROM rooms WHERE 1=1 ");
+        int roomTypeId= bookingRoomTypeDto.getRoomTypeId();
+        int quantityRooms = bookingRoomTypeDto.getQuantityRooms();
+        StringBuilder builder = new StringBuilder("SELECT * FROM rooms WHERE 1=1 ");
         builder.append(" AND rooms.property_id =:propertyId ");
         builder.append(" AND rooms.room_type_id =:roomTypeId ");
-        builder.append(" AND ((rooms.check_in is NULL AND rooms.check_out is null) OR NOT(rooms.check_in > :checkOut AND rooms.check_out < :checkIn))");
-        builder.append(" LIMIT 2 ");
-        Query query = entityManager.createNativeQuery(builder.toString(),Integer.class);
+        Query query = entityManager.createNativeQuery(builder.toString(),Room.class);
         query.setParameter("propertyId",propertyId);
-        query.setParameter("checkIn",bookingRoomTypeDto.getCheckIn());
-        query.setParameter("checkOut",bookingRoomTypeDto.getCheckOut());
-        query.setParameter("roomTypeId",bookingRoomTypeDto.getRoomTypeId());
-        List<Integer> roomNumbers = (List<Integer>) query.getResultList();
-        return roomNumbers;
+        query.setParameter("roomTypeId",roomTypeId);
+        List<Room> rooms = query.getResultList();
+        List<BookingRoomsDto> bookingRoomsDtos = getBookingRooms(roomTypeId,propertyId);
+        BookingRoomsDto bookedListRooms = null; // loai phong da dat co propertyId,roomTypeId bang roomTypeId,propertyId
+        List<Integer> result = new ArrayList<>();
+        Set<Integer> bookedNow = new HashSet<>();
+        if(!bookingRoomsDtos.isEmpty()){
+            for(BookingRoomsDto bookingRoomsDto : bookingRoomsDtos){
+                if(bookingRoomsDto.getRoomTypeId()==roomTypeId && bookingRoomsDto.getPropertyId()==propertyId){
+                    LocalDateTime checkIn = bookingRoomsDto.getCheckIn();
+                    LocalDateTime checkOut = bookingRoomsDto.getCheckOut();
+                    if(!(bookingRoomTypeDto.getCheckIn().isAfter(checkOut) || bookingRoomTypeDto.getCheckOut().isBefore(checkIn))){
+                        bookedNow.addAll(bookingRoomsDto.getNumRooms());
+                    }
+                }
+            }
+        }
+        for(Room room: rooms){
+            if(!bookedNow.contains(room.getRoomNumber())){
+                result.add(room.getRoomNumber());
+                if(result.size()==quantityRooms) break;
+            }
+        }
+        return result;
     }
 
     @Override
-    public boolean confirmBooking(BookingRoomConfirmDto bookingRoomConfirmDto) {
+    public boolean confirmBooking(BookingRoomConfirmDto bookingRoomConfirmDto,Integer discountCarId,Integer discountHotelId) {
+        logger.debug("discountCarId:{}",discountCarId);
+        logger.debug("discountHotelId:{}",discountHotelId);
         for(int roomNumber : bookingRoomConfirmDto.getNumRooms()){
-
+            Room room = roomRepository.findByRoomNumberAndPropertyIdAndRoomTypeId(roomNumber
+                    ,bookingRoomConfirmDto.getPropertyId()
+                    ,bookingRoomConfirmDto.getRoomTypeId());
+            logger.debug("room :{}",room);
+            if(room!=null){
+                room.setCheckIn(bookingRoomConfirmDto.getCheckIn());
+                room.setCheckOut(bookingRoomConfirmDto.getCheckOut());
+                roomRepository.save(room);
+            }
         }
+        if(discountHotelId!=null && discountHotelId!=-1){
+            UserDiscount userDiscount = userDiscountRepository.findByDiscountIdAndEmail(discountHotelId,bookingRoomConfirmDto.getUserEmail());
+            if(userDiscount!=null){
+                userDiscountRepository.delete(userDiscount);
+            }
+        }
+        if(discountCarId!=null && discountCarId!=-1){
+            UserDiscountCars userDiscountCars = userDiscountCarsRepository.findByDiscountCarIdAndEmail(discountCarId,bookingRoomConfirmDto.getUserEmail());
+            if(userDiscountCars!=null){
+                userDiscountCarsRepository.delete(userDiscountCars);
+            }
+        }
+
         return true;
     }
 
@@ -241,7 +268,43 @@ public class RoomTypeServiceImpl implements IRoomTypeService {
         return RoomTypeConverter.toRoomTypDto(roomType);
     }
 
+    private boolean checkBookingRooms(Integer roomTypeId, int propertyId,
+                                      List<BookingRoomsDto> bookingRoomsDtos,
+                                      LocalDateTime checkIn,
+                                      LocalDateTime checkOut
+    ) {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        List<Integer> roomNumbers = roomRepository.findByRoomTypeIdAndPropertyId(roomTypeId, propertyId)
+                .stream().map(Room::getRoomNumber).toList();
+        logger.debug("roomNumbers :{}",roomNumbers);
+        Set<Integer> bookedNow = new HashSet<>();
+        if(!bookingRoomsDtos.isEmpty()){
+            for (BookingRoomsDto bookingRoomsDto : bookingRoomsDtos) {
+                if (bookingRoomsDto.getRoomTypeId() == roomTypeId && bookingRoomsDto.getPropertyId() == propertyId) {
+                    LocalDateTime checkInRoom = bookingRoomsDto.getCheckIn();
+                    LocalDateTime checkOutRoom = bookingRoomsDto.getCheckOut();
+                    if(checkIn==null && checkOut==null){
+                        if(!(currentDateTime.isBefore(checkInRoom) || currentDateTime.isAfter(checkOutRoom))){
+                            bookedNow.addAll(bookingRoomsDto.getNumRooms());
+                        }
+                    }
+                    else{
+                        if(!(checkOut.isBefore(checkInRoom) || Objects.requireNonNull(checkIn).isAfter(checkOutRoom))){
+                            bookedNow.addAll(bookingRoomsDto.getNumRooms());
+                        }
+                    }
+                }
+            }
+        }
+        logger.debug("bookedNow :{}",bookedNow);
+        logger.debug("----------------------");
+        return roomNumbers.stream().anyMatch(number -> !bookedNow.contains(number));
+    }
 
+    public  List<BookingRoomsDto> getBookingRooms(Integer roomTypeId,Integer propertyId){
+        SuccessResponseDto<List<BookingRoomsDto> > response = bookingsFeignClient.getBookingRooms(roomTypeId,propertyId).getBody();
+        return response.getData();
+    }
 
     private String getKeyFromCheckRoomDto(CheckRoomDto checkRoomDto) {
         return String.format("hold|room|%d|%s|%s|%s",
@@ -287,15 +350,31 @@ public class RoomTypeServiceImpl implements IRoomTypeService {
 
 
     private int getQuantityRoomsRemain(CheckRoomDto checkRoomDto) {
-        StringBuilder builder = new StringBuilder(" SELECT COUNT(r.id) FROM room_type rt " +
-                "LEFT JOIN rooms r on rt.id=r.room_type_id and (r.check_out <:checkIn or r.check_out is null or r.check_in >:checkOut) WHERE 1=1 ");
-        builder.append(" AND rt.id=:roomTypeId ");
-        Query query = entityManager.createNativeQuery(builder.toString(), Integer.class);
-        query.setParameter("checkIn", checkRoomDto.getCheckIn());
-        query.setParameter("checkOut", checkRoomDto.getCheckOut());
-        query.setParameter("roomTypeId",checkRoomDto.getRoomTypeId());
-        return ((Number) query.getSingleResult()).intValue();
-
+        Integer propertyId = checkRoomDto.getPropertyId();
+        Integer roomTypeId = checkRoomDto.getRoomTypeId();
+        List<BookingRoomsDto> bookingRoomsDtos = getBookingRooms(checkRoomDto.getRoomTypeId(),checkRoomDto.getPropertyId());
+        logger.debug("bookingRoomDtos :{}",bookingRoomsDtos);
+        List<Room> rooms = roomRepository.findByRoomTypeIdAndPropertyId(checkRoomDto.getRoomTypeId(), checkRoomDto.getPropertyId());
+        Set<Integer> bookedNow = new HashSet<>();
+        if(!bookingRoomsDtos.isEmpty()){
+            for(BookingRoomsDto bookingRoomsDto : bookingRoomsDtos){
+                if(bookingRoomsDto.getRoomTypeId()==roomTypeId && bookingRoomsDto.getPropertyId()==propertyId){
+                    LocalDateTime checkIn = bookingRoomsDto.getCheckIn();
+                    LocalDateTime checkOut = bookingRoomsDto.getCheckOut();
+                    if(!(checkRoomDto.getCheckIn().isAfter(checkOut) || checkRoomDto.getCheckOut().isBefore(checkIn))){
+                        bookedNow.addAll(bookingRoomsDto.getNumRooms());
+                    }
+                }
+            }
+        }
+        if(bookedNow.isEmpty()){
+            return rooms.size();
+        }
+        int count =0;
+        for(Room room : rooms){
+            if(!bookedNow.contains(room.getRoomNumber())) count+=1;
+        }
+        return count;
     }
 
 }

@@ -54,6 +54,7 @@ public class BookingDto {
 
     @NotNull(message = "propertyId is not null")
     private int propertyId;
+
     private List<BookingRoomTypeDto> roomTypes;
 
     private String specialMessage;

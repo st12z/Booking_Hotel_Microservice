@@ -1,21 +1,27 @@
 package com.thuc.bookings.dto.responseDto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString
 public class BookingRoomConfirmDto {
     private int roomTypeId;
     private int propertyId;
-    private List<Integer> numRooms;
-    private int discountHotelId;
 
-    private int discountCarId;
+    private String userEmail;
+
+    private List<Integer> numRooms;
+
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime checkIn;
+
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime checkOut;
 }

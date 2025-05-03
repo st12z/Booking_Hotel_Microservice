@@ -27,7 +27,7 @@ public class SearchController {
             @RequestParam String destination,
             @RequestParam(required = false)  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime checkIn,
             @RequestParam(required = false)  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime checkOut,
-            @RequestParam(required = false)  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Integer quantityBeds,
+            @RequestParam(required = false)  Integer quantityBeds,
             @RequestParam(defaultValue="1") int pageNo,
             @RequestParam(defaultValue="10") int pageSize
     ) {

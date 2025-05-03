@@ -6,6 +6,8 @@ import com.thuc.bookings.converter.BookingRoomsConverter;
 import com.thuc.bookings.dto.requestDto.BookingCarsRequestDto;
 import com.thuc.bookings.dto.requestDto.BookingDto;
 import com.thuc.bookings.dto.requestDto.BookingRoomTypeDto;
+import com.thuc.bookings.dto.responseDto.BookingRoomConfirmDto;
+import com.thuc.bookings.dto.responseDto.BookingRoomsDto;
 import com.thuc.bookings.dto.responseDto.PaymentResponseDto;
 import com.thuc.bookings.dto.responseDto.SuccessResponseDto;
 import com.thuc.bookings.entity.Bill;
@@ -36,8 +38,10 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -111,13 +115,43 @@ public class BookingServiceImpl implements IBookingService {
             }
         }
         List<BookingRooms> bookingRooms = bookingRoomsRepository.findByBillId(bill.getId());
+        List<BookingRoomConfirmDto> bookingRoomConfirmDtos = new ArrayList<>();
         for(BookingRooms bookingRoom: bookingRooms){
             // xóa hold room
             redisTemplate.delete(String.format("hold|room|%d|%s|%s|%s",bookingRoom.getRoomTypeId()
                     ,userEmail,bookingRoom.getCheckIn(),bookingRoom.getCheckOut()));
             // khóa phòng đã đặt hiện tại
-
+            bookingRoomConfirmDtos.add(new BookingRoomConfirmDto(bookingRoom.getRoomTypeId(),
+                    bill.getPropertyId(),
+                    bill.getUserEmail(),
+                    bookingRoom.getNumRooms(),
+                    bookingRoom.getCheckIn(),
+                    bookingRoom.getCheckOut()
+            ));
         }
+        for(BookingRoomConfirmDto bookingRoomConfirmDto : bookingRoomConfirmDtos){
+            log.debug("bookingRoomConfirmDto :{}",bookingRoomConfirmDto.toString());
+            roomsFeignClient.confirmBookingRooms(bookingRoomConfirmDto,bill.getDiscountCarId(),bill.getDiscountHotelId());
+        }
+    }
+
+
+    @Override
+    public List<BookingRoomsDto> getListBookingRooms(Integer roomTypeId,Integer propertyId) {
+        List<BookingRooms> bookingRooms = new ArrayList<>();
+        log.debug("roomTypeId :{}, propertyId :{}",roomTypeId,propertyId);
+        if(roomTypeId!=null){
+            bookingRooms = bookingRoomsRepository.findByRoomTypeIdAndPropertyId(roomTypeId,propertyId);
+            log.debug("bookingRooms :{}",bookingRooms);
+            if(!bookingRooms.isEmpty()){
+                return bookingRooms.stream().map(BookingRoomsConverter::toBookingRoomsDto).collect(Collectors.toList());
+            }
+            return new ArrayList<>();
+        }
+        bookingRooms= bookingRoomsRepository.findByPropertyId(propertyId);
+        log.debug("bookingRooms :{}",bookingRooms);
+        return bookingRooms.stream().map(BookingRoomsConverter::toBookingRoomsDto).toList();
+
     }
 
     private List<Integer> findRoomNumber(BookingRoomTypeDto bookingRoomTypeDto, int propertyId) {

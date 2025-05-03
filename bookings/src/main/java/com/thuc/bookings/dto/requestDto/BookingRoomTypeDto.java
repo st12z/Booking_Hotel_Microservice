@@ -14,11 +14,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookingRoomTypeDto {
-    @NotEmpty(message = "check in is not empty")
+
+    @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime checkIn;
 
-    @NotEmpty(message = "check out is not empty")
+    @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime checkOut;
 

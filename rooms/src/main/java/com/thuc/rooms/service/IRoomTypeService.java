@@ -21,5 +21,5 @@ public interface IRoomTypeService {
 
     List<Integer> getAvailableRooms(BookingRoomTypeDto bookingRoomTypeDto, int propertyId);
 
-    boolean confirmBooking(@Valid BookingRoomConfirmDto bookingRoomConfirmDto);
+    boolean confirmBooking(@Valid BookingRoomConfirmDto bookingRoomConfirmDto,Integer discountCarId,Integer discountHotelId);
 }

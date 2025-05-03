@@ -9,4 +9,8 @@ import java.util.List;
 @Repository
 public interface UserDiscountCarsRepository extends JpaRepository<UserDiscountCars,Integer> {
     List<UserDiscountCars> findByEmail(String email);
+
+    UserDiscountCars findByDiscountCarId(int discountCarId);
+
+    UserDiscountCars findByDiscountCarIdAndEmail(int discountCarId, String userEmail);
 }

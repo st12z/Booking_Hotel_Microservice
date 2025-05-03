@@ -21,5 +21,8 @@ public record BillDto(Integer id,String billCode,
                       int isShuttleService,
                       int bookingForWho,
                       BillStatus billStatus,
-                      String specialMessage) {
+                      String specialMessage,
+                      int discountCarId,
+                      int discountHotelId
+                      ) {
 }

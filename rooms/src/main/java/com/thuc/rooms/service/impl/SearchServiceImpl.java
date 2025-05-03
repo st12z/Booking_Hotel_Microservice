@@ -1,15 +1,20 @@
 package com.thuc.rooms.service.impl;
 
 import com.thuc.rooms.converter.PropertyConverter;
+import com.thuc.rooms.dto.BookingRoomsDto;
 import com.thuc.rooms.dto.PageResponseDto;
 import com.thuc.rooms.dto.PropertyDto;
 import com.thuc.rooms.dto.SearchDto;
 import com.thuc.rooms.entity.Property;
+import com.thuc.rooms.entity.Room;
+import com.thuc.rooms.entity.RoomType;
 import com.thuc.rooms.repository.CityRepository;
 import com.thuc.rooms.repository.PropertyRepository;
+import com.thuc.rooms.repository.RoomRepository;
 import com.thuc.rooms.repository.TripRepository;
 import com.thuc.rooms.service.ISearchService;
 import com.thuc.rooms.service.IRedisPropertyService;
+import com.thuc.rooms.service.client.BookingsFeignClient;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
@@ -18,9 +23,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,6 +35,8 @@ public class SearchServiceImpl implements ISearchService {
     private final TripRepository tripRepository;
     private final Logger log = LoggerFactory.getLogger(SearchServiceImpl.class);
     private final IRedisPropertyService redisService;
+    private final RoomRepository roomRepository;
+    private final BookingsFeignClient bookingsFeignClient;
     @PersistenceContext
     private EntityManager entityManager;
     // Use NativeQuery
@@ -46,12 +52,7 @@ public class SearchServiceImpl implements ISearchService {
             sql.append(" OR EXISTS (SELECT 1 FROM trip tr WHERE  p.city_id = tr.city_id and unaccent(name) ILIKE unaccent(:destination)))");
             parameters.put("destination",(String)('%'+searchDto.getDestination()+'%'));
         }
-        if(searchDto.getCheckOut() !=null  && searchDto.getCheckIn()!=null) {
-            sql.append(" AND EXISTS (SELECT 1 FROM rooms r WHERE r.property_id = p.id " +
-                    "AND (r.check_out <:checkIn OR (r.check_in is null AND r.check_out is null)))"
-            );
-            parameters.put("checkIn",searchDto.getCheckIn());
-        }
+
         if(searchDto.getQuantityBeds()!=null){
             sql.append(" AND EXISTS (SELECT 1 FROM room_type rt WHERE rt.property_id=p.id AND num_beds = :quantityBed) ");
             parameters.put("quantityBed",searchDto.getQuantityBeds());
@@ -63,7 +64,7 @@ public class SearchServiceImpl implements ISearchService {
         parameters.forEach(allQuery::setParameter);
         List<Property> propertiesAll = allQuery.getResultList();
         List<PropertyDto> propertyDtoAll = propertiesAll.stream().map(PropertyConverter::toPropertyDto).toList();
-        if(redisService.getData(key)==null) redisService.saveData(key,propertyDtoAll);
+
         sql.append(" LIMIT :limit OFFSET :offset ");
         int limit = pageSize;
         int offset = pageSize*(pageNo-1);
@@ -72,7 +73,37 @@ public class SearchServiceImpl implements ISearchService {
         query.setParameter("limit",limit);
         query.setParameter("offset",offset);
         List<Property> properties = query.getResultList();
-        List<PropertyDto> propertyDtos = properties.stream().map(PropertyConverter::toPropertyDto).collect(Collectors.toList());
+        LocalDateTime currentTime = LocalDateTime.now();
+        log.debug("properties :{}",properties);
+        List<Property> propertiesByTime = properties.stream().filter(property -> {
+            List<RoomType> roomTypes = property.getRoomTypes();
+            int propertyId= property.getId();
+            return roomTypes.stream().anyMatch(roomType -> {
+                int roomTypeId = roomType.getId();
+                List<Integer> roomNumbers = roomRepository.findByRoomTypeIdAndPropertyId(roomTypeId,propertyId).stream().map(Room::getRoomNumber).toList();
+                List<BookingRoomsDto> bookingRoomsDtos = bookingsFeignClient.getBookingRooms(roomTypeId,propertyId).getBody().getData();
+                Set<Integer> bookedNow = new HashSet<>();
+                if(!bookingRoomsDtos.isEmpty()){
+                    for(BookingRoomsDto bookingRoomsDto : bookingRoomsDtos){
+                        LocalDateTime checkInRoom = bookingRoomsDto.getCheckIn();
+                        LocalDateTime checkOutRoom = bookingRoomsDto.getCheckOut();
+                        if(searchDto.getCheckIn()!=null && searchDto.getCheckOut()!=null){
+                            if(!(searchDto.getCheckOut().isBefore(checkInRoom) || searchDto.getCheckIn().isAfter(checkOutRoom))){
+                                bookedNow.addAll(bookingRoomsDto.getNumRooms());
+                            }
+                        }
+                        else{
+                            if(!(currentTime.isBefore(checkInRoom) || currentTime.isAfter(checkOutRoom))){
+                                bookedNow.addAll(bookingRoomsDto.getNumRooms());
+                            }
+                        }
+                    }
+                }
+                return roomNumbers.stream().anyMatch(number->!bookedNow.contains(number));
+            });
+        }).toList();
+        List<PropertyDto> propertyDtos = propertiesByTime.stream().map(PropertyConverter::toPropertyDto).collect(Collectors.toList());
+        if(redisService.getData(key)==null) redisService.saveData(key,propertyDtos);
         return PageResponseDto.<List<PropertyDto>>builder()
                 .dataPage(propertyDtos)
                 .pageNo(pageNo)

@@ -17,4 +17,5 @@ public interface UserDiscountRepository extends JpaRepository<UserDiscount,Integ
     List<UserDiscount> findByEmail(@Param("email") String email);
     @Query("SELECT u from UserDiscount u where u.email=:email and u.discountId=:discountId")
     UserDiscount findByDiscountIdAndEmail(@Param("discountId") int discountId,@Param("email") String email);
+
 }

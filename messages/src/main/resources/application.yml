@@ -50,7 +50,7 @@ spring:
     password: guest
 
 server:
-  port: 9000
+  port: 8084
 
 logging:
   level:

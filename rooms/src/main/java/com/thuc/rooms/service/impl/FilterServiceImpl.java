@@ -37,7 +37,7 @@ public class FilterServiceImpl implements IFilterService {
         List<Integer> ids = getIdsPropertyInRedis(searchDto) !=null ? getIdsPropertyInRedis(searchDto) : null;
         if(ids==null){
             PageResponseDto<List<PropertyDto>> response = searchService.getPropertiesBySearchV1(pageNo,pageSize,searchDto);
-            ids = getIdsPropertyInRedis(searchDto);
+            ids = response.getDataPage().stream().map(PropertyDto::getId).toList();
         }
         log.debug("ids:{}", ids);
         List<FilterCriteria> filterCriterias = getFilterCriteria(filter,ids);

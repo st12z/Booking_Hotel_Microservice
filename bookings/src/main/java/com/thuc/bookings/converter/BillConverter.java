@@ -28,6 +28,8 @@ public class BillConverter {
                 .specialMessage(bookingDto.getSpecialMessage())
                 .userEmail(bookingDto.getUserEmail())
                 .billCode(billCode)
+                .discountHotelId(bookingDto.getDiscountHotelId())
+                .discountCarId(bookingDto.getDiscountCarId())
                 .build();
         return bill;
     }
@@ -54,6 +56,8 @@ public class BillConverter {
                 .specialMessage(bill.getSpecialMessage())
                 .userEmail(bill.getUserEmail())
                 .billCode(bill.getBillCode())
+                .discountHotelId(bill.getDiscountHotelId())
+                .discountCarId(bill.getDiscountCarId())
                 .build();
         return billDto;
     }

@@ -112,12 +112,16 @@ public class RoomTypeController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
     @PostMapping("/confirm-booking")
-    public ResponseEntity<SuccessResponseDto<?>> confirmBookingRooms(@RequestBody @Valid BookingRoomConfirmDto bookingRoomConfirmDto) {
-        log.debug("Request to confirm booking rooms with {}", bookingRoomConfirmDto);
+    public ResponseEntity<SuccessResponseDto<?>> confirmBookingRooms(@RequestBody @Valid BookingRoomConfirmDto bookingRoomConfirmDto,
+                                                                     @RequestParam(value = "discountCarId", required = false) Integer discountCarId,
+                                                                     @RequestParam(value = "discountHotelId", required = false) Integer discountHotelId
+
+    ) {
+        log.debug("Request to confirm booking rooms with {}", bookingRoomConfirmDto.toString());
         SuccessResponseDto<?> response = SuccessResponseDto.builder()
                 .code(RoomTypeConstant.STATUS_200)
                 .message(RoomTypeConstant.MESSAGE_200)
-                .data(roomTypeService.confirmBooking(bookingRoomConfirmDto))
+                .data(roomTypeService.confirmBooking(bookingRoomConfirmDto,discountCarId,discountHotelId))
                 .build();
         return  ResponseEntity.status(HttpStatus.OK).body(response);
     }
