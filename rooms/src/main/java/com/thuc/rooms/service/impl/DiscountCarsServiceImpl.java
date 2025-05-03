@@ -5,6 +5,7 @@ import com.thuc.rooms.dto.DiscountCarsDto;
 import com.thuc.rooms.dto.UserDiscountCarDto;
 import com.thuc.rooms.entity.DiscountCars;
 import com.thuc.rooms.entity.UserDiscountCars;
+import com.thuc.rooms.exception.ResourceAlreadyExistsException;
 import com.thuc.rooms.exception.ResourceNotFoundException;
 import com.thuc.rooms.repository.DiscountCarsRepository;
 import com.thuc.rooms.repository.UserDiscountCarsRepository;
@@ -37,6 +38,10 @@ public class DiscountCarsServiceImpl implements IDiscountCarsService {
 
     @Override
     public UserDiscountCarDto saveDiscount(UserDiscountCarDto userDiscountCarDto) {
+        UserDiscountCars existDiscountCars = userDiscountCarsRepository.findByDiscountCarIdAndEmail(userDiscountCarDto.getDiscountCarId(), userDiscountCarDto.getEmail());
+        if(existDiscountCars != null) {
+            throw new ResourceAlreadyExistsException("DiscountCars","discountCarId-Email",String.format("%d-%s",userDiscountCarDto.getDiscountCarId(),userDiscountCarDto.getEmail()));
+        }
         UserDiscountCars userDiscountCars = UserDiscountCars.builder()
                 .discountCarId(userDiscountCarDto.getDiscountCarId())
                 .email(userDiscountCarDto.getEmail())
