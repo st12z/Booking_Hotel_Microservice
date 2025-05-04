@@ -35,5 +35,19 @@ public class BillControllers {
                 .build();
         return ResponseEntity.ok(response);
     }
+    @GetMapping("search")
+    public ResponseEntity<SuccessResponseDto<PageResponseDto<List<BillDto>>>> getBillsByKeyword(@RequestParam String email,
+                                                                                                @RequestParam(required = false,defaultValue = "") String keyword,
+                                                                                                @RequestParam(required = false,defaultValue = "1") Integer pageNo,
+                                                                                                @RequestParam(required = false,defaultValue = "5") Integer pageSize
+                                                                                                ){
+        log.debug("getBillsByKeyword keyword={}", keyword);
+        SuccessResponseDto<PageResponseDto<List<BillDto>>> response = SuccessResponseDto.<PageResponseDto<List<BillDto>>>builder()
+                .code(BookingConstant.STATUS_200)
+                .message(BookingConstant.MESSAGE_200)
+                .data(billService.getBillsByKeyword(email,keyword,pageNo,pageSize))
+                .build();
+        return ResponseEntity.ok(response);
+    }
 
 }

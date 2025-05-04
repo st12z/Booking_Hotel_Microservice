@@ -8,4 +8,6 @@ import java.util.List;
 public interface IBillService {
 
     PageResponseDto<List<BillDto>> getMyBills(String email, Integer pageNo, Integer pageSize);
+
+    PageResponseDto<List<BillDto>> getBillsByKeyword(String email,String keyword,Integer pageNo, Integer pageSize);
 }
