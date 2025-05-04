@@ -18,6 +18,7 @@ public class BillConverter {
                 .country(bookingDto.getCountry())
                 .addressDetail(bookingDto.getAddressDetail())
                 .originTotalPayment(bookingDto.getOriginTotalPayment())
+                .newTotalPayment(bookingDto.getNewTotalPayment())
                 .pricePromotion(bookingDto.getPricePromotion())
                 .discountHotel(bookingDto.getDiscountHotel())
                 .discountCar(bookingDto.getDiscountCar())
@@ -34,8 +35,9 @@ public class BillConverter {
         return bill;
     }
 
-    public static BillDto toBllDto(Bill bill) {
+    public static BillDto toBillDto(Bill bill) {
         BillDto billDto = BillDto.builder()
+                .id(bill.getId())
                 .firstName(bill.getFirstName())
                 .lastName(bill.getLastName())
                 .email(bill.getEmail())
@@ -46,10 +48,11 @@ public class BillConverter {
                 .country(bill.getCountry())
                 .addressDetail(bill.getAddressDetail())
                 .originTotalPayment(bill.getOriginTotalPayment())
+                .newTotalPayment(bill.getNewTotalPayment())
                 .pricePromotion(bill.getPricePromotion())
                 .discountHotel(bill.getDiscountHotel())
                 .discountCar(bill.getDiscountCar())
-                .billStatus(BillStatus.PENDING)
+                .billStatus(bill.getBillStatus())
                 .isBusinessTrip(bill.getIsBusinessTrip())
                 .isShuttleService(bill.getIsShuttleService())
                 .bookingForWho(bill.getBookingForWho())
@@ -61,4 +64,6 @@ public class BillConverter {
                 .build();
         return billDto;
     }
+
+
 }

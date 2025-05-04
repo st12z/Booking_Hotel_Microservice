@@ -29,7 +29,7 @@ public class BookingFunctions {
             bookingService.updateBillStatus(billCode,BillStatus.SUCCESS);
             Bill bill = billRepository.findByBillCode(billCode);
             bookingService.removeHoldInRedis(billCode);
-            return BillConverter.toBllDto(bill);
+            return BillConverter.toBillDto(bill);
         };
     }
 }

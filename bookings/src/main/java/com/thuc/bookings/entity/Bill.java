@@ -40,6 +40,8 @@ public class Bill extends BaseEntity{
 
     private int originTotalPayment;
 
+    private int newTotalPayment;
+
     private int pricePromotion;
 
     private int discountHotel;

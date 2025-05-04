@@ -38,6 +38,8 @@ public class BillDto {
 
     private int originTotalPayment;
 
+    private int newTotalPayment;
+
     private int pricePromotion;
 
     private int discountHotel;
