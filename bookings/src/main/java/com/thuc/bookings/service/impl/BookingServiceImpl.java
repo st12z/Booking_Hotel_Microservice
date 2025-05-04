@@ -3,13 +3,11 @@ package com.thuc.bookings.service.impl;
 import com.thuc.bookings.converter.BillConverter;
 import com.thuc.bookings.converter.BookingCarsConverter;
 import com.thuc.bookings.converter.BookingRoomsConverter;
+import com.thuc.bookings.converter.VehicleConverter;
 import com.thuc.bookings.dto.requestDto.BookingCarsRequestDto;
 import com.thuc.bookings.dto.requestDto.BookingDto;
 import com.thuc.bookings.dto.requestDto.BookingRoomTypeDto;
-import com.thuc.bookings.dto.responseDto.BookingRoomConfirmDto;
-import com.thuc.bookings.dto.responseDto.BookingRoomsDto;
-import com.thuc.bookings.dto.responseDto.PaymentResponseDto;
-import com.thuc.bookings.dto.responseDto.SuccessResponseDto;
+import com.thuc.bookings.dto.responseDto.*;
 import com.thuc.bookings.entity.Bill;
 import com.thuc.bookings.entity.BookingCars;
 import com.thuc.bookings.entity.BookingRooms;
@@ -152,6 +150,23 @@ public class BookingServiceImpl implements IBookingService {
         log.debug("bookingRooms :{}",bookingRooms);
         return bookingRooms.stream().map(BookingRoomsConverter::toBookingRoomsDto).toList();
 
+    }
+
+    @Override
+    public List<BookingRoomsDto> getListBookingRoomsByBillId(Integer billId) {
+        List<BookingRooms> bookingRooms = bookingRoomsRepository.findByBillId(billId);
+        return bookingRooms.stream().map(BookingRoomsConverter::toBookingRoomsDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<BookingCarsResponseDto> getListBookingCarsByBillId(Integer billId) {
+        List<BookingCars> bookingCars = bookingCarsRepository.findByBillId(billId);
+        return bookingCars.stream().map(bookingCar->{
+            Vehicles vehicle = vehiclesRepository.findById(bookingCar.getVehicleId())
+                    .orElseThrow(()-> new ResourceNotFoundException("Vehicle","id",String.valueOf(bookingCar.getVehicleId())));
+            VehicleDto vehicleDto = VehicleConverter.toVehicleDto(vehicle);
+            return BookingCarsConverter.toBookingCarsResponseDto(bookingCar,vehicleDto);
+        }).toList();
     }
 
     private List<Integer> findRoomNumber(BookingRoomTypeDto bookingRoomTypeDto, int propertyId) {

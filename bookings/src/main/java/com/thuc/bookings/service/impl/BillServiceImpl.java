@@ -70,4 +70,9 @@ public class BillServiceImpl implements IBillService {
                 .build();
     }
 
+    @Override
+    public BillDto getBillByBillCode(String billCode) {
+        return null;
+    }
+
 }

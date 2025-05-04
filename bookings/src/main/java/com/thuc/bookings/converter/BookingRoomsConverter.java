@@ -28,6 +28,7 @@ public class BookingRoomsConverter {
     public static BookingRoomsDto toBookingRoomsDto(BookingRooms bookingDto) {
         BookingRoomsDto bookingRooms = BookingRoomsDto.builder()
                 .id(bookingDto.getId())
+                .billId(bookingDto.getBillId())
                 .roomTypeId(bookingDto.getRoomTypeId())
                 .quantityRooms(bookingDto.getQuantityRooms())
                 .checkIn(bookingDto.getCheckIn())
