@@ -17,6 +17,11 @@ spring:
       validation-timeout: 5000 # Thời gian tối đa (ms) để kiểm tra tính hợp lệ của kết nối (5 giây)
       leak-detection-threshold: 15000 # Thời gian (ms) để phát hiện rò rỉ kết nối (15 giây)
       connection-test-query: SELECT 1 # Câu truy vấn để kiểm tra tính hợp lệ của kết nối
+  servlet:
+    multipart:
+      max-request-size: 10MB
+      max-file-size: 10MB
+      enabled: true
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
@@ -48,3 +53,8 @@ eureka:
 logging:
   level:
     com.thuc.rooms: DEBUG
+
+cloudinary:
+  cloud_name: ${CLOUDINARY_CLOUD_NAME}
+  api_key: ${CLOUDINARY_API_KEY}
+  api_secret: ${CLOUDINARY_API_SECRET}

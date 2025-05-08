@@ -31,5 +31,7 @@ public class Review extends BaseEntity{
 
     private float ratingLocation;
 
+    private String image;
+
     private float ratingWifi;
 }

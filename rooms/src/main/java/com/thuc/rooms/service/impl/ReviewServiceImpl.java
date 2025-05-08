@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class IReviewServiceImpl implements IReviewService {
+public class ReviewServiceImpl implements IReviewService {
     private final ReviewRepository reviewRepository;
     @Override
     public ReviewDto createReview(ReviewDto reviewDto) {
