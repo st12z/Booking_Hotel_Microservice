@@ -77,4 +77,5 @@ public class Property extends BaseEntity {
         this.slug = ConvertToSlug.convertToSlug(name);
     }
 
+
 }

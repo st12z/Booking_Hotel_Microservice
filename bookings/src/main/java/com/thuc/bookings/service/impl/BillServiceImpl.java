@@ -72,7 +72,8 @@ public class BillServiceImpl implements IBillService {
 
     @Override
     public BillDto getBillByBillCode(String billCode) {
-        return null;
+        Bill bill = billRepository.findByBillCode(billCode);
+        return BillConverter.toBillDto(bill);
     }
 
 }
