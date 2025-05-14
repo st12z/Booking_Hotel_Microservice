@@ -28,8 +28,8 @@ public class SecurityConfig {
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         return http
                 .authorizeExchange(exchange ->
-                    exchange
-                            .anyExchange().permitAll()
+                        exchange
+                                .anyExchange().permitAll()
                 )
                 .oauth2ResourceServer(oAuth2ResourceServerSpec -> oAuth2ResourceServerSpec
                         .jwt(jwt->jwt.jwtAuthenticationConverter(grantedAuthoritiesExtractor()))

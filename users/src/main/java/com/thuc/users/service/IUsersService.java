@@ -16,4 +16,6 @@ public interface IUsersService {
     void logout();
 
     UserDto getUserByEmail(String email);
+
+    UserDto getInfoUserById(Integer id);
 }

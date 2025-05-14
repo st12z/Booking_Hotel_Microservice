@@ -1,7 +1,10 @@
 package com.thuc.rooms.entity;
 
+import com.thuc.rooms.utils.StringConverter;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Table(name="reviews")
 @Entity
@@ -15,6 +18,10 @@ public class Review extends BaseEntity{
     private int id;
 
     private String email;
+
+    @ManyToOne
+    @JoinColumn(name = "property_id")
+    private Property property;
 
     @Column(columnDefinition = "TEXT")
     private String content;
@@ -31,7 +38,10 @@ public class Review extends BaseEntity{
 
     private float ratingLocation;
 
-    private String image;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "review_images", joinColumns = @JoinColumn(name = "review_id"))
+    @Column(name = "image_url")
+    private List<String> images;
 
     private float ratingWifi;
 }

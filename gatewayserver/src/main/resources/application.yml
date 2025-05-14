@@ -13,6 +13,8 @@ spring:
         jwt:
           # download public certificates de resourceserver ket noi authserver validate token
           jwk-set-uri: http://localhost:7080/realms/master/protocol/openid-connect/certs
+  main:
+    allow-bean-definition-overriding: true
 management:
   endpoints:
     web:

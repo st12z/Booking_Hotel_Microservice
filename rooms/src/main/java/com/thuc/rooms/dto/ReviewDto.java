@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -35,4 +36,8 @@ public class ReviewDto {
     private float ratingWifi;
 
     List<String> images;
+
+    private int propertyId;
+
+    private LocalDateTime createdAt;
 }

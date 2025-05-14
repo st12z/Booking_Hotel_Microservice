@@ -15,7 +15,6 @@ public class ReviewConverter {
                 .ratingProperty(reviewDto.getRatingProperty())
                 .ratingStaff(reviewDto.getRatingStaff())
                 .ratingWifi(reviewDto.getRatingWifi())
-
                 .build();
     }
     public static ReviewDto toReviewDto(Review review) {
@@ -30,7 +29,9 @@ public class ReviewConverter {
                 .ratingProperty(review.getRatingProperty())
                 .ratingStaff(review.getRatingStaff())
                 .ratingWifi(review.getRatingWifi())
-
+                .images(review.getImages())
+                .propertyId(review.getProperty().getId())
+                .createdAt(review.getCreatedAt())
                 .build();
     }
 }

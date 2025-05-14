@@ -26,8 +26,6 @@ public class Property extends BaseEntity {
     @Column(nullable = false)
     private String propertyType;
 
-    private Integer ratingStar;
-
     @Column(columnDefinition = "TEXT")
     private String address;
 
@@ -48,9 +46,6 @@ public class Property extends BaseEntity {
     @Column(columnDefinition = "jsonb")
     private List <String> images;
 
-    private Integer numReviews;
-
-    private Double avgReviewScore;
 
     @Column(nullable = true)
     private Double distanceFromCenter;
@@ -69,6 +64,9 @@ public class Property extends BaseEntity {
 
     @OneToMany(mappedBy = "property")
     private List<RoomType> roomTypes;
+
+    @OneToMany(mappedBy = "property")
+    private List<Review> reviews;
 
     private String slug;
 

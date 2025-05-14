@@ -41,9 +41,31 @@ public class ReviewsController {
         ObjectMapper objectMapper = new ObjectMapper();
         ReviewDto review = objectMapper.readValue(reviewDto, ReviewDto.class);
         log.debug("createReview with reviewDto: {}", review);
-        String image = uploadCloudinary.uploadCloudinary(images.get(0));
-
-        return null;
+        SuccessResponseDto<ReviewDto> response = SuccessResponseDto.<ReviewDto>builder()
+                .code(ReviewConstant.STATUS_201)
+                .message(ReviewConstant.MESSAGE_200)
+                .data(reviewService.createReview(review,images))
+                .build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
-
+    @GetMapping("/delete/{id}")
+    public ResponseEntity<SuccessResponseDto<String>> deleteReview(@PathVariable int id) {
+        log.debug("deleteReview with id: {}", id);
+        SuccessResponseDto<String> response = SuccessResponseDto.<String>builder()
+                .code(ReviewConstant.STATUS_200)
+                .message(ReviewConstant.MESSAGE_200)
+                .data(reviewService.deleteReview(id))
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+    @GetMapping("")
+    public ResponseEntity<SuccessResponseDto<List<ReviewDto>>> getReviewsByPropertyId(@RequestParam int propertyId) {
+        log.debug("getReviewsByPropertyId: {}", propertyId);
+        SuccessResponseDto<List<ReviewDto>> response = SuccessResponseDto.<List<ReviewDto>>builder()
+                .code(ReviewConstant.STATUS_200)
+                .message(ReviewConstant.MESSAGE_200)
+                .data(reviewService.getReviewsByPropertyId(propertyId))
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 }

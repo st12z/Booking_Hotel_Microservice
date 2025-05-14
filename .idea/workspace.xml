@@ -5,7 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="51d15752-74e9-4b1e-bbb6-eccb5a2b114f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/utils/UploadCloudinary.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/config/WebSocketConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/constants/ChatConstant.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/ChatsController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/MessagesController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/UploadController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/converter/ChatConverter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/converter/RoomChatsConverter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/ChatResponseDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/RoomChatsDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/entity/Chats.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/entity/RoomChats.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/entity/UserDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/repository/ChatRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/repository/RoomChatsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/IChatService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/ChatServiceImpl.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../BÀI15.drawio - draw.io_files/.idea/BÀI15.drawio - draw.io_files.iml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../SpringOauth2/.idea/.gitignore" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../SpringOauth2/.idea/SpringOauth2.iml" afterDir="false" />
@@ -545,15 +560,28 @@
       <change afterPath="$PROJECT_DIR$/../thymeleaf-project/thymeleaf-project/src/main/resources/templates/fragments.html" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../thymeleaf-project/thymeleaf-project/src/main/resources/templates/register_form.html" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../thymeleaf-project/thymeleaf-project/src/main/resources/templates/test.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gatewayserver/src/main/java/com/thuc/gatewayserver/config/AddUserInfoFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/gatewayserver/src/main/java/com/thuc/gatewayserver/config/AddUserInfoFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gatewayserver/src/main/java/com/thuc/gatewayserver/config/CustomAuthenticationEntryPoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/gatewayserver/src/main/java/com/thuc/gatewayserver/config/CustomAuthenticationEntryPoint.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gatewayserver/src/main/java/com/thuc/gatewayserver/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/gatewayserver/src/main/java/com/thuc/gatewayserver/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gatewayserver/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/gatewayserver/src/main/resources/application.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rooms/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/RoomsApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/RoomsApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/ReviewsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/ReviewsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/converter/PropertyConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/converter/PropertyConverter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/converter/ReviewConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/converter/ReviewConverter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/PropertyDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/PropertyDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/ReviewDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/ReviewDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/entity/Property.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/entity/Property.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/entity/Review.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/entity/Review.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/IReviewServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/ReviewServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rooms/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/repository/ReviewRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/repository/ReviewRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/IReviewService.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/IReviewService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/ReviewServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/ReviewServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/utils/StringConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/utils/StringConverter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/utils/UploadCloudinary.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/utils/UploadCloudinary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/controller/UsersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/controller/UsersController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/service/IUsersService.java" beforeDir="false" afterPath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/service/IUsersService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/service/impl/UsersServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/service/impl/UsersServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -590,53 +618,53 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Maven.BookingService [clean].executor": "Run",
-    "Maven.BookingService [package].executor": "Run",
-    "Maven.bookings [clean].executor": "Run",
-    "Maven.bookings [package].executor": "Run",
-    "Maven.eurekaserver [clean,package].executor": "Run",
-    "Maven.eurekaserver [clean].executor": "Run",
-    "Maven.eurekaserver [install].executor": "Run",
-    "Maven.eurekaserver [package].executor": "Run",
-    "Maven.gatewayserver [clean,package].executor": "Run",
-    "Maven.payments [clean].executor": "Run",
-    "Maven.rooms [clean,package].executor": "Run",
-    "Maven.users [clean,package].executor": "Run",
-    "Maven.users [clean].executor": "Run",
-    "Maven.users [package].executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "Spring Boot.BookingApplication.executor": "Debug",
-    "Spring Boot.BookingServiceApplication.executor": "Debug",
-    "Spring Boot.EurekaserverApplication.executor": "Debug",
-    "Spring Boot.GatewayserverApplication.executor": "Debug",
-    "Spring Boot.MessagesApplication.executor": "Debug",
-    "Spring Boot.PaymentsApplication.executor": "Debug",
-    "Spring Boot.RoomServiceAppliction.executor": "Debug",
-    "Spring Boot.RoomsApplication.executor": "Debug",
-    "Spring Boot.UsersApplication.executor": "Debug",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/T/Downloads/Booking_Hotel_Microservice/payments/src/main/java/com/thuc/payments/dto",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.41034484",
-    "run.configurations.included.in.services": "true",
-    "settings.editor.selected.configurable": "reference.projectsettings.compiler.annotationProcessors",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Maven.BookingService [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.BookingService [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.bookings [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.bookings [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.eurekaserver [clean,package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.eurekaserver [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.eurekaserver [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.eurekaserver [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.gatewayserver [clean,package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.payments [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.rooms [clean,package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.users [clean,package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.users [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.users [package].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.BookingApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.BookingServiceApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.EurekaserverApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.GatewayserverApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.MessagesApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.PaymentsApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.RoomServiceAppliction.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.RoomsApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.UsersApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/T/Downloads/Booking_Hotel_Microservice/payments/src/main/java/com/thuc/payments/dto&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.41034484&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.annotationProcessors&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
@@ -652,11 +680,11 @@
       <recent name="C:\Users\T\Downloads\Booking_Hotel_Microservice\rooms\src\main\java\com\thuc\rooms" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.thuc.rooms.entity" />
       <recent name="com.thuc.bookings.config" />
       <recent name="com.thuc.rooms.config" />
       <recent name="com.thuc.bookings.dto.responseDto" />
       <recent name="com.thuc.rooms.dto" />
-      <recent name="com.thuc.bookings.utils" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -872,7 +900,14 @@
       <workItem from="1746629390768" duration="4400000" />
       <workItem from="1746699691106" duration="819000" />
       <workItem from="1746709774930" duration="7475000" />
-      <workItem from="1746722579139" duration="2342000" />
+      <workItem from="1746722579139" duration="2693000" />
+      <workItem from="1746779522991" duration="8880000" />
+      <workItem from="1746883988290" duration="5436000" />
+      <workItem from="1746932969054" duration="672000" />
+      <workItem from="1746972536453" duration="1307000" />
+      <workItem from="1747060263310" duration="817000" />
+      <workItem from="1747144605145" duration="8631000" />
+      <workItem from="1747184689268" duration="9138000" />
     </task>
     <servers />
   </component>
@@ -899,9 +934,14 @@
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/ReviewsController.java</url>
-          <line>45</line>
-          <option name="timeStamp" value="8" />
+          <url>file://$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/ChatServiceImpl.java</url>
+          <line>49</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/ChatServiceImpl.java</url>
+          <line>48</line>
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

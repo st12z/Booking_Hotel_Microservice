@@ -79,4 +79,10 @@ public class UsersServiceImpl implements IUsersService {
         }
         return UsersConverter.toUserDto(userEntity);
     }
+
+    @Override
+    public UserDto getInfoUserById(Integer id) {
+        UserEntity user = userRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("User", String.valueOf(id)));
+        return UsersConverter.toUserDto(user);
+    }
 }

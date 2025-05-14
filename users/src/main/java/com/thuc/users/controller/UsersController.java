@@ -101,4 +101,14 @@ public class UsersController {
                 .data(user).build();
         return ResponseEntity.ok(success);
     }
+    @GetMapping("/get-user/{id}")
+    public ResponseEntity<SuccessResponseDto<UserDto>> getInfoUserById(@PathVariable("id") Integer id) {
+        log.debug("Getting user info with id: {}", id);
+        SuccessResponseDto<UserDto> response = SuccessResponseDto.<UserDto>builder()
+                .code(UsersConstant.STATUS_200)
+                .message(UsersConstant.MESSAGE_200)
+                .data(usersService.getInfoUserById(id))
+                .build();
+        return ResponseEntity.ok(response);
+    }
 }

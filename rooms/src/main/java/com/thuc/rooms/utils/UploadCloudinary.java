@@ -43,12 +43,16 @@ public class UploadCloudinary {
             );
 
             // Tạo URL với các tham số biến đổi
-            String transformedImageUrl = cloudinary.url().transformation(new Transformation()
+            String publicId = (String) uploadResult.get("public_id");
+
+            String transformedImageUrl = cloudinary.url()
+                    .transformation(new Transformation()
                             .crop("pad")
                             .width(300)
                             .height(400)
                             .background("auto:predominant"))
-                    .generate((String) uploadResult.get("public_id"));
+                    .version(uploadResult.get("version").toString()) // thêm version để khác URL
+                    .generate(publicId);
 
             // Trả về URL của ảnh đã biến đổi
             return transformedImageUrl;
