@@ -11,4 +11,11 @@ public class RoomChatsConverter {
                 .userBId(roomChats.getUserBId())
                 .build();
     }
+    public static RoomChats toRoomChats(RoomChatsDto roomChatsDto) {
+        return RoomChats.builder()
+                .id(roomChatsDto.getId())
+                .userAId(roomChatsDto.getUserAId())
+                .userBId(70)
+                .build();
+    }
 }

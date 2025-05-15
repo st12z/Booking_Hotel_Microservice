@@ -25,7 +25,7 @@ public class ReviewDto {
 
     private float ratingFacilities;
 
-    private String email;
+    private int userId;
 
     private float ratingClean;
 

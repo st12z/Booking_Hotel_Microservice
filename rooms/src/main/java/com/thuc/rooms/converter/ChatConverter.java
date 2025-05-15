@@ -11,6 +11,7 @@ public class ChatConverter {
                 .content(chats.getContent())
                 .images(chats.getImages())
                 .userSend(chats.getUserSend())
+                .createdAt(chats.getCreatedAt())
                 .build();
     }
 

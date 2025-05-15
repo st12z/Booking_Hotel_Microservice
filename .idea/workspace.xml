@@ -5,22 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="51d15752-74e9-4b1e-bbb6-eccb5a2b114f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/config/WebSocketConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/constants/ChatConstant.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/ChatsController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/MessagesController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/UploadController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/converter/ChatConverter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/converter/RoomChatsConverter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/ChatResponseDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/RoomChatsDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/entity/Chats.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/entity/RoomChats.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/entity/UserDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/repository/ChatRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/repository/RoomChatsRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/IChatService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/ChatServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/constants/NotificationConstant.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/constants/RoomChatConstant.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/NotificationController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/NotificationsWebSocket.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/RoomChatsController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/converter/NotificationConverter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/NotificationDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/entity/Notifications.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/repository/NotificationRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/INotificationService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/IRoomChatService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/NotificationServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/RoomChatServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/dto/requestDto/RoomChatsDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/service/client/RoomChatsFeignClient.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../BÀI15.drawio - draw.io_files/.idea/BÀI15.drawio - draw.io_files.iml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../SpringOauth2/.idea/.gitignore" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../SpringOauth2/.idea/SpringOauth2.iml" afterDir="false" />
@@ -562,24 +561,25 @@
       <change afterPath="$PROJECT_DIR$/../thymeleaf-project/thymeleaf-project/src/main/resources/templates/test.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gatewayserver/src/main/java/com/thuc/gatewayserver/config/AddUserInfoFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/gatewayserver/src/main/java/com/thuc/gatewayserver/config/AddUserInfoFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gatewayserver/src/main/java/com/thuc/gatewayserver/config/CustomAuthenticationEntryPoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/gatewayserver/src/main/java/com/thuc/gatewayserver/config/CustomAuthenticationEntryPoint.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gatewayserver/src/main/java/com/thuc/gatewayserver/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/gatewayserver/src/main/java/com/thuc/gatewayserver/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gatewayserver/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/gatewayserver/src/main/resources/application.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rooms/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/ReviewsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/ReviewsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/converter/PropertyConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/converter/PropertyConverter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/config/WebSocketConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/config/WebSocketConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/ChatsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/ChatsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/MessagesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/MessagesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/converter/ChatConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/converter/ChatConverter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/converter/ReviewConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/converter/ReviewConverter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/PropertyDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/PropertyDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/converter/RoomChatsConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/converter/RoomChatsConverter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/ChatResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/ChatResponseDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/ReviewDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/ReviewDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/entity/Property.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/entity/Property.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/entity/Chats.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/entity/Chats.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/entity/Review.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/entity/Review.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/repository/ReviewRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/repository/ReviewRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/IReviewService.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/IReviewService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/ReviewServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/ReviewServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/utils/StringConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/utils/StringConverter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/utils/UploadCloudinary.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/utils/UploadCloudinary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/repository/RoomChatsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/repository/RoomChatsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/IChatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/IChatService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/ChatServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/ChatServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/users/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/UsersApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/UsersApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/controller/UsersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/controller/UsersController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/converter/UsersConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/converter/UsersConverter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/dto/responseDto/UserDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/dto/responseDto/UserDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/service/IUsersService.java" beforeDir="false" afterPath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/service/IUsersService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/service/impl/UsersServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/service/impl/UsersServiceImpl.java" afterDir="false" />
     </list>
@@ -594,8 +594,8 @@
         <option value="Exception" />
         <option value="Enum" />
         <option value="Record" />
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -680,11 +680,11 @@
       <recent name="C:\Users\T\Downloads\Booking_Hotel_Microservice\rooms\src\main\java\com\thuc\rooms" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.thuc.users.dto.requestDto" />
+      <recent name="com.thuc.rooms.config" />
       <recent name="com.thuc.rooms.entity" />
       <recent name="com.thuc.bookings.config" />
-      <recent name="com.thuc.rooms.config" />
       <recent name="com.thuc.bookings.dto.responseDto" />
-      <recent name="com.thuc.rooms.dto" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -907,7 +907,11 @@
       <workItem from="1746972536453" duration="1307000" />
       <workItem from="1747060263310" duration="817000" />
       <workItem from="1747144605145" duration="8631000" />
-      <workItem from="1747184689268" duration="9138000" />
+      <workItem from="1747184689268" duration="9798000" />
+      <workItem from="1747208390077" duration="5777000" />
+      <workItem from="1747229648231" duration="8526000" />
+      <workItem from="1747292569534" duration="11119000" />
+      <workItem from="1747317290676" duration="3132000" />
     </task>
     <servers />
   </component>
@@ -932,16 +936,6 @@
           <url>file://$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/impl/BookingServiceImpl.java</url>
           <line>169</line>
           <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/ChatServiceImpl.java</url>
-          <line>49</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/ChatServiceImpl.java</url>
-          <line>48</line>
-          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

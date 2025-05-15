@@ -17,7 +17,7 @@ public class Review extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String email;
+    private int userId;
 
     @ManyToOne
     @JoinColumn(name = "property_id")

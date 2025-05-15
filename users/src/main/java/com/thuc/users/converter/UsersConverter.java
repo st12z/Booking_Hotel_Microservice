@@ -2,6 +2,7 @@ package com.thuc.users.converter;
 
 import com.thuc.users.dto.requestDto.UserRequestDto;
 import com.thuc.users.dto.responseDto.UserDto;
+import com.thuc.users.entity.RoleEntity;
 import com.thuc.users.entity.UserEntity;
 
 public class UsersConverter {
@@ -34,6 +35,7 @@ public class UsersConverter {
                 .village(userEntity.getVillage())
                 .phoneNumber(userEntity.getPhoneNumber())
                 .birthday(userEntity.getBirthday())
+                .roles(userEntity.getRoles().stream().map(RoleEntity::getName).toList())
                 .build();
     }
 }

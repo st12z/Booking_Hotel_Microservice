@@ -1,5 +1,6 @@
 package com.thuc.users.service;
 
+import com.thuc.users.dto.requestDto.RoomChatsDto;
 import com.thuc.users.dto.requestDto.UserRequestDto;
 import com.thuc.users.dto.responseDto.UserDto;
 
@@ -18,4 +19,6 @@ public interface IUsersService {
     UserDto getUserByEmail(String email);
 
     UserDto getInfoUserById(Integer id);
+
+    RoomChatsDto createRoomChats(RoomChatsDto roomChats);
 }

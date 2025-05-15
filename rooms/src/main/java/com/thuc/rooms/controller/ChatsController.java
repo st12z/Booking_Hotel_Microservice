@@ -23,16 +23,7 @@ import java.util.List;
 public class ChatsController {
     private final IChatService chatService;
     private final Logger logger = LoggerFactory.getLogger(ChatsController.class);
-    @GetMapping("/rooms/{userId}")
-    public ResponseEntity<SuccessResponseDto<List<RoomChatsDto>>> getRoomChats(@PathVariable int userId) {
-        logger.debug("Getting room chats of {}", userId);
-        SuccessResponseDto<List<RoomChatsDto>> response = SuccessResponseDto.<List<RoomChatsDto>>builder()
-                .code(ChatConstant.STATUS_200)
-                .message(ChatConstant.MESSAGE_200)
-                .data(chatService.getRoomChatsOfUser(userId))
-                .build();
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+
     @GetMapping("/messages/{roomChatId}")
     public ResponseEntity<SuccessResponseDto<List<ChatResponseDto>>> getMessages(@PathVariable int roomChatId) {
         logger.debug("Getting messages of {}", roomChatId);

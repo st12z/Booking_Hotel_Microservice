@@ -1,5 +1,6 @@
 package com.thuc.users.dto.responseDto;
 
+import com.thuc.users.utils.RoleEnum;
 import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Builder
@@ -36,4 +38,6 @@ public class UserDto {
     private LocalDate birthday;
 
     private String gender;
+
+    private List<String> roles;
 }

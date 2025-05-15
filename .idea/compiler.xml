@@ -9,7 +9,6 @@
         <outputRelativeToContentRoot value="true" />
         <module name="eurekaserver" />
         <module name="bookings" />
-        <module name="users" />
         <module name="payments" />
       </profile>
       <profile name="Annotation profile for messages" enabled="true">
@@ -39,6 +38,15 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
         </processorPath>
         <module name="gatewayserver" />
+      </profile>
+      <profile name="Annotation profile for users" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath>
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
+        </processorPath>
+        <module name="users" />
       </profile>
     </annotationProcessing>
   </component>

@@ -1,6 +1,7 @@
 package com.thuc.users.controller;
 
 import com.thuc.users.constant.UsersConstant;
+import com.thuc.users.dto.requestDto.RoomChatsDto;
 import com.thuc.users.dto.requestDto.UserRequestDto;
 import com.thuc.users.dto.responseDto.ErrorResponseDto;
 import com.thuc.users.dto.responseDto.SuccessResponseDto;
@@ -108,6 +109,16 @@ public class UsersController {
                 .code(UsersConstant.STATUS_200)
                 .message(UsersConstant.MESSAGE_200)
                 .data(usersService.getInfoUserById(id))
+                .build();
+        return ResponseEntity.ok(response);
+    }
+    @PostMapping("/create-rooms")
+    public ResponseEntity<SuccessResponseDto<RoomChatsDto>> createRoomChats(@RequestBody  RoomChatsDto roomChats) {
+        log.debug("Creating room chats with request: {}", roomChats);
+        SuccessResponseDto<RoomChatsDto> response = SuccessResponseDto.<RoomChatsDto>builder()
+                .code(UsersConstant.STATUS_200)
+                .message(UsersConstant.MESSAGE_200)
+                .data(usersService.createRoomChats(roomChats))
                 .build();
         return ResponseEntity.ok(response);
     }

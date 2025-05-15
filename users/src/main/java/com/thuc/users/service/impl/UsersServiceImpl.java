@@ -1,7 +1,9 @@
 package com.thuc.users.service.impl;
 
 import com.thuc.users.converter.UsersConverter;
+import com.thuc.users.dto.requestDto.RoomChatsDto;
 import com.thuc.users.dto.requestDto.UserRequestDto;
+import com.thuc.users.dto.responseDto.SuccessResponseDto;
 import com.thuc.users.dto.responseDto.UserDto;
 import com.thuc.users.entity.RoleEntity;
 import com.thuc.users.entity.UserEntity;
@@ -12,6 +14,7 @@ import com.thuc.users.repository.UserRepository;
 import com.thuc.users.service.IKeycloakAccountService;
 import com.thuc.users.service.IKeycloakService;
 import com.thuc.users.service.IUsersService;
+import com.thuc.users.service.client.RoomChatsFeignClient;
 import com.thuc.users.utils.RoleEnum;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -33,6 +36,7 @@ public class UsersServiceImpl implements IUsersService {
     private final RoleRepository roleRepository;
     private final Logger logger = LoggerFactory.getLogger(UsersServiceImpl.class);
     private final StreamBridge streamBridge;
+    private final RoomChatsFeignClient  roomChatsFeignClient;
     @Override
     public UserDto createUser(UserRequestDto user) {
         logger.debug("Creating a new user");
@@ -84,5 +88,11 @@ public class UsersServiceImpl implements IUsersService {
     public UserDto getInfoUserById(Integer id) {
         UserEntity user = userRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("User", String.valueOf(id)));
         return UsersConverter.toUserDto(user);
+    }
+
+    @Override
+    public RoomChatsDto createRoomChats(RoomChatsDto roomChats) {
+        SuccessResponseDto<RoomChatsDto> response = roomChatsFeignClient.createRoomChat(roomChats).getBody();
+        return response.getData();
     }
 }

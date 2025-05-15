@@ -6,23 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChatResponseDto {
-
-    private int id ;
-
-    private int roomChatId;
-
+@Builder
+public class NotificationDto {
+    private int id;
     private String content;
-
-    private int userSend;
-
-    private List<String> images;
-
     private LocalDateTime createdAt;
 }

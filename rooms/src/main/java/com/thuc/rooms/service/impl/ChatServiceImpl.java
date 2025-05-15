@@ -21,11 +21,7 @@ import java.util.stream.Collectors;
 public class ChatServiceImpl implements IChatService {
     private final ChatRepository chatRepository;
     private final RoomChatsRepository roomChatsRepository;
-    @Override
-    public List<RoomChatsDto> getRoomChatsOfUser(int userId) {
-        List<RoomChats> roomChats = roomChatsRepository.findByUserAIdOrUserBId(userId,userId);
-        return roomChats.stream().map(RoomChatsConverter::toRoomChatsDto).collect(Collectors.toList());
-    }
+
 
     @Override
     public List<ChatResponseDto> getChatsByRoomChatId(int roomChatId) {

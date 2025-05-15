@@ -13,4 +13,5 @@ public interface RoomChatsRepository extends JpaRepository<RoomChats, Integer> {
     List<RoomChats> findByUserAIdOrUserBId(int userAId, int userBId);
 
 
+    RoomChats findByUserAId(int userAId);
 }
