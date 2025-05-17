@@ -105,10 +105,12 @@ public class UsersController {
     @GetMapping("/get-user/{id}")
     public ResponseEntity<SuccessResponseDto<UserDto>> getInfoUserById(@PathVariable("id") Integer id) {
         log.debug("Getting user info with id: {}", id);
+        UserDto userDto = usersService.getInfoUserById(id);
+
         SuccessResponseDto<UserDto> response = SuccessResponseDto.<UserDto>builder()
                 .code(UsersConstant.STATUS_200)
                 .message(UsersConstant.MESSAGE_200)
-                .data(usersService.getInfoUserById(id))
+                .data(userDto)
                 .build();
         return ResponseEntity.ok(response);
     }
@@ -119,6 +121,26 @@ public class UsersController {
                 .code(UsersConstant.STATUS_200)
                 .message(UsersConstant.MESSAGE_200)
                 .data(usersService.createRoomChats(roomChats))
+                .build();
+        return ResponseEntity.ok(response);
+    }
+    @GetMapping("/update-visits")
+    public ResponseEntity<SuccessResponseDto<Integer>> updateVisits(@RequestParam(required = false) Integer userId){
+        log.debug("Updating visits with request: {}", userId);
+        SuccessResponseDto<Integer> response = SuccessResponseDto.<Integer>builder()
+                .code(UsersConstant.STATUS_200)
+                .message(UsersConstant.MESSAGE_200)
+                .data(usersService.updateUserVisits(userId))
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+    @GetMapping("/amount-visits")
+    public ResponseEntity<SuccessResponseDto<Integer>> amountVisits(){
+        log.debug("Getting amount visits");
+        SuccessResponseDto<Integer> response = SuccessResponseDto.<Integer>builder()
+                .code(UsersConstant.STATUS_200)
+                .message(UsersConstant.MESSAGE_200)
+                .data(usersService.getAmountVisits())
                 .build();
         return ResponseEntity.ok(response);
     }

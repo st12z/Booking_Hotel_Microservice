@@ -21,4 +21,8 @@ public interface IUsersService {
     UserDto getInfoUserById(Integer id);
 
     RoomChatsDto createRoomChats(RoomChatsDto roomChats);
+
+    int updateUserVisits(Integer userId);
+
+    Integer getAmountVisits();
 }
