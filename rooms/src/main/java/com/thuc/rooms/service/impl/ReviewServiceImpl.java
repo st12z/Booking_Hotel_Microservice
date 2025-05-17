@@ -56,5 +56,10 @@ public class ReviewServiceImpl implements IReviewService {
         return reviews.stream().map(ReviewConverter::toReviewDto).collect(Collectors.toList());
     }
 
+    @Override
+    public Integer getAmountReviews() {
+        return (int) reviewRepository.count();
+    }
+
 
 }

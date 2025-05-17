@@ -66,4 +66,14 @@ public class BillControllers {
                 .build();
         return ResponseEntity.ok(response);
     }
+    @GetMapping("/amount-revenue")
+    public ResponseEntity<SuccessResponseDto<Integer>> getAmountRevenueToDay() {
+        log.debug("getAmountRevenueToDay");
+        SuccessResponseDto<Integer> response = SuccessResponseDto.<Integer>builder()
+                .code(BookingConstant.STATUS_200)
+                .message(BookingConstant.MESSAGE_200)
+                .data(billService.getAmountRevenueToday())
+                .build();
+        return ResponseEntity.ok(response);
+    }
 }

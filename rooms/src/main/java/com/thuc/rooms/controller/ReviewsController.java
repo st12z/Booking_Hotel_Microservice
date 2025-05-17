@@ -68,4 +68,14 @@ public class ReviewsController {
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+    @GetMapping("/amount-reviews")
+    public ResponseEntity<SuccessResponseDto<Integer>> amountReviews() {
+        log.debug("amountReviews");
+        SuccessResponseDto<Integer> response = SuccessResponseDto.<Integer>builder()
+                .code(ReviewConstant.STATUS_200)
+                .message(ReviewConstant.MESSAGE_200)
+                .data(reviewService.getAmountReviews())
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 }

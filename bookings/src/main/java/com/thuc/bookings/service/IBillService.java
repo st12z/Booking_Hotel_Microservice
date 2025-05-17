@@ -14,4 +14,6 @@ public interface IBillService {
     BillDto getBillByBillCode(String billCode);
 
     Integer getAmountBills();
+
+    Integer getAmountRevenueToday();
 }

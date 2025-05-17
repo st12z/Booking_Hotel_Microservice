@@ -19,4 +19,7 @@ public interface BillRepository extends JpaRepository<Bill, Integer> {
 
     @Query("SELECT COUNT(*) FROM Bill b where b.createdAt BETWEEN :startOfDay AND :endOfDay")
     Integer countByCreatedAt(@Param("startOfDay") LocalDateTime startOfDay, @Param("endOfDay") LocalDateTime endOfDay);
+
+    @Query("SELECT SUM(b.newTotalPayment) FROM Bill b where b.createdAt BETWEEN :startOfDay AND :endOfDay")
+    int getTotalPaymentToday(@Param("startOfDay") LocalDateTime startOfDay,@Param("endOfDay") LocalDateTime endOfDay);
 }

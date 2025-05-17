@@ -87,4 +87,12 @@ public class BillServiceImpl implements IBillService {
         return (int) billRepository.countByCreatedAt(startOfDay,endOfDay);
     }
 
+    @Override
+    public Integer getAmountRevenueToday() {
+        LocalDate today = LocalDate.now();
+        LocalDateTime startOfDay = today.atStartOfDay();
+        LocalDateTime endOfDay = today.atTime(LocalTime.MAX);
+        return (int) billRepository.getTotalPaymentToday(startOfDay,endOfDay);
+    }
+
 }

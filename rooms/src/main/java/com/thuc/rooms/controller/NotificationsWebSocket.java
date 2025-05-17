@@ -69,4 +69,27 @@ public class NotificationsWebSocket {
         }
         return null;
     }
+    @MessageMapping("/sendAmountReviews")
+    public Integer sendAmountReviews(@Payload Integer amountReviews) {
+        try{
+            log.debug("sendAmountReviews :{}", amountReviews);
+            messagingTemplate.convertAndSendToUser("manager@gmail.com", "/queue/amount-reviews", amountReviews);
+            return amountReviews;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+    @MessageMapping("/sendAmountRevenueToday")
+    public Integer sendAmountRevenueToday(@Payload Integer amountRevenueToday) {
+        try{
+            log.debug("sendAmountRevenueToday :{}", amountRevenueToday);
+            messagingTemplate.convertAndSendToUser("manager@gmail.com", "/queue/amount-revenue-today", amountRevenueToday);
+            return amountRevenueToday;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

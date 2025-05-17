@@ -11,4 +11,6 @@ public interface IReviewService {
     String deleteReview(int id);
 
     List<ReviewDto> getReviewsByPropertyId(int propertyId);
+
+    Integer getAmountReviews();
 }
