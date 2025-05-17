@@ -19,4 +19,6 @@ public interface IBillService {
     Integer getAmountRevenueToday();
 
     List<StatisticBillByMonth> getAmountBillsByMonth(Integer month);
+
+    List<StatisticBillByMonth> getAmountRevenueByMonth(Integer month);
 }

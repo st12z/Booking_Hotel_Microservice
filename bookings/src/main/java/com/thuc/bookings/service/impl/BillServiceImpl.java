@@ -92,7 +92,7 @@ public class BillServiceImpl implements IBillService {
         LocalDate today = LocalDate.now();
         LocalDateTime startOfDay = today.atStartOfDay();
         LocalDateTime endOfDay = today.atTime(LocalTime.MAX);
-        return (int) billRepository.getTotalPaymentToday(startOfDay,endOfDay);
+        return  billRepository.getTotalPaymentToday(startOfDay,endOfDay) !=null ? billRepository.getTotalPaymentToday(startOfDay,endOfDay):0 ;
     }
 
     @Override
@@ -109,6 +109,21 @@ public class BillServiceImpl implements IBillService {
         }
         return result;
 
+    }
+
+    @Override
+    public List<StatisticBillByMonth> getAmountRevenueByMonth(Integer month) {
+        List<StatisticBillByMonth> result = new ArrayList<>();
+        Year currentYear = Year.now();
+        YearMonth currentMonth = currentYear.atMonth(month);
+        int daysInMonth = currentMonth.lengthOfMonth();
+        for(int i=1;i<=daysInMonth;i++){
+            LocalDateTime startOfDay = LocalDateTime.of(currentYear.getValue(),month,i,0,0,0);
+            LocalDateTime endOfDay = LocalDateTime.of(currentYear.getValue(),month,i,23,59,59,999_999_999);
+            int total=billRepository.getTotalPaymentToday(startOfDay,endOfDay) !=null ? billRepository.getTotalPaymentToday(startOfDay,endOfDay):0 ;
+            result.add(new StatisticBillByMonth(i,total));
+        }
+        return result;
     }
 
 }

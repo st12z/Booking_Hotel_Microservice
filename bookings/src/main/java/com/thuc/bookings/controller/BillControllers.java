@@ -87,4 +87,14 @@ public class BillControllers {
                 .build();
         return ResponseEntity.ok(response);
     }
+    @GetMapping("/amount-revenue-month")
+    public ResponseEntity<SuccessResponseDto<List<StatisticBillByMonth>>> getRevenueByMonth(@RequestParam Integer month) {
+        log.debug("getRevenueMonth month={}", month);
+        SuccessResponseDto<List<StatisticBillByMonth>> response = SuccessResponseDto.<List<StatisticBillByMonth>>builder()
+                .code(BookingConstant.STATUS_200)
+                .message(BookingConstant.MESSAGE_200)
+                .data(billService.getAmountRevenueByMonth(month))
+                .build();
+        return ResponseEntity.ok(response);
+    }
 }
