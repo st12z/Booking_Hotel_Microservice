@@ -55,6 +55,7 @@ public class UsersServiceImpl implements IUsersService {
         userEntity = UsersConverter.toUserEntity(user);
         userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
         userEntity.setRoles(List.of(roleUser));
+        userEntity.setAvatar(user.getAvatar());
         UserEntity saveUser= userRepository.save(userEntity);
         keycloakAccountService.createUser(user);
         sendCommunication(user);
@@ -124,5 +125,10 @@ public class UsersServiceImpl implements IUsersService {
         LocalDateTime startOfDay = today.atStartOfDay();
         LocalDateTime endOfDay = today.atTime(LocalTime.MAX);
         return (int) userVisitRepository.countByAccessedAt(startOfDay,endOfDay);
+    }
+
+    @Override
+    public Integer getAmountUsers() {
+        return (int)userRepository.count();
     }
 }

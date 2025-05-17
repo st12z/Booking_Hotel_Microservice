@@ -47,4 +47,15 @@ public class NotificationsWebSocket {
         }
         return null;
     }
+    @MessageMapping("/sendAmountUsers")
+    public Integer sendAmountUsers(@Payload Integer amountUsers) {
+        try{
+            log.debug("sendAmountUsers :{}", amountUsers);
+            messagingTemplate.convertAndSendToUser("manager@gmail.com", "/queue/amount-users", amountUsers);
+            return amountUsers;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

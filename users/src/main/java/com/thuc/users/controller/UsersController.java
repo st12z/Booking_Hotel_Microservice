@@ -144,4 +144,14 @@ public class UsersController {
                 .build();
         return ResponseEntity.ok(response);
     }
+    @GetMapping("/amount-users")
+    public ResponseEntity<SuccessResponseDto<Integer>> getAmountUsers(){
+        log.debug("Getting amount users");
+        SuccessResponseDto<Integer> response = SuccessResponseDto.<Integer>builder()
+                .code(UsersConstant.STATUS_200)
+                .message(UsersConstant.MESSAGE_200)
+                .data(usersService.getAmountUsers())
+                .build();
+        return ResponseEntity.ok(response);
+    }
 }

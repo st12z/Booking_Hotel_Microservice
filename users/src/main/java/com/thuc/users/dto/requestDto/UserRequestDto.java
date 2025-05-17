@@ -49,4 +49,6 @@ public class UserRequestDto {
 
     private String address;
 
+    private String avatar;
+
 }

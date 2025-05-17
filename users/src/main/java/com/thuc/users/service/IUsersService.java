@@ -25,4 +25,6 @@ public interface IUsersService {
     int updateUserVisits(Integer userId);
 
     Integer getAmountVisits();
+
+    Integer getAmountUsers();
 }
