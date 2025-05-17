@@ -3,6 +3,7 @@ package com.thuc.users.service.impl;
 import com.thuc.users.converter.UsersConverter;
 import com.thuc.users.dto.requestDto.RoomChatsDto;
 import com.thuc.users.dto.requestDto.UserRequestDto;
+import com.thuc.users.dto.responseDto.StatisticVisitByMonth;
 import com.thuc.users.dto.responseDto.SuccessResponseDto;
 import com.thuc.users.dto.responseDto.UserDto;
 import com.thuc.users.entity.RoleEntity;
@@ -25,9 +26,8 @@ import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -130,5 +130,20 @@ public class UsersServiceImpl implements IUsersService {
     @Override
     public Integer getAmountUsers() {
         return (int)userRepository.count();
+    }
+
+    @Override
+    public List<StatisticVisitByMonth> getAmountVisitsByMonth(Integer month) {
+        List<StatisticVisitByMonth> result = new ArrayList<>();
+        Year currentYear = Year.now();
+        YearMonth currentMonth = currentYear.atMonth(month);
+        int daysInMonth = currentMonth.lengthOfMonth();
+        for(int i=1;i<=daysInMonth;i++){
+            LocalDateTime startOfDay = LocalDateTime.of(currentYear.getValue(),month,i,0,0,0);
+            LocalDateTime endOfDay = LocalDateTime.of(currentYear.getValue(),month,i,23,59,59,999_999_999);
+            int total=userVisitRepository.countByAccessedAt(startOfDay,endOfDay);
+            result.add(new StatisticVisitByMonth(i,total));
+        }
+        return result;
     }
 }

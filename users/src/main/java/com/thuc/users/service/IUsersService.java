@@ -2,8 +2,10 @@ package com.thuc.users.service;
 
 import com.thuc.users.dto.requestDto.RoomChatsDto;
 import com.thuc.users.dto.requestDto.UserRequestDto;
+import com.thuc.users.dto.responseDto.StatisticVisitByMonth;
 import com.thuc.users.dto.responseDto.UserDto;
 
+import java.util.List;
 import java.util.Map;
 
 public interface IUsersService {
@@ -27,4 +29,6 @@ public interface IUsersService {
     Integer getAmountVisits();
 
     Integer getAmountUsers();
+
+    List<StatisticVisitByMonth> getAmountVisitsByMonth(Integer month);
 }

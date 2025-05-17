@@ -4,6 +4,7 @@ import com.thuc.users.constant.UsersConstant;
 import com.thuc.users.dto.requestDto.RoomChatsDto;
 import com.thuc.users.dto.requestDto.UserRequestDto;
 import com.thuc.users.dto.responseDto.ErrorResponseDto;
+import com.thuc.users.dto.responseDto.StatisticVisitByMonth;
 import com.thuc.users.dto.responseDto.SuccessResponseDto;
 import com.thuc.users.dto.responseDto.UserDto;
 import com.thuc.users.service.IUsersService;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -151,6 +153,16 @@ public class UsersController {
                 .code(UsersConstant.STATUS_200)
                 .message(UsersConstant.MESSAGE_200)
                 .data(usersService.getAmountUsers())
+                .build();
+        return ResponseEntity.ok(response);
+    }
+    @GetMapping("/amount-visits-month")
+    public ResponseEntity<SuccessResponseDto<List<StatisticVisitByMonth>>> getAmountVisitsMonth(@RequestParam Integer month){
+        log.debug("Getting amount visits month {}", month);
+        SuccessResponseDto<List<StatisticVisitByMonth>> response = SuccessResponseDto.<List<StatisticVisitByMonth>>builder()
+                .code(UsersConstant.STATUS_200)
+                .message(UsersConstant.MESSAGE_200)
+                .data(usersService.getAmountVisitsByMonth(month))
                 .build();
         return ResponseEntity.ok(response);
     }

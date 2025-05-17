@@ -3,6 +3,7 @@ package com.thuc.bookings.service.impl;
 import com.thuc.bookings.converter.BillConverter;
 import com.thuc.bookings.dto.responseDto.BillDto;
 import com.thuc.bookings.dto.responseDto.PageResponseDto;
+import com.thuc.bookings.dto.responseDto.StatisticBillByMonth;
 import com.thuc.bookings.entity.Bill;
 import com.thuc.bookings.repository.BillRepository;
 import com.thuc.bookings.service.IBillService;
@@ -17,9 +18,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -93,6 +93,22 @@ public class BillServiceImpl implements IBillService {
         LocalDateTime startOfDay = today.atStartOfDay();
         LocalDateTime endOfDay = today.atTime(LocalTime.MAX);
         return (int) billRepository.getTotalPaymentToday(startOfDay,endOfDay);
+    }
+
+    @Override
+    public List<StatisticBillByMonth> getAmountBillsByMonth(Integer month) {
+        List<StatisticBillByMonth> result = new ArrayList<>();
+        Year currentYear = Year.now();
+        YearMonth currentMonth = currentYear.atMonth(month);
+        int daysInMonth = currentMonth.lengthOfMonth();
+        for(int i=1;i<=daysInMonth;i++){
+            LocalDateTime startOfDay = LocalDateTime.of(currentYear.getValue(),month,i,0,0,0);
+            LocalDateTime endOfDay = LocalDateTime.of(currentYear.getValue(),month,i,23,59,59,999_999_999);
+            int total=billRepository.countByCreatedAt(startOfDay,endOfDay);
+            result.add(new StatisticBillByMonth(i,total));
+        }
+        return result;
+
     }
 
 }

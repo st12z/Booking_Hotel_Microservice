@@ -2,6 +2,7 @@ package com.thuc.bookings.service;
 
 import com.thuc.bookings.dto.responseDto.BillDto;
 import com.thuc.bookings.dto.responseDto.PageResponseDto;
+import com.thuc.bookings.dto.responseDto.StatisticBillByMonth;
 
 import java.util.List;
 
@@ -16,4 +17,6 @@ public interface IBillService {
     Integer getAmountBills();
 
     Integer getAmountRevenueToday();
+
+    List<StatisticBillByMonth> getAmountBillsByMonth(Integer month);
 }

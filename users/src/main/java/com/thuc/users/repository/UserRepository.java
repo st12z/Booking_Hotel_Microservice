@@ -11,6 +11,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 @Repository
 @Transactional
 public interface UserRepository extends JpaRepository<UserEntity, Integer> {
@@ -21,4 +23,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
     @Modifying
     @Query("Update UserEntity u set u.sendEmail=true WHERE u.email= :email")
     void updateSendEmailByEmail(@Param("email") String email);
+
+
 }

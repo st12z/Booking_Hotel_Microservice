@@ -3,6 +3,7 @@ package com.thuc.bookings.controller;
 import com.thuc.bookings.constants.BookingConstant;
 import com.thuc.bookings.dto.responseDto.BillDto;
 import com.thuc.bookings.dto.responseDto.PageResponseDto;
+import com.thuc.bookings.dto.responseDto.StatisticBillByMonth;
 import com.thuc.bookings.dto.responseDto.SuccessResponseDto;
 import com.thuc.bookings.service.IBillService;
 import lombok.RequiredArgsConstructor;
@@ -73,6 +74,16 @@ public class BillControllers {
                 .code(BookingConstant.STATUS_200)
                 .message(BookingConstant.MESSAGE_200)
                 .data(billService.getAmountRevenueToday())
+                .build();
+        return ResponseEntity.ok(response);
+    }
+    @GetMapping("/amount-bills-month")
+    public ResponseEntity<SuccessResponseDto<List<StatisticBillByMonth>>> getBillsByMonth(@RequestParam Integer month) {
+        log.debug("getBillsByMonth month={}", month);
+        SuccessResponseDto<List<StatisticBillByMonth>> response = SuccessResponseDto.<List<StatisticBillByMonth>>builder()
+                .code(BookingConstant.STATUS_200)
+                .message(BookingConstant.MESSAGE_200)
+                .data(billService.getAmountBillsByMonth(month))
                 .build();
         return ResponseEntity.ok(response);
     }
