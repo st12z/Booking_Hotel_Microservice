@@ -74,6 +74,10 @@ public class PropertyServiceImpl implements IPropertyService {
         return PropertyConverter.toPropertyDto(property);
     }
 
+    @Override
+    public Integer getAmountProperties() {
+        return (int)propertyRepository.count();
+    }
 
 
 }

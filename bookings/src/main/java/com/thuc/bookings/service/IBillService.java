@@ -12,4 +12,6 @@ public interface IBillService {
     PageResponseDto<List<BillDto>> getBillsByKeyword(String email,String keyword,Integer pageNo, Integer pageSize);
 
     BillDto getBillByBillCode(String billCode);
+
+    Integer getAmountBills();
 }

@@ -545,12 +545,14 @@
       <change afterPath="$PROJECT_DIR$/../thymeleaf-project/thymeleaf-project/src/main/resources/templates/register_form.html" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../thymeleaf-project/thymeleaf-project/src/main/resources/templates/test.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/controller/BillControllers.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/controller/BillControllers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/repository/BillRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/repository/BillRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/IBillService.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/IBillService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/impl/BillServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/impl/BillServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/NotificationsWebSocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/NotificationsWebSocket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/converter/RoomChatsConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/converter/RoomChatsConverter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/controller/UsersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/controller/UsersController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/dto/requestDto/UserRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/dto/requestDto/UserRequestDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/service/IUsersService.java" beforeDir="false" afterPath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/service/IUsersService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/service/impl/UsersServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/service/impl/UsersServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/PropertiesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/PropertiesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/IPropertyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/IPropertyService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/PropertyServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/PropertyServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -882,7 +884,7 @@
       <workItem from="1747292569534" duration="11119000" />
       <workItem from="1747317290676" duration="3171000" />
       <workItem from="1747402009673" duration="1881000" />
-      <workItem from="1747445312914" duration="6333000" />
+      <workItem from="1747445312914" duration="7695000" />
     </task>
     <servers />
   </component>

@@ -56,5 +56,14 @@ public class BillControllers {
                 .build();
         return ResponseEntity.ok(response);
     }
-
+    @GetMapping("/amount-bills")
+    public ResponseEntity<SuccessResponseDto<Integer>> amountProperties() {
+        log.debug("Request to get properties by  amount bills");
+        SuccessResponseDto<Integer> response = SuccessResponseDto.<Integer>builder()
+                .code(BookingConstant.STATUS_200)
+                .message(BookingConstant.MESSAGE_200)
+                .data(billService.getAmountBills())
+                .build();
+        return ResponseEntity.ok(response);
+    }
 }

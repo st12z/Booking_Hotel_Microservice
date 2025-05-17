@@ -17,6 +17,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -74,6 +77,14 @@ public class BillServiceImpl implements IBillService {
     public BillDto getBillByBillCode(String billCode) {
         Bill bill = billRepository.findByBillCode(billCode);
         return BillConverter.toBillDto(bill);
+    }
+
+    @Override
+    public Integer getAmountBills() {
+        LocalDate today = LocalDate.now();
+        LocalDateTime startOfDay = today.atStartOfDay();
+        LocalDateTime endOfDay = today.atTime(LocalTime.MAX);
+        return (int) billRepository.countByCreatedAt(startOfDay,endOfDay);
     }
 
 }

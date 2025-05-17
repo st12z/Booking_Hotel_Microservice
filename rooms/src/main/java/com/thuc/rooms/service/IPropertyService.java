@@ -15,4 +15,6 @@ public interface IPropertyService {
     List<PropertyDto> getPropertiesBySlugs(List<String> slugs);
 
     PropertyDto getPropertyById(Integer id);
+
+    Integer getAmountProperties();
 }

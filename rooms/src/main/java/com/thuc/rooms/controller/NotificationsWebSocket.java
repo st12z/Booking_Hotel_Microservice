@@ -58,4 +58,15 @@ public class NotificationsWebSocket {
         }
         return null;
     }
+    @MessageMapping("/sendAmountBills")
+    public Integer sendAmountBills(@Payload Integer amountBills) {
+        try{
+            log.debug("sendAmountBills :{}", amountBills);
+            messagingTemplate.convertAndSendToUser("manager@gmail.com", "/queue/amount-bills", amountBills);
+            return amountBills;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

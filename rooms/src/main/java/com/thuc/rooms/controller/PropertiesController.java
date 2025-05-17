@@ -61,4 +61,14 @@ public class PropertiesController {
                 .build();
         return ResponseEntity.ok(response);
     }
+    @GetMapping("/amount-properties")
+    public ResponseEntity<SuccessResponseDto<Integer>> amountProperties() {
+        logger.debug("Request to get properties by  amount properties");
+        SuccessResponseDto<Integer> response = SuccessResponseDto.<Integer>builder()
+                .code(PropertyConstant.STATUS_200)
+                .message(PropertyConstant.MESSAGE_200)
+                .data(propertyService.getAmountProperties())
+                .build();
+        return ResponseEntity.ok(response);
+    }
 }
