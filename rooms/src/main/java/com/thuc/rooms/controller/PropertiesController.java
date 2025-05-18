@@ -2,6 +2,7 @@ package com.thuc.rooms.controller;
 
 
 import com.thuc.rooms.constants.PropertyConstant;
+import com.thuc.rooms.dto.PageResponseDto;
 import com.thuc.rooms.dto.PropertyDto;
 import com.thuc.rooms.dto.SuccessResponseDto;
 import com.thuc.rooms.service.IPropertyService;
@@ -20,13 +21,27 @@ import java.util.List;
 public class PropertiesController {
     private final IPropertyService propertyService;
     private final Logger logger = LoggerFactory.getLogger(PropertiesController.class);
+    @GetMapping("/all")
+    public ResponseEntity<
+            SuccessResponseDto<PageResponseDto<List<PropertyDto>>>
+            > getAllProperties(@RequestParam(defaultValue = "1") Integer pageNo,
+                               @RequestParam(defaultValue = "10") Integer pageSize
+                               ) {
+        logger.debug("Request to get all properties ");
+        SuccessResponseDto<PageResponseDto<List<PropertyDto>>> response = SuccessResponseDto.<PageResponseDto<List<PropertyDto>>>builder()
+                .message(PropertyConstant.MESSAGE_200)
+                .code(PropertyConstant.STATUS_200)
+                .data(propertyService.getAllProperties(pageNo,pageSize))
+                .build();
+        return ResponseEntity.ok(response);
+    }
     @GetMapping("")
-    public ResponseEntity<SuccessResponseDto<List<PropertyDto>>> getAllProperties(@RequestParam String slugCity) {
+    public ResponseEntity<SuccessResponseDto<List<PropertyDto>>> getAllPropertiesBySlugCity(@RequestParam String slugCity) {
         logger.debug("Request to get all properties for city {}", slugCity);
         SuccessResponseDto<List<PropertyDto>> response = SuccessResponseDto.<List<PropertyDto>>builder()
                 .code(PropertyConstant.STATUS_200)
                 .message(PropertyConstant.MESSAGE_200)
-                .data(propertyService.getAllProperties(slugCity))
+                .data(propertyService.getAllPropertiesBySlugCity(slugCity))
                 .build();
         return ResponseEntity.ok(response);
     }

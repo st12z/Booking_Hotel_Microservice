@@ -97,4 +97,14 @@ public class BillControllers {
                 .build();
         return ResponseEntity.ok(response);
     }
+    @GetMapping("/all")
+    public ResponseEntity<SuccessResponseDto<List<BillDto>>> getAllBills() {
+        log.debug("getAllBills");
+        SuccessResponseDto<List<BillDto>> response = SuccessResponseDto.<List<BillDto>>builder()
+                .code(BookingConstant.STATUS_200)
+                .message(BookingConstant.MESSAGE_200)
+                .data(billService.getAllBills())
+                .build();
+        return ResponseEntity.ok(response);
+    }
 }

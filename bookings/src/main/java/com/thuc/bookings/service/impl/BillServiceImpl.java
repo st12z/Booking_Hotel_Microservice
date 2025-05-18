@@ -20,7 +20,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -124,6 +126,13 @@ public class BillServiceImpl implements IBillService {
             result.add(new StatisticBillByMonth(i,total));
         }
         return result;
+    }
+
+    @Override
+    public List<BillDto> getAllBills() {
+        return billRepository.findAll().stream().sorted(Comparator.comparing(Bill::getCreatedAt).reversed())
+                .limit(6)
+                .map(BillConverter::toBillDto).toList();
     }
 
 }

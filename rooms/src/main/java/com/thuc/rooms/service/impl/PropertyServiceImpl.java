@@ -1,6 +1,7 @@
 package com.thuc.rooms.service.impl;
 
 import com.thuc.rooms.converter.PropertyConverter;
+import com.thuc.rooms.dto.PageResponseDto;
 import com.thuc.rooms.dto.PropertyDto;
 import com.thuc.rooms.dto.SearchDto;
 import com.thuc.rooms.entity.City;
@@ -15,6 +16,9 @@ import com.thuc.rooms.service.IRedisPropertyService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +36,7 @@ public class PropertyServiceImpl implements IPropertyService {
     private final IRedisPropertyService redisPropertyService;
     private final RoomTypeRepository roomTypeRepository;
     @Override
-    public List<PropertyDto> getAllProperties(String slugCity) {
+    public List<PropertyDto> getAllPropertiesBySlugCity(String slugCity) {
         Optional<City> cityOptional = cityRepository.findBySlug(slugCity);
         if(!cityOptional.isPresent()){
             log.debug("City with Slug {} not found", slugCity);
@@ -77,6 +81,19 @@ public class PropertyServiceImpl implements IPropertyService {
     @Override
     public Integer getAmountProperties() {
         return (int)propertyRepository.count();
+    }
+
+    @Override
+    public PageResponseDto<List<PropertyDto>> getAllProperties(Integer pageNo, Integer pageSize) {
+        Pageable pageable = PageRequest.of(pageNo-1, pageSize,Sort.by("createdAt").descending());
+        Page<Property> page = propertyRepository.findAll(pageable);
+        List<PropertyDto> properties = page.getContent().stream().map(PropertyConverter::toPropertyDto).toList();
+        return PageResponseDto.<List<PropertyDto>>builder()
+                .pageNo(pageNo)
+                .pageSize(pageSize)
+                .total(page.getTotalElements())
+                .dataPage(properties)
+                .build();
     }
 
 

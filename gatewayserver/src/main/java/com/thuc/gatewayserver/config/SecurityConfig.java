@@ -29,6 +29,16 @@ public class SecurityConfig {
         return http
                 .authorizeExchange(exchange ->
                         exchange
+                                .pathMatchers("/bookinghotel/bookings/api/bills/amount-bills",
+                                        "/bookinghotel/bookings/api/bills/amount-bills-month",
+                                        "/bookinghotel/bookings/api/bills/amount-revenue",
+                                        "/bookinghotel/bookings/api/bills/amount-revenue-month",
+                                        "/bookinghotel/rooms/api/reviews/amount-reviews",
+                                        "/bookinghotel/users/api/users/amount-visits",
+                                        "/bookinghotel/users/api/users/amount-users",
+                                        "/bookinghotel/users/api/users/amount-visits-month",
+                                        "/bookinghotel/rooms/api/properties/amount-properties"
+                                        ).hasAnyRole("ADMIN","MANAGER","STAFF")
                                 .anyExchange().permitAll()
                 )
                 .oauth2ResourceServer(oAuth2ResourceServerSpec -> oAuth2ResourceServerSpec
