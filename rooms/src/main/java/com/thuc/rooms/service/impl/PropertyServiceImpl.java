@@ -85,8 +85,21 @@ public class PropertyServiceImpl implements IPropertyService {
 
     @Override
     public PageResponseDto<List<PropertyDto>> getAllProperties(Integer pageNo, Integer pageSize) {
-        Pageable pageable = PageRequest.of(pageNo-1, pageSize,Sort.by("createdAt").descending());
+        Pageable pageable = PageRequest.of(pageNo-1, pageSize,Sort.by("id"));
         Page<Property> page = propertyRepository.findAll(pageable);
+        List<PropertyDto> properties = page.getContent().stream().map(PropertyConverter::toPropertyDto).toList();
+        return PageResponseDto.<List<PropertyDto>>builder()
+                .pageNo(pageNo)
+                .pageSize(pageSize)
+                .total(page.getTotalElements())
+                .dataPage(properties)
+                .build();
+    }
+
+    @Override
+    public PageResponseDto<List<PropertyDto>> getPropertiesByKeyword(String keyword, Integer pageNo, Integer pageSize) {
+        Pageable pageable = PageRequest.of(pageNo-1, pageSize,Sort.by("id"));
+        Page<Property> page = propertyRepository.findByKeyword('%'+keyword.toLowerCase()+'%',pageable);
         List<PropertyDto> properties = page.getContent().stream().map(PropertyConverter::toPropertyDto).toList();
         return PageResponseDto.<List<PropertyDto>>builder()
                 .pageNo(pageNo)

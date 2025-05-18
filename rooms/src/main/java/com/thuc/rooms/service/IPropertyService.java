@@ -20,4 +20,6 @@ public interface IPropertyService {
     Integer getAmountProperties();
 
     PageResponseDto<List<PropertyDto>> getAllProperties(Integer pageNo, Integer pageSize);
+
+    PageResponseDto<List<PropertyDto>> getPropertiesByKeyword(String keyword, Integer pageNo, Integer pageSize);
 }
