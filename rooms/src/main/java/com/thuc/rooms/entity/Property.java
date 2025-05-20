@@ -38,13 +38,11 @@ public class Property extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String overview;
 
-    @Convert(converter = StringConverter.class)
-    @Column(columnDefinition = "jsonb")
-    private List <String> facilities;
+    @ManyToMany(mappedBy = "properties")
+    private List <Facilities> facilities;
 
-    @Convert(converter = StringConverter.class)
-    @Column(columnDefinition = "jsonb")
-    private List <String> images;
+    @OneToMany(mappedBy = "property")
+    private List<PropertyImages> propertyImages;
 
 
     @Column(nullable = true)
@@ -75,5 +73,8 @@ public class Property extends BaseEntity {
         this.slug = ConvertToSlug.convertToSlug(name);
     }
 
+    private int ratingStar;
+
+    private double avgReviewScore;
 
 }

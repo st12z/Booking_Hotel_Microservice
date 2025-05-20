@@ -73,9 +73,9 @@ public class UsersController {
             return ResponseEntity.ok(success);
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorResponseDto.builder()
-                            .code(UsersConstant.STATUS_404)
-                            .error(e.getMessage())
-                            .build());
+                    .code(UsersConstant.STATUS_404)
+                    .error(e.getMessage())
+                    .build());
         }
     }
     @GetMapping("/logout")
@@ -136,7 +136,7 @@ public class UsersController {
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
-    @GetMapping("/amount-visits")
+    @GetMapping("/amount-visits-today")
     public ResponseEntity<SuccessResponseDto<Integer>> amountVisits(){
         log.debug("Getting amount visits");
         SuccessResponseDto<Integer> response = SuccessResponseDto.<Integer>builder()

@@ -34,19 +34,6 @@ public class PropertySearchCriteria implements Consumer<FilterCriteria> {
             predicates.add(builder.greaterThanOrEqualTo(root.get(param.getKey()),(Integer)param.getValue()));
         }
 
-        if(param.getOperation().equalsIgnoreCase("CONTAINS")) {
-            List<String> paramFacilities = (List<String>) param.getValue();
-            List<Predicate> containsPredicates = new ArrayList<>();
-
-            for (String facility : paramFacilities) {
-                containsPredicates.add(builder.equal(builder.function("jsonb_contains", Boolean.class, root.get("facilities"),
-                                        builder.literal("[\"" + facility + "\"]")), true)
-                );
-            }
-
-            predicates.add(builder.and(containsPredicates.toArray(new Predicate[0])));
-
-        }
         if(param.getOperation().equalsIgnoreCase("IN") ) {
             if(param.getKey().equalsIgnoreCase("ratingStar"))  predicates.add(root.get(param.getKey()).in((List<Integer>)param.getValue()));
             else predicates.add(root.get(param.getKey()).in((List<String>)param.getValue()));

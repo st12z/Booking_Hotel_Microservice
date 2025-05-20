@@ -29,16 +29,28 @@ public class SecurityConfig {
         return http
                 .authorizeExchange(exchange ->
                         exchange
-                                .pathMatchers("/bookinghotel/bookings/api/bills/amount-bills",
+                                .pathMatchers("/bookinghotel/bookings/api/bills/amount-bills-today",
                                         "/bookinghotel/bookings/api/bills/amount-bills-month",
-                                        "/bookinghotel/bookings/api/bills/amount-revenue",
+                                        "/bookinghotel/bookings/api/bills/amount-revenue-today",
                                         "/bookinghotel/bookings/api/bills/amount-revenue-month",
                                         "/bookinghotel/rooms/api/reviews/amount-reviews",
-                                        "/bookinghotel/users/api/users/amount-visits",
+                                        "/bookinghotel/users/api/users/amount-visits-today",
                                         "/bookinghotel/users/api/users/amount-users",
                                         "/bookinghotel/users/api/users/amount-visits-month",
-                                        "/bookinghotel/rooms/api/properties/amount-properties"
-                                        ).hasAnyRole("ADMIN","MANAGER","STAFF")
+                                        "/bookinghotel/rooms/api/properties/amount-properties",
+                                        "/bookinghotel/rooms/api/notifications/**",
+                                        "/bookinghotel/rooms/api/properties/search"
+                                ).hasAnyRole("ADMIN","MANAGER","STAFF")
+                                .pathMatchers("/bookinghotel/bookings/api/bills/**",
+                                        "/bookinghotel/bookings/api/bookingcars/**",
+                                        "/bookinghotel/bookings/api/bookings/**",
+                                        "/bookinghotel/bookings/api/vehicles/**",
+                                        "/bookinghotel/payments/api/payments/**",
+                                        "/bookinghotel/rooms/api/chats/**",
+                                        "/bookinghotel/rooms/api/reviews/**",
+                                        "/bookinghotel/rooms/api/upload/**",
+                                        "/bookinghotel/rooms/api/room-chats/**")
+                                .hasAnyRole("ADMIN","MANAGER","STAFF","USER")
                                 .anyExchange().permitAll()
                 )
                 .oauth2ResourceServer(oAuth2ResourceServerSpec -> oAuth2ResourceServerSpec

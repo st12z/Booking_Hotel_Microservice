@@ -2,6 +2,7 @@ package com.thuc.rooms.service.impl;
 
 import com.thuc.rooms.converter.PropertyConverter;
 import com.thuc.rooms.dto.*;
+import com.thuc.rooms.entity.Facilities;
 import com.thuc.rooms.entity.Property;
 import com.thuc.rooms.entity.RoomType;
 import com.thuc.rooms.exception.ResourceNotFoundException;
@@ -65,7 +66,7 @@ public class FilterServiceImpl implements IFilterService {
         log.debug("get property by condition:{}", propertySearchCriteria);
         Predicate predicate = builder.and(predicates.toArray(new Predicate[0]));
         Join<Property,RoomType> roomTypePropertyJoin=root.join("roomTypes",JoinType.INNER);
-
+        Join<Property, Facilities> propertyFacilitiesJoin = root.join("facilities");
         if(filter.getBudget()!=null && filter.getBudget()!=0){
             Predicate predicatePrice = builder.lessThanOrEqualTo(roomTypePropertyJoin.get("price"),filter.getBudget());
             predicate = builder.and(predicate,predicatePrice);
@@ -75,7 +76,14 @@ public class FilterServiceImpl implements IFilterService {
             Predicate predicateNumbeds = builder.equal(roomTypePropertyJoin.get("numBeds"),filter.getQuantityBeds());
             predicate = builder.and(predicate,predicateNumbeds);
         }
-
+        if(filter.getFacilities()!=null && !filter.getFacilities().isEmpty()){
+            List<Predicate> predicateFacilities = new ArrayList<>();
+            for(String facility:filter.getFacilities()){
+                predicateFacilities.add(builder.equal(propertyFacilitiesJoin.get("id"),facility));
+            }
+            Predicate predicateOr = builder.or(predicateFacilities.toArray(new Predicate[0]));
+            predicate = builder.and(predicate,predicateOr);
+        }
         if(filter.getSortCondition()!=null && !filter.getSortCondition().isEmpty()){
             String split[]=filter.getSortCondition().split("-");
             if(split.length>=2){
@@ -132,11 +140,20 @@ public class FilterServiceImpl implements IFilterService {
         filterCriterias.forEach(propertySearchCriteria);
         Predicate predicate = builder.and(predicates.toArray(new Predicate[0]));
         Join<Property,RoomType> roomTypePropertyJoin=root.join("roomTypes",JoinType.INNER);
+        Join<Property, Facilities> propertyFacilitiesJoin = root.join("facilities");
         if(filter.getBudget()!=null && filter.getBudget()!=0){
             Predicate predicatePrice = builder.lessThanOrEqualTo(roomTypePropertyJoin.get("price"),filter.getBudget());
             predicate = builder.and(predicate,predicatePrice);
         }
 
+        if(filter.getFacilities()!=null && !filter.getFacilities().isEmpty()){
+            List<Predicate> predicateFacilities = new ArrayList<>();
+            for(String facility:filter.getFacilities()){
+                predicateFacilities.add(builder.equal(propertyFacilitiesJoin.get("id"),facility));
+            }
+            Predicate predicateOr = builder.or(predicateFacilities.toArray(new Predicate[0]));
+            predicate = builder.and(predicate,predicateOr);
+        }
         if(filter.getQuantityBeds()!=null && filter.getQuantityBeds()!=0){
             Predicate predicateNumbeds = builder.equal(roomTypePropertyJoin.get("numBeds"),filter.getQuantityBeds());
             predicate = builder.and(predicate,predicateNumbeds);
@@ -183,9 +200,7 @@ public class FilterServiceImpl implements IFilterService {
                 }
             }
         }
-        if(filterDto.getFacilities() !=null && !filterDto.getFacilities().isEmpty()){
-            filterCriteriaList.add(new FilterCriteria("facilities","CONTAINS",filterDto.getFacilities()));
-        }
+
         return filterCriteriaList;
     }
 }
