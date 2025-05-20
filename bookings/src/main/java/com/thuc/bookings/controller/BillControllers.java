@@ -22,6 +22,7 @@ public class BillControllers {
     private final IBillService billService;
     @GetMapping("")
     public ResponseEntity<SuccessResponseDto<PageResponseDto<List<BillDto>>>> getMyBills(@RequestParam String email,
+                                                                                         @RequestParam(defaultValue = "") String keyword,
                                                                                          @RequestParam(required = false,defaultValue = "1") Integer pageNo,
                                                                                          @RequestParam(required = false,defaultValue = "10") Integer pageSize
     ){
@@ -29,21 +30,7 @@ public class BillControllers {
         SuccessResponseDto<PageResponseDto<List<BillDto>>> response = SuccessResponseDto.<PageResponseDto<List<BillDto>>> builder()
                 .code(BookingConstant.STATUS_200)
                 .message(BookingConstant.MESSAGE_200)
-                .data(billService.getMyBills(email,pageNo,pageSize))
-                .build();
-        return ResponseEntity.ok(response);
-    }
-    @GetMapping("search")
-    public ResponseEntity<SuccessResponseDto<PageResponseDto<List<BillDto>>>> getBillsByKeyword(@RequestParam String email,
-                                                                                                @RequestParam(required = false,defaultValue = "") String keyword,
-                                                                                                @RequestParam(required = false,defaultValue = "1") Integer pageNo,
-                                                                                                @RequestParam(required = false,defaultValue = "5") Integer pageSize
-                                                                                                ){
-        log.debug("getBillsByKeyword keyword={}", keyword);
-        SuccessResponseDto<PageResponseDto<List<BillDto>>> response = SuccessResponseDto.<PageResponseDto<List<BillDto>>>builder()
-                .code(BookingConstant.STATUS_200)
-                .message(BookingConstant.MESSAGE_200)
-                .data(billService.getBillsByKeyword(email,keyword,pageNo,pageSize))
+                .data(billService.getMyBills(email,pageNo,pageSize,keyword))
                 .build();
         return ResponseEntity.ok(response);
     }
@@ -57,17 +44,17 @@ public class BillControllers {
                 .build();
         return ResponseEntity.ok(response);
     }
-    @GetMapping("/amount-bills")
-    public ResponseEntity<SuccessResponseDto<Integer>> amountProperties() {
+    @GetMapping("/amount-bills-today")
+    public ResponseEntity<SuccessResponseDto<Integer>> amountBills() {
         log.debug("Request to get properties by  amount bills");
         SuccessResponseDto<Integer> response = SuccessResponseDto.<Integer>builder()
                 .code(BookingConstant.STATUS_200)
                 .message(BookingConstant.MESSAGE_200)
-                .data(billService.getAmountBills())
+                .data(billService.getAmountBillsToday())
                 .build();
         return ResponseEntity.ok(response);
     }
-    @GetMapping("/amount-revenue")
+    @GetMapping("/amount-revenue-today")
     public ResponseEntity<SuccessResponseDto<Integer>> getAmountRevenueToDay() {
         log.debug("getAmountRevenueToDay");
         SuccessResponseDto<Integer> response = SuccessResponseDto.<Integer>builder()
@@ -98,12 +85,12 @@ public class BillControllers {
         return ResponseEntity.ok(response);
     }
     @GetMapping("/all")
-    public ResponseEntity<SuccessResponseDto<List<BillDto>>> getAllBills() {
-        log.debug("getAllBills");
+    public ResponseEntity<SuccessResponseDto<List<BillDto>>> getAllBillsRecently() {
+        log.debug("getAllBillsRecently");
         SuccessResponseDto<List<BillDto>> response = SuccessResponseDto.<List<BillDto>>builder()
                 .code(BookingConstant.STATUS_200)
                 .message(BookingConstant.MESSAGE_200)
-                .data(billService.getAllBills())
+                .data(billService.getAllBillsRecently())
                 .build();
         return ResponseEntity.ok(response);
     }

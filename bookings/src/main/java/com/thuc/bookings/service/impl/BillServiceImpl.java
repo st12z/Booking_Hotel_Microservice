@@ -5,6 +5,7 @@ import com.thuc.bookings.dto.responseDto.BillDto;
 import com.thuc.bookings.dto.responseDto.PageResponseDto;
 import com.thuc.bookings.dto.responseDto.StatisticBillByMonth;
 import com.thuc.bookings.entity.Bill;
+import com.thuc.bookings.exception.ResourceNotFoundException;
 import com.thuc.bookings.repository.BillRepository;
 import com.thuc.bookings.service.IBillService;
 import com.thuc.bookings.utils.BillStatus;
@@ -32,9 +33,9 @@ public class BillServiceImpl implements IBillService {
     @PersistenceContext
     private EntityManager entityManager;
     @Override
-    public PageResponseDto<List<BillDto>> getMyBills(String email, Integer pageNo, Integer pageSize) {
-        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, Sort.by("createdAt").descending());
-        Page<Bill> billPage = billRepository.findByUserEmailAndBillStatus(email, BillStatus.SUCCESS,pageable);
+    public PageResponseDto<List<BillDto>> getMyBills(String email, Integer pageNo, Integer pageSize,String keyword) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        Page<Bill> billPage = billRepository.findByKeyword(email, '%'+keyword+'%',pageable);
         List<BillDto> billDtos = billPage.getContent().stream().map(BillConverter::toBillDto).toList();
         return PageResponseDto.<List<BillDto>>builder()
                 .total(billPage.getTotalElements())
@@ -44,45 +45,18 @@ public class BillServiceImpl implements IBillService {
                 .build();
     }
 
-    @Override
-    public PageResponseDto<List<BillDto>> getBillsByKeyword(String email,String keyword,Integer pageNo, Integer pageSize) {
-        StringBuilder builder = new StringBuilder(" SELECT * FROM bill WHERE 1=1 ");
-        builder.append(" AND user_email = :email ");
-        builder.append(" AND ( bill_code LIKE :keyword ");
-        builder.append(" OR first_name LIKE :keyword ");
-        builder.append(" OR last_name LIKE :keyword ");
-        builder.append(" OR phone_number LIKE :keyword)");
-
-        String count = builder.toString().replace("SELECT *"," SELECT COUNT(*) ");
-        Query queryCount = entityManager.createNativeQuery(count, Integer.class);
-        queryCount.setParameter("keyword", "%"+keyword+"%");
-        queryCount.setParameter("email",email);
-        int total =(Integer) queryCount.getSingleResult();
-
-        builder.append(" ORDER BY created_at desc ");
-        int offset = (pageNo - 1) * pageSize;
-        Query query = entityManager.createNativeQuery(builder.toString(), Bill.class);
-        query.setParameter("keyword", "%"+keyword+"%");
-        query.setParameter("email",email);
-        query.setFirstResult(offset);
-        query.setMaxResults(pageSize);
-        List<BillDto> billDtos = query.getResultList();
-        return PageResponseDto.<List<BillDto>>builder()
-                .total((long)total)
-                .dataPage(billDtos)
-                .pageSize(pageSize)
-                .pageNo(pageNo)
-                .build();
-    }
 
     @Override
     public BillDto getBillByBillCode(String billCode) {
         Bill bill = billRepository.findByBillCode(billCode);
+        if(bill==null){
+            throw new ResourceNotFoundException("Bill","billCode",String.valueOf(billCode));
+        }
         return BillConverter.toBillDto(bill);
     }
 
     @Override
-    public Integer getAmountBills() {
+    public Integer getAmountBillsToday() {
         LocalDate today = LocalDate.now();
         LocalDateTime startOfDay = today.atStartOfDay();
         LocalDateTime endOfDay = today.atTime(LocalTime.MAX);
@@ -129,7 +103,7 @@ public class BillServiceImpl implements IBillService {
     }
 
     @Override
-    public List<BillDto> getAllBills() {
+    public List<BillDto> getAllBillsRecently() {
         return billRepository.findAll().stream().sorted(Comparator.comparing(Bill::getCreatedAt).reversed())
                 .limit(6)
                 .map(BillConverter::toBillDto).toList();

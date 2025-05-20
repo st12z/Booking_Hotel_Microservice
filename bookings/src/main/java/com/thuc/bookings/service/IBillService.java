@@ -8,13 +8,12 @@ import java.util.List;
 
 public interface IBillService {
 
-    PageResponseDto<List<BillDto>> getMyBills(String email, Integer pageNo, Integer pageSize);
+    PageResponseDto<List<BillDto>> getMyBills(String email, Integer pageNo, Integer pageSize,String keyword);
 
-    PageResponseDto<List<BillDto>> getBillsByKeyword(String email,String keyword,Integer pageNo, Integer pageSize);
 
     BillDto getBillByBillCode(String billCode);
 
-    Integer getAmountBills();
+    Integer getAmountBillsToday();
 
     Integer getAmountRevenueToday();
 
@@ -22,5 +21,5 @@ public interface IBillService {
 
     List<StatisticBillByMonth> getAmountRevenueByMonth(Integer month);
 
-    List<BillDto> getAllBills();
+    List<BillDto> getAllBillsRecently();
 }

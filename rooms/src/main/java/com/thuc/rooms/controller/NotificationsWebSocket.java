@@ -48,37 +48,28 @@ public class NotificationsWebSocket {
         return null;
     }
     @MessageMapping("/sendAmountUsers")
-    public Integer sendAmountUsers(@Payload Integer amountUsers) {
+    public void sendAmountUsers(@Payload String message) {
         try{
-            log.debug("sendAmountUsers :{}", amountUsers);
-            messagingTemplate.convertAndSendToUser("manager@gmail.com", "/queue/amount-users", amountUsers);
-            return amountUsers;
+            messagingTemplate.convertAndSendToUser("manager@gmail.com", "/queue/amount-users",message);
         }catch (Exception e){
             e.printStackTrace();
         }
-        return null;
     }
-    @MessageMapping("/sendAmountBills")
-    public Integer sendAmountBills(@Payload Integer amountBills) {
+    @MessageMapping("/sendAmountBillsToday")
+    public void sendAmountBills(@Payload String message) {
         try{
-            log.debug("sendAmountBills :{}", amountBills);
-            messagingTemplate.convertAndSendToUser("manager@gmail.com", "/queue/amount-bills", amountBills);
-            return amountBills;
+            messagingTemplate.convertAndSendToUser("manager@gmail.com", "/queue/amount-bills-today", message);
         }catch (Exception e){
             e.printStackTrace();
         }
-        return null;
     }
     @MessageMapping("/sendAmountReviews")
-    public Integer sendAmountReviews(@Payload Integer amountReviews) {
+    public void sendAmountReviews(@Payload String message) {
         try{
-            log.debug("sendAmountReviews :{}", amountReviews);
-            messagingTemplate.convertAndSendToUser("manager@gmail.com", "/queue/amount-reviews", amountReviews);
-            return amountReviews;
+            messagingTemplate.convertAndSendToUser("manager@gmail.com", "/queue/amount-reviews", message);
         }catch (Exception e){
             e.printStackTrace();
         }
-        return null;
     }
     @MessageMapping("/sendAmountRevenueToday")
     public Integer sendAmountRevenueToday(@Payload Integer amountRevenueToday) {

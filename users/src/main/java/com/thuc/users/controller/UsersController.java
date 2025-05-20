@@ -136,7 +136,7 @@ public class UsersController {
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
-    @GetMapping("/amount-visits")
+    @GetMapping("/amount-visits-today")
     public ResponseEntity<SuccessResponseDto<Integer>> amountVisits(){
         log.debug("Getting amount visits");
         SuccessResponseDto<Integer> response = SuccessResponseDto.<Integer>builder()

@@ -57,4 +57,7 @@ public class PropertyDto implements Serializable {
     private double ratingStaff;
     private double ratingComfort;
 
+    private int totalPayments;
+
+    private int totalBills;
 }
