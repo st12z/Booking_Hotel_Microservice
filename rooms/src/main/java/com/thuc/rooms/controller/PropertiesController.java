@@ -43,7 +43,7 @@ public class PropertiesController {
         return ResponseEntity.ok(response);
     }
     @PostMapping("")
-    public ResponseEntity<SuccessResponseDto<List<PropertyDto>>> addProperty(@RequestBody List<String> slugs) {
+    public ResponseEntity<SuccessResponseDto<List<PropertyDto>>> getPropertyByListSlugs(@RequestBody List<String> slugs) {
         logger.debug("Request to get properties with list slugs {}", slugs);
         SuccessResponseDto<List<PropertyDto>> response =SuccessResponseDto
                 .<List<PropertyDto>>builder()
