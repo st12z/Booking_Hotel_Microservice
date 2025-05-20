@@ -39,7 +39,7 @@ public class SecurityConfig {
                                         "/bookinghotel/users/api/users/amount-visits-month",
                                         "/bookinghotel/rooms/api/properties/amount-properties",
                                         "/bookinghotel/rooms/api/notifications/**",
-                                        "/bookinghotel/rooms/api/properties/search/**"
+                                        "/bookinghotel/rooms/api/properties/search"
                                 ).hasAnyRole("ADMIN","MANAGER","STAFF")
                                 .pathMatchers("/bookinghotel/bookings/api/bills/**",
                                         "/bookinghotel/bookings/api/bookingcars/**",

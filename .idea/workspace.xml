@@ -545,8 +545,22 @@
       <change afterPath="$PROJECT_DIR$/../thymeleaf-project/thymeleaf-project/src/main/resources/templates/register_form.html" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../thymeleaf-project/thymeleaf-project/src/main/resources/templates/test.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/gatewayserver/src/main/java/com/thuc/gatewayserver/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/gatewayserver/src/main/java/com/thuc/gatewayserver/config/SecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/PropertiesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/PropertiesController.java" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/controller/BillControllers.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/controller/BillControllers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/repository/BillRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/repository/BillRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/IBillService.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/IBillService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/impl/BillServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/impl/BillServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gatewayserver/src/main/java/com/thuc/gatewayserver/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/gatewayserver/src/main/java/com/thuc/gatewayserver/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/NotificationsWebSocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/NotificationsWebSocket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/PropertyDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/dto/PropertyDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/repository/PropertyRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/repository/PropertyRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/PropertyServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/PropertyServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/ReviewServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/service/impl/ReviewServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/controller/UsersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/users/src/main/java/com/thuc/users/controller/UsersController.java" afterDir="false" />
+>>>>>>> 510b51716d89e4c5a444a2eef2e5f9fad4f74684
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -583,53 +597,58 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Maven.BookingService [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.BookingService [package].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.bookings [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.bookings [package].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.eurekaserver [clean,package].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.eurekaserver [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.eurekaserver [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.eurekaserver [package].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.gatewayserver [clean,package].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.payments [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.rooms [clean,package].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.users [clean,package].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.users [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.users [package].executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;Spring Boot.BookingApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Spring Boot.BookingServiceApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Spring Boot.EurekaserverApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Spring Boot.GatewayserverApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Spring Boot.MessagesApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Spring Boot.PaymentsApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Spring Boot.RoomServiceAppliction.executor&quot;: &quot;Debug&quot;,
-    &quot;Spring Boot.RoomsApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Spring Boot.UsersApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/T/Downloads/Booking_Hotel_Microservice/payments/src/main/java/com/thuc/payments/dto&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.41034484&quot;,
-    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.annotationProcessors&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Maven.BookingService [clean].executor": "Run",
+    "Maven.BookingService [package].executor": "Run",
+    "Maven.bookings [clean].executor": "Run",
+    "Maven.bookings [package].executor": "Run",
+    "Maven.eurekaserver [clean,package].executor": "Run",
+    "Maven.eurekaserver [clean].executor": "Run",
+    "Maven.eurekaserver [install].executor": "Run",
+    "Maven.eurekaserver [package].executor": "Run",
+    "Maven.gatewayserver [clean,package].executor": "Run",
+    "Maven.payments [clean].executor": "Run",
+    "Maven.rooms [clean,package].executor": "Run",
+    "Maven.users [clean,package].executor": "Run",
+    "Maven.users [clean].executor": "Run",
+    "Maven.users [package].executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Spring Boot.BookingApplication.executor": "Debug",
+    "Spring Boot.BookingServiceApplication.executor": "Debug",
+    "Spring Boot.EurekaserverApplication.executor": "Debug",
+    "Spring Boot.GatewayserverApplication.executor": "Debug",
+    "Spring Boot.MessagesApplication.executor": "Debug",
+    "Spring Boot.PaymentsApplication.executor": "Debug",
+    "Spring Boot.RoomServiceAppliction.executor": "Debug",
+    "Spring Boot.RoomsApplication.executor": "Debug",
+    "Spring Boot.UsersApplication.executor": "Debug",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/T/Downloads/Booking_Hotel_Microservice/payments/src/main/java/com/thuc/payments/dto",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.41034484",
+    "run.configurations.included.in.services": "true",
+    "settings.editor.selected.configurable": "reference.projectsettings.compiler.annotationProcessors",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
   }
-}</component>
+}]]></component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
@@ -881,7 +900,10 @@
       <workItem from="1747445312914" duration="7900000" />
       <workItem from="1747487059879" duration="9501000" />
       <workItem from="1747555726235" duration="5427000" />
-      <workItem from="1747583757956" duration="2660000" />
+      <workItem from="1747583757956" duration="3407000" />
+      <workItem from="1747620253857" duration="2446000" />
+      <workItem from="1747623999595" duration="1990000" />
+      <workItem from="1747704197193" duration="11639000" />
     </task>
     <servers />
   </component>
@@ -906,6 +928,16 @@
           <url>file://$PROJECT_DIR$/bookings/src/main/java/com/thuc/bookings/service/impl/BookingServiceImpl.java</url>
           <line>169</line>
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/gatewayserver/src/main/java/com/thuc/gatewayserver/config/SecurityConfig.java</url>
+          <line>44</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/rooms/src/main/java/com/thuc/rooms/controller/NotificationsWebSocket.java</url>
+          <line>68</line>
+          <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

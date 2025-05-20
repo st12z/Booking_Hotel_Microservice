@@ -37,6 +37,12 @@ public interface BillRepository extends JpaRepository<Bill, Integer> {
                     " OR unaccent(b.last_name) ILIKE unaccent(:keyword) " +
                     " OR b.email ILIKE (:keyword) " +
                     " OR EXISTS(SELECT 1 FROM properties p  WHERE p.id=b.property_id AND unaccent(p.name) ILIKE unaccent(:keyword)))"
+<<<<<<< HEAD
             ,nativeQuery = true)
     Page<Bill> findByKeyword(String email,String keyword, Pageable pageable);
 }
+=======
+    ,nativeQuery = true)
+    Page<Bill> findByKeyword(String email,String keyword, Pageable pageable);
+}
+>>>>>>> 510b51716d89e4c5a444a2eef2e5f9fad4f74684
