@@ -2,9 +2,7 @@ package com.thuc.rooms.service;
 
 
 
-import com.thuc.rooms.dto.PageResponseDto;
-import com.thuc.rooms.dto.PropertyDto;
-import com.thuc.rooms.dto.SearchDto;
+import com.thuc.rooms.dto.*;
 
 import java.util.List;
 
@@ -19,7 +17,7 @@ public interface IPropertyService {
 
     Integer getAmountProperties();
 
-    PageResponseDto<List<PropertyDto>> getAllProperties(Integer pageNo, Integer pageSize);
 
-    PageResponseDto<List<PropertyDto>> getPropertiesByKeyword(String keyword, Integer pageNo, Integer pageSize);
+
+    PageResponseDto<List<PropertyDto>> getPropertiesByFilter(FilterDtoManage filterDto);
 }

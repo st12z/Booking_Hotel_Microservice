@@ -39,8 +39,6 @@ public class PropertyDto implements Serializable {
 
     private Double avgReviewScore;
 
-    private Boolean deleted;
-
     private Double distanceFromCenter;
 
     private Double distanceFromTrip;
@@ -60,8 +58,5 @@ public class PropertyDto implements Serializable {
     private int totalPayments;
 
     private int totalBills;
-<<<<<<< HEAD
+
 }
-=======
-}
->>>>>>> 510b51716d89e4c5a444a2eef2e5f9fad4f74684

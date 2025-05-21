@@ -2,9 +2,7 @@ package com.thuc.rooms.controller;
 
 
 import com.thuc.rooms.constants.PropertyConstant;
-import com.thuc.rooms.dto.PageResponseDto;
-import com.thuc.rooms.dto.PropertyDto;
-import com.thuc.rooms.dto.SuccessResponseDto;
+import com.thuc.rooms.dto.*;
 import com.thuc.rooms.service.IPropertyService;
 import jakarta.ws.rs.POST;
 import lombok.RequiredArgsConstructor;
@@ -73,18 +71,15 @@ public class PropertiesController {
                 .build();
         return ResponseEntity.ok(response);
     }
-    @GetMapping("/search")
+    @PostMapping("/filter")
     public ResponseEntity<
             SuccessResponseDto<PageResponseDto<List<PropertyDto>>>
-            > getPropertiesByKeyword(@RequestParam(defaultValue = "") String keyword,
-                                                                                        @RequestParam(defaultValue = "1") Integer pageNo,
-                                                                                        @RequestParam(defaultValue = "10") Integer pageSize
-    ) {
-        logger.debug("Request to get properties by  keyword {}", keyword);
+            > getPropertiesByFilter(@RequestBody FilterDtoManage filterDto) {
+        logger.debug("Request to get properties by  filterDto {}", filterDto);
         SuccessResponseDto<PageResponseDto<List<PropertyDto>>> response = SuccessResponseDto.<PageResponseDto<List<PropertyDto>>>builder()
                 .message(PropertyConstant.MESSAGE_200)
                 .code(PropertyConstant.STATUS_200)
-                .data(propertyService.getPropertiesByKeyword(keyword,pageNo,pageSize))
+                .data(propertyService.getPropertiesByFilter(filterDto))
                 .build();
         return ResponseEntity.ok(response);
     }

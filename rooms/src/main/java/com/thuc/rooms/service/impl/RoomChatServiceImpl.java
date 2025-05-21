@@ -2,6 +2,7 @@ package com.thuc.rooms.service.impl;
 
 import com.thuc.rooms.converter.RoomChatsConverter;
 import com.thuc.rooms.dto.RoomChatsDto;
+import com.thuc.rooms.entity.Chats;
 import com.thuc.rooms.entity.RoomChats;
 import com.thuc.rooms.exception.ResourceAlreadyExistsException;
 import com.thuc.rooms.exception.ResourceNotFoundException;
@@ -10,6 +11,8 @@ import com.thuc.rooms.service.IRoomChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,8 +22,17 @@ public class RoomChatServiceImpl implements IRoomChatService {
     private final RoomChatsRepository roomChatsRepository;
     @Override
     public List<RoomChatsDto> getRoomChatsOfUser(int userId) {
-        List<RoomChats> roomChats = roomChatsRepository.findByUserAIdOrUserBId(userId,userId);
-        return roomChats.stream().map(RoomChatsConverter::toRoomChatsDto).collect(Collectors.toList());
+        List<RoomChats> roomChats = roomChatsRepository.findByUserAIdOrUserBId(userId, userId);
+
+        return roomChats.stream()
+                .sorted(Comparator.comparing((RoomChats item) ->
+                        item.getChats().stream()
+                                .map(Chats::getCreatedAt)
+                                .max(Comparator.naturalOrder())
+                                .orElse(LocalDateTime.MIN)
+                ).reversed()) // sắp xếp giảm dần
+                .map(RoomChatsConverter::toRoomChatsDto)
+                .collect(Collectors.toList());
     }
 
     @Override

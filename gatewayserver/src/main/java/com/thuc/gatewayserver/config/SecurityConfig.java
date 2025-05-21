@@ -33,6 +33,7 @@ public class SecurityConfig {
                                         "/bookinghotel/bookings/api/bills/amount-bills-month",
                                         "/bookinghotel/bookings/api/bills/amount-revenue-today",
                                         "/bookinghotel/bookings/api/bills/amount-revenue-month",
+                                        "/bookinghotel/bookings/api/bills/amount-bills-property/**",
                                         "/bookinghotel/rooms/api/reviews/amount-reviews",
                                         "/bookinghotel/users/api/users/amount-visits-today",
                                         "/bookinghotel/users/api/users/amount-users",

@@ -5,6 +5,7 @@ import com.thuc.bookings.dto.responseDto.PageResponseDto;
 import com.thuc.bookings.dto.responseDto.StatisticBillByMonth;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IBillService {
 
@@ -22,4 +23,8 @@ public interface IBillService {
     List<StatisticBillByMonth> getAmountRevenueByMonth(Integer month);
 
     List<BillDto> getAllBillsRecently();
+
+    Map<Integer,Integer> getAmountBillsByPropertyIds(List<Integer> propertyIds);
+
+    Map<Integer,Integer> getAmountRevenueByPropertyIds(List<Integer> propertyIds);
 }

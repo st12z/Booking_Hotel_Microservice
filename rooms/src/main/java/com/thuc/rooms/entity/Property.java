@@ -51,8 +51,6 @@ public class Property extends BaseEntity {
     @Column(nullable = true)
     private Double distanceFromTrip;
 
-    private Boolean deleted;
-
     @ManyToOne
     @JoinColumn(name = "city_id")
     private City city;

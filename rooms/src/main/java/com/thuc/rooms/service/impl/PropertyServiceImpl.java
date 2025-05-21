@@ -1,9 +1,7 @@
 package com.thuc.rooms.service.impl;
 
 import com.thuc.rooms.converter.PropertyConverter;
-import com.thuc.rooms.dto.PageResponseDto;
-import com.thuc.rooms.dto.PropertyDto;
-import com.thuc.rooms.dto.SearchDto;
+import com.thuc.rooms.dto.*;
 import com.thuc.rooms.entity.City;
 import com.thuc.rooms.entity.Property;
 import com.thuc.rooms.entity.RoomType;
@@ -13,6 +11,10 @@ import com.thuc.rooms.repository.PropertyRepository;
 import com.thuc.rooms.repository.RoomTypeRepository;
 import com.thuc.rooms.service.IPropertyService;
 import com.thuc.rooms.service.IRedisPropertyService;
+import com.thuc.rooms.service.client.BillsFeignClient;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,9 +24,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,6 +35,9 @@ public class PropertyServiceImpl implements IPropertyService {
     private final Logger log = LoggerFactory.getLogger(PropertyServiceImpl.class);
     private final IRedisPropertyService redisPropertyService;
     private final RoomTypeRepository roomTypeRepository;
+    private final BillsFeignClient billsFeignClient;
+    @PersistenceContext
+    private EntityManager entityManager;
     @Override
     public List<PropertyDto> getAllPropertiesBySlugCity(String slugCity) {
         Optional<City> cityOptional = cityRepository.findBySlug(slugCity);
@@ -83,34 +86,75 @@ public class PropertyServiceImpl implements IPropertyService {
         return (int)propertyRepository.count();
     }
 
+
     @Override
-    public PageResponseDto<List<PropertyDto>> getAllProperties(Integer pageNo, Integer pageSize) {
-        Pageable pageable = PageRequest.of(pageNo-1, pageSize,Sort.by("id"));
-        Page<Property> page = propertyRepository.findAll(pageable);
-        List<PropertyDto> properties = page.getContent().stream().map(item->{
+    public PageResponseDto<List<PropertyDto>> getPropertiesByFilter(FilterDtoManage filterDto) {
+        int pageNo = filterDto.getPageNo();
+        int pageSize = filterDto.getPageSize();
+        String keyword =filterDto.getKeyword();
+        int topBill = filterDto.getTopBill();
+        int topRevenue = filterDto.getTopRevenue();
+        int rateStar = filterDto.getRateStar();
+        String propertyType = filterDto.getPropertyType();
+        StringBuilder builder = new StringBuilder("SELECT * FROM properties p WHERE 1=1 ");
+        if(rateStar!=0){
+            builder.append(" AND rating_star =:rateStar ");
+        }
+        if(propertyType!=null && !propertyType.isEmpty()){
+            builder.append(" AND p.property_type = :propertyType ");
+        }
+        if(keyword != null && !keyword.isEmpty()){
+            builder.append(" AND (unaccent(lower(p.property_type)) ILIKE unaccent(:keyword) " +
+                    " OR unaccent(lower(p.name)) ILIKE unaccent(:keyword) " +
+                    " OR EXISTS(SELECT 1 FROM cities c WHERE p.city_id=c.id AND unaccent(c.name) ILIKE unaccent(:keyword))) ");
+
+        }
+        builder.append(" ORDER BY p.id ");
+        Query query = entityManager.createNativeQuery(builder.toString(), Property.class);
+        if(rateStar!=0){
+            query.setParameter("rateStar", rateStar);
+        }
+        if(propertyType!=null && !propertyType.isEmpty()){
+            query.setParameter("propertyType", propertyType);
+        }
+        if(keyword != null && !keyword.isEmpty()){
+            query.setParameter("keyword",'%'+ keyword+'%');
+        }
+        List<Property> properties = query.getResultList();
+        List<Integer> propertyIds = properties.stream().map(Property::getId).toList();
+        Map<Integer,Integer> billMap = billsFeignClient.getBillByPropertyIds(propertyIds).getBody().getData();
+        Map<Integer,Integer> revenueMap = billsFeignClient.getRevenueByPropertyIds(propertyIds).getBody().getData();
+        List<PropertyDto> propertiesDtos = properties.stream().map(item->{
+            int propertyId = item.getId();
             PropertyDto propertyDto = PropertyConverter.toPropertyDto(item);
+            propertyDto.setTotalBills(billMap.get(propertyId));
+            propertyDto.setTotalPayments(revenueMap.get(propertyId));
             return propertyDto;
-        }).toList();
+        }).collect(Collectors.toList());
+        if(topBill!=0 ){
+            propertiesDtos.sort(Comparator.comparing(PropertyDto::getTotalBills).reversed());
+            if(topBill<propertiesDtos.size()){
+                propertiesDtos = propertiesDtos.subList(0, topBill);
+            }
+        }
+        if(topRevenue!=0 ){
+            propertiesDtos.sort(Comparator.comparing(PropertyDto::getTotalPayments).reversed());
+            if(topRevenue<propertiesDtos.size()){
+                propertiesDtos = propertiesDtos.subList(0, topRevenue);
+            }
+        }
+        int start = (pageNo-1) * pageSize;
+        int end = Math.min(start + pageSize, propertiesDtos.size());
+        propertiesDtos = propertiesDtos.subList(start, end);
         return PageResponseDto.<List<PropertyDto>>builder()
                 .pageNo(pageNo)
                 .pageSize(pageSize)
-                .total(page.getTotalElements())
-                .dataPage(properties)
+                .dataPage(propertiesDtos)
+                .total((long)properties.size())
                 .build();
     }
 
-    @Override
-    public PageResponseDto<List<PropertyDto>> getPropertiesByKeyword(String keyword, Integer pageNo, Integer pageSize) {
-        Pageable pageable = PageRequest.of(pageNo-1, pageSize,Sort.by("id"));
-        Page<Property> page = propertyRepository.findByKeyword('%'+keyword.toLowerCase()+'%',pageable);
-        List<PropertyDto> properties = page.getContent().stream().map(PropertyConverter::toPropertyDto).toList();
-        return PageResponseDto.<List<PropertyDto>>builder()
-                .pageNo(pageNo)
-                .pageSize(pageSize)
-                .total(page.getTotalElements())
-                .dataPage(properties)
-                .build();
-    }
+
 
 
 }

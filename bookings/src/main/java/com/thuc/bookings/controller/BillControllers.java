@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/bills")
@@ -91,6 +92,26 @@ public class BillControllers {
                 .code(BookingConstant.STATUS_200)
                 .message(BookingConstant.MESSAGE_200)
                 .data(billService.getAllBillsRecently())
+                .build();
+        return ResponseEntity.ok(response);
+    }
+    @GetMapping("/amount-bills-property")
+    public ResponseEntity<SuccessResponseDto<Map<Integer,Integer>>> getBillByPropertyIds(@RequestParam List<Integer> propertyIds) {
+        log.debug("getBillByPropertyId propertyIds={}", propertyIds);
+        SuccessResponseDto<Map<Integer,Integer>> response = SuccessResponseDto.<Map<Integer,Integer>>builder()
+                .code(BookingConstant.STATUS_200)
+                .message(BookingConstant.MESSAGE_200)
+                .data(billService.getAmountBillsByPropertyIds(propertyIds))
+                .build();
+        return ResponseEntity.ok(response);
+    }
+    @GetMapping("/amount-revenue-property")
+    public ResponseEntity<SuccessResponseDto<Map<Integer,Integer>>> getRevenueByPropertyIds(@RequestParam List<Integer> propertyIds) {
+        log.debug("getRevenueByPropertyId propertyId={}", propertyIds);
+        SuccessResponseDto<Map<Integer,Integer>> response = SuccessResponseDto.<Map<Integer,Integer>>builder()
+                .code(BookingConstant.STATUS_200)
+                .message(BookingConstant.MESSAGE_200)
+                .data(billService.getAmountRevenueByPropertyIds(propertyIds))
                 .build();
         return ResponseEntity.ok(response);
     }

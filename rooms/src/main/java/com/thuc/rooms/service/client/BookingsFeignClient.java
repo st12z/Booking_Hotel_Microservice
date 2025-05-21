@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-@FeignClient(name = "bookings",path = "/api/bookingrooms")
+@FeignClient(name = "bookings",contextId = "bookingsClient",path = "/api/bookingrooms")
 public interface BookingsFeignClient {
     @GetMapping("")
     public ResponseEntity<SuccessResponseDto<List<BookingRoomsDto>>> getBookingRooms(@RequestParam(required = false) Integer roomTypeId,

@@ -20,9 +20,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.*;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -107,6 +105,27 @@ public class BillServiceImpl implements IBillService {
         return billRepository.findAll().stream().sorted(Comparator.comparing(Bill::getCreatedAt).reversed())
                 .limit(6)
                 .map(BillConverter::toBillDto).toList();
+    }
+
+    @Override
+    public Map<Integer,Integer> getAmountBillsByPropertyIds(List<Integer> propertyIds) {
+        Map<Integer,Integer> result = new HashMap<>();
+        for(Integer propertyId:propertyIds){
+            Integer amount = billRepository.countByPropertyId(propertyId)==null ? 0 : billRepository.countByPropertyId(propertyId);
+            result.put(propertyId,amount);
+        }
+        return result;
+    }
+
+    @Override
+    public Map<Integer,Integer> getAmountRevenueByPropertyIds(List<Integer> propertyIds) {
+        Map<Integer,Integer> result = new HashMap<>();
+        for(Integer propertyId:propertyIds){
+            List<Bill> bills = billRepository.findByPropertyId(propertyId);
+            Integer total = bills.stream().mapToInt(Bill::getNewTotalPayment).sum();
+            result.put(propertyId,total);
+        }
+        return result;
     }
 
 }

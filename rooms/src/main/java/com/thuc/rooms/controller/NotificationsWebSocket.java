@@ -82,5 +82,14 @@ public class NotificationsWebSocket {
         }
         return null;
     }
+    @MessageMapping("/sendNotifyMessage")
+    public void sendNotifyMessage(@Payload String message) {
+        try{
+            log.debug("sendNotifyMessage :{}", message);
+            messagingTemplate.convertAndSendToUser("manager@gmail.com", "/queue/notifymessage", message);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
 }

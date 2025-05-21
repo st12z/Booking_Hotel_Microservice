@@ -17,13 +17,16 @@ public interface PropertyRepository extends JpaRepository<Property,Integer> {
     Property findBySlug(String slug);
 
     @Query(value = "SELECT * FROM properties p " +
-            "WHERE unaccent(lower(p.name)) ILIKE unaccent(:keyword) " +
-            "OR unaccent(lower(p.property_type)) ILIKE unaccent(:keyword) " +
-            "OR EXISTS(SELECT 1 FROM properties p1 join cities c on p1.city_id=c.id WHERE unaccent(c.name) ILIKE unaccent(:keyword))",
+            "WHERE unaccent(lower(p.name)) ILIKE unaccent(:keyword) AND rating_star ILIKE rateStar AND p.property_type ILIKE :propertyType " +
+            "AND( unaccent(lower(p.property_type)) ILIKE unaccent(:keyword) " +
+            "OR EXISTS(SELECT 1 FROM properties p1 join cities c on p1.city_id=c.id WHERE unaccent(c.name) ILIKE unaccent(:keyword)))",
             countQuery = "SELECT count(*) FROM properties p " +
-                    "WHERE unaccent(lower(p.name)) ILIKE unaccent(:keyword) " +
-                    "OR unaccent(lower(p.property_type)) ILIKE unaccent(:keyword) "+
+                    "WHERE unaccent(lower(p.name)) ILIKE unaccent(:keyword) AND rating_star=:rateStar AND p.property_type ILIKE :propertyType " +
+                    "AND (unaccent(lower(p.property_type)) ILIKE unaccent(:keyword) "+
                     "OR EXISTS(SELECT 1 FROM cities c  WHERE p.city_id=c.id AND unaccent(c.name) ILIKE unaccent(:keyword))",
             nativeQuery = true)
-    Page<Property> findByKeyword(@Param("keyword") String keyword, Pageable pageable);
+    Page<Property> findByKeyword(@Param("keyword") String keyword,
+                                 @Param("rateStar") int rateStar,
+                                 @Param("propertyType") String propertyType,
+                                 Pageable pageable);
 }

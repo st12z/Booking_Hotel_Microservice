@@ -21,8 +21,8 @@ public class Facilities {
     private String name;
 
     @ManyToMany
-    @JoinTable(name="property_facilities",joinColumns = @JoinColumn(name = "property_id"),
-        inverseJoinColumns = @JoinColumn(name="facility_id")
+    @JoinTable(name="property_facilities",joinColumns = @JoinColumn(name="facility_id"),
+        inverseJoinColumns = @JoinColumn(name="property_id")
     )
     private List<Property> properties;
 }
