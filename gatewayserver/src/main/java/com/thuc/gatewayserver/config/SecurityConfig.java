@@ -47,11 +47,13 @@ public class SecurityConfig {
                                         "/bookinghotel/bookings/api/bookingcars/**",
                                         "/bookinghotel/bookings/api/bookings/**",
                                         "/bookinghotel/bookings/api/vehicles/**",
-                                        "/bookinghotel/payments/api/payments/**",
                                         "/bookinghotel/rooms/api/chats/**",
                                         "/bookinghotel/rooms/api/reviews/**",
                                         "/bookinghotel/rooms/api/upload/**",
-                                        "/bookinghotel/rooms/api/room-chats/**")
+                                        "/bookinghotel/rooms/api/room-chats/**",
+                                        "/bookinghotel/payments/api/payments/refund/**",
+                                        "/bookinghotel/payments/api/payments/get-url/**"
+                                )
                                 .hasAnyRole("ADMIN","MANAGER","STAFF","USER")
                                 .anyExchange().permitAll()
                 )

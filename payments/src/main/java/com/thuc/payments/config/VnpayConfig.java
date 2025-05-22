@@ -44,7 +44,7 @@ public class VnpayConfig {
         config.put("vnp_OrderType", orderType);
         config.put("vnp_CurrCode","VND");
         config.put("vnp_TxnRef", VnpayUtil.getRandomString(8));
-        config.put("vnp_OrderInfo","Thanh toán đặt phòng:");
+        config.put("vnp_OrderInfo","Payment for booking:");
         config.put("vnp_Locale","vn");
         config.put("vnp_BankCode","NCB");
         String ipAddress = VnpayUtil.getIpAddress(request);

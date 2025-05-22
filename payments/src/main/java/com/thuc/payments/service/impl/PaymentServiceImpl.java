@@ -2,15 +2,24 @@ package com.thuc.payments.service.impl;
 
 
 import com.thuc.payments.config.VnpayConfig;
+import com.thuc.payments.config.VnpayRefundConfig;
 import com.thuc.payments.dto.BookingDto;
 import com.thuc.payments.dto.PaymentResponseDto;
+import com.thuc.payments.entity.PaymentTransaction;
+import com.thuc.payments.exception.ResourceNotFoundException;
+import com.thuc.payments.repository.PaymentTransactionRepository;
 import com.thuc.payments.service.IPaymentService;
 import com.thuc.payments.utils.VnpayUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -20,7 +29,10 @@ import java.util.*;
 @RequiredArgsConstructor
 public class PaymentServiceImpl implements IPaymentService {
     private final VnpayConfig vnpayConfig;
+    private final VnpayRefundConfig vnpayRefundConfig;
     private final Logger log = LoggerFactory.getLogger(PaymentServiceImpl.class);
+    private final PaymentTransactionRepository paymentTransactionRepository;
+    private final Logger logger = LoggerFactory.getLogger(PaymentServiceImpl.class);
     @Override
     public PaymentResponseDto getUrlPayment(HttpServletRequest request, BookingDto bookingDto) {
         Map<String,String> params = vnpayConfig.getVNPayConfig(request);
@@ -68,5 +80,48 @@ public class PaymentServiceImpl implements IPaymentService {
                 .billCode(params.get("vnp_TxnRef"))
                 .paymentUrl(paymentUrl)
                 .build();
+    }
+
+    @Override
+    public String refund(HttpServletRequest request, String billCode) {
+
+
+        PaymentTransaction paymentTransaction = paymentTransactionRepository.findByVnpTxnRef(billCode);
+        if (paymentTransaction == null) {
+            throw new ResourceNotFoundException("PaymentTransaction", "vnpTxnRef", billCode);
+        }
+        LinkedHashMap<String, String> params = vnpayRefundConfig.getVNPayRefundConfig(request,paymentTransaction);
+        List fieldNames = new ArrayList(params.keySet());
+        StringBuilder hashData = new StringBuilder();
+        Iterator itr = fieldNames.iterator();
+        while (itr.hasNext()) {
+            String fieldName = (String) itr.next();
+            String fieldValue = (String) params.get(fieldName);
+            if ("vnp_SecureHash".equals(fieldName)) continue;
+            if ((fieldValue != null) && (!fieldValue.isEmpty())) {
+                // Build hash data
+                hashData.append(fieldValue);
+                if (itr.hasNext()) {
+                    hashData.append('|');
+                }
+            }
+        }
+        log.debug("hashData: hashData={}", hashData.toString());
+        String vnp_SecureHash = VnpayUtil.hmacSHA512(vnpayConfig.getSecretKey(), hashData.toString());
+        params.put("vnp_SecureHash", vnp_SecureHash);
+        logger.debug("params: params={}", params);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<Map<String, String>> requestEntity = new HttpEntity<>(params, headers);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.postForEntity(
+                vnpayRefundConfig.getVnp_RefundUrl(),
+                requestEntity,
+                String.class
+        );
+
+        String responseBody = response.getBody();
+        return responseBody;
     }
 }

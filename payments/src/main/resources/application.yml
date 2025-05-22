@@ -1,6 +1,21 @@
 spring:
   application:
     name: payments
+  datasource:
+    url: jdbc:postgresql://localhost:5432/booking-hotel
+    username: postgres
+    password: Anhthucdz1234!
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      # Cấu hình tối ưu cho Connection Pool
+      minimum-idle: 5         # Số kết nối tối thiểu luôn tồn tại trong pool
+      maximum-pool-size: 20   # Số kết nối tối đa trong pool
+      idle-timeout: 300000    # Thời gian tối đa (ms) cho các kết nối không hoạt động trước khi đóng (5 phút)
+      max-lifetime: 1800000   # Thời gian tối đa (ms) sống của kết nối (30 phút)
+      connection-timeout: 30000 # Thời gian tối đa (ms) để nhận được kết nối từ pool (30 giây)
+      validation-timeout: 5000 # Thời gian tối đa (ms) để kiểm tra tính hợp lệ của kết nối (5 giây)
+      leak-detection-threshold: 15000 # Thời gian (ms) để phát hiện rò rỉ kết nối (15 giây)
+      connection-test-query: SELECT 1 # Câu truy vấn để kiểm tra tính hợp lệ của kết nối
   cloud:
     stream:
       bindings:
@@ -30,7 +45,13 @@ payment:
     vnp_Version: 2.1.0
     vnp_Command: pay
     orderType: other
-
+refund:
+  vnpay:
+    vnp_RefundUrl: https://sandbox.vnpayment.vn/merchant_webapi/api/transaction
+    vnp_Version: 2.1.0
+    vnp_Command: refund
+    vnp_TmnCode: 58X4B4HP
+    secretKey: VRLDWNVWDNPCOEPBZUTWSEDQAGXJCNGZ
 
 server:
   port: 8083

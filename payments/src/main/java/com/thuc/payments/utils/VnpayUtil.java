@@ -36,7 +36,7 @@ public class VnpayUtil {
             return sb.toString();
 
         } catch (Exception ex) {
-            return "";
+            throw new RuntimeException("Error while generating HMAC SHA512", ex);
         }
     }
     public static String getIpAddress(HttpServletRequest request){

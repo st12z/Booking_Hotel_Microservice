@@ -7,4 +7,6 @@ import jakarta.servlet.http.HttpServletRequest;
 
 public interface IPaymentService {
     public PaymentResponseDto getUrlPayment(HttpServletRequest request, BookingDto bookingDto);
+
+    String refund(HttpServletRequest request, String billCode);
 }
