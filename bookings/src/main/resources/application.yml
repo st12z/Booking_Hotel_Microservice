@@ -22,12 +22,17 @@ spring:
       timeout: 5s
   cloud:
     function:
-      definition: sendPayment
+      definition: sendPayment; sendRefund
     stream:
       bindings:
         sendPayment-in-0:
           destination: send-update-status
           group: ${spring.application.name}
+        sendRefund-in-0:
+          destination: send-refund-status
+          group: ${spring.application.name}
+        sendRefund-out-0:
+          destination: send-refund-bill
         sendPayment-out-0:
           destination: send-confirm-bill
 

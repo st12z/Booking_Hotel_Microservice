@@ -3,7 +3,7 @@ spring:
     name: messages
   cloud:
     function:
-      definition: sendEmailCreateAccount; sendEmailConfirmBill
+      definition: sendEmailCreateAccount; sendEmailConfirmBill ; sendEmailRefundBill
     stream:
       bindings:
         sendEmailCreateAccount-in-0:
@@ -28,8 +28,20 @@ spring:
             default-retryable: true # retry tất cả lỗi
             retryable-exceptions:
               java.lang.RuntimeException: true
+        sendEmailRefundBill-in-0:
+          destination: send-refund-bill
+          group: ${spring.application.name}
+          consumer:
+            max-attempts: 3 #
+            back-off-initial-interval: 2000 # đợi 2s retry lần đaầu
+            back-off-multiplier: 2.0 # x2 khi retry
+            default-retryable: true # retry tất cả lỗi
+            retryable-exceptions:
+              java.lang.RuntimeException: true
         sendEmailConfirmBill-out-0:
           destination: confirm-bill-send
+        sendEmailRefundBill-out-0:
+          destination: refund-bill-send
 
   mail:
     host: smtp.gmail.com

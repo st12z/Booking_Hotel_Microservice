@@ -21,6 +21,8 @@ spring:
       bindings:
         sendPayment-out-0:
           destination: send-update-status
+        sendRefund-out-0:
+          destination: send-refund-status
   rabbitmq:
     username: guest
     password: guest

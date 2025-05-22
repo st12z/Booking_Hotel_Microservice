@@ -1,19 +1,25 @@
 package com.thuc.payments.service.impl;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thuc.payments.config.VnpayConfig;
 import com.thuc.payments.config.VnpayRefundConfig;
 import com.thuc.payments.dto.BookingDto;
 import com.thuc.payments.dto.PaymentResponseDto;
+import com.thuc.payments.dto.VnpayRefundResponseDto;
 import com.thuc.payments.entity.PaymentTransaction;
 import com.thuc.payments.exception.ResourceNotFoundException;
 import com.thuc.payments.repository.PaymentTransactionRepository;
 import com.thuc.payments.service.IPaymentService;
+import com.thuc.payments.utils.TransactionType;
 import com.thuc.payments.utils.VnpayUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -23,6 +29,8 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 @Service
@@ -33,6 +41,7 @@ public class PaymentServiceImpl implements IPaymentService {
     private final Logger log = LoggerFactory.getLogger(PaymentServiceImpl.class);
     private final PaymentTransactionRepository paymentTransactionRepository;
     private final Logger logger = LoggerFactory.getLogger(PaymentServiceImpl.class);
+    private final StreamBridge streamBridge;
     @Override
     public PaymentResponseDto getUrlPayment(HttpServletRequest request, BookingDto bookingDto) {
         Map<String,String> params = vnpayConfig.getVNPayConfig(request);
@@ -83,45 +92,81 @@ public class PaymentServiceImpl implements IPaymentService {
     }
 
     @Override
-    public String refund(HttpServletRequest request, String billCode) {
-
-
-        PaymentTransaction paymentTransaction = paymentTransactionRepository.findByVnpTxnRef(billCode);
-        if (paymentTransaction == null) {
-            throw new ResourceNotFoundException("PaymentTransaction", "vnpTxnRef", billCode);
-        }
-        LinkedHashMap<String, String> params = vnpayRefundConfig.getVNPayRefundConfig(request,paymentTransaction);
-        List fieldNames = new ArrayList(params.keySet());
-        StringBuilder hashData = new StringBuilder();
-        Iterator itr = fieldNames.iterator();
-        while (itr.hasNext()) {
-            String fieldName = (String) itr.next();
-            String fieldValue = (String) params.get(fieldName);
-            if ("vnp_SecureHash".equals(fieldName)) continue;
-            if ((fieldValue != null) && (!fieldValue.isEmpty())) {
-                // Build hash data
-                hashData.append(fieldValue);
-                if (itr.hasNext()) {
-                    hashData.append('|');
+    public VnpayRefundResponseDto refund(HttpServletRequest request, String billCode) throws JsonProcessingException {
+            ObjectMapper objectMapper = new ObjectMapper();
+            PaymentTransaction paymentTransaction = paymentTransactionRepository.
+                    findByVnpTxnRefAndTransactionType(billCode,TransactionType.PAYMENT);
+            if (paymentTransaction == null) {
+                throw new ResourceNotFoundException("PaymentTransaction", "vnpTxnRef", billCode);
+            }
+            long days = ChronoUnit.DAYS.between(paymentTransaction.getCreatedAt(), LocalDateTime.now());
+            if(days>3){
+                throw new RuntimeException("Payment transaction refund time is too long");
+            }
+            LinkedHashMap<String, String> params = new LinkedHashMap<>();
+            if(days<=2){
+                params = vnpayRefundConfig.getVNPayRefundConfig(request,paymentTransaction,2);
+            }
+            else{
+                params = vnpayRefundConfig.getVNPayRefundConfig(request,paymentTransaction,3);
+            }
+            List fieldNames = new ArrayList(params.keySet());
+            StringBuilder hashData = new StringBuilder();
+            Iterator itr = fieldNames.iterator();
+            while (itr.hasNext()) {
+                String fieldName = (String) itr.next();
+                String fieldValue = (String) params.get(fieldName);
+                if ("vnp_SecureHash".equals(fieldName)) continue;
+                if ((fieldValue != null) && (!fieldValue.isEmpty())) {
+                    // Build hash data
+                    hashData.append(fieldValue);
+                    if (itr.hasNext()) {
+                        hashData.append('|');
+                    }
                 }
             }
-        }
-        log.debug("hashData: hashData={}", hashData.toString());
-        String vnp_SecureHash = VnpayUtil.hmacSHA512(vnpayConfig.getSecretKey(), hashData.toString());
-        params.put("vnp_SecureHash", vnp_SecureHash);
-        logger.debug("params: params={}", params);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+            log.debug("hashData: hashData={}", hashData.toString());
+            String vnp_SecureHash = VnpayUtil.hmacSHA512(vnpayConfig.getSecretKey(), hashData.toString());
+            params.put("vnp_SecureHash", vnp_SecureHash);
+            logger.debug("params: params={}", params);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<Map<String, String>> requestEntity = new HttpEntity<>(params, headers);
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> response = restTemplate.postForEntity(
-                vnpayRefundConfig.getVnp_RefundUrl(),
-                requestEntity,
-                String.class
-        );
+            HttpEntity<Map<String, String>> requestEntity = new HttpEntity<>(params, headers);
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<String> response = restTemplate.postForEntity(
+                    vnpayRefundConfig.getVnp_RefundUrl(),
+                    requestEntity,
+                    String.class
+            );
 
-        String responseBody = response.getBody();
-        return responseBody;
+
+            String responseBody = response.getBody();
+            VnpayRefundResponseDto vnpayRefundResponseDto = objectMapper.readValue(responseBody, VnpayRefundResponseDto.class);
+            PaymentTransaction existPaymentTransaction = paymentTransactionRepository.findByVnpTxnRefAndTransactionType(paymentTransaction.getVnpTxnRef(), TransactionType.REFUND);
+            if(existPaymentTransaction==null &&vnpayRefundResponseDto.getVnp_ResponseCode().equals("00")){
+                PaymentTransaction paymentTransactionRefund = PaymentTransaction.builder()
+                        .vnpTransactionNo(paymentTransaction.getVnpTransactionNo())
+                        .vnpAmount(paymentTransaction.getVnpAmount()/100)
+                        .vnpResponseCode(paymentTransaction.getVnpResponseCode())
+                        .vnpTransactionDate(paymentTransaction.getVnpTransactionDate())
+                        .vnpTxnRef(paymentTransaction.getVnpTxnRef())
+                        .transactionType(TransactionType.REFUND)
+                        .build();
+                paymentTransactionRepository.save(paymentTransactionRefund);
+                log.debug("send refund callback :{}", paymentTransactionRefund.getVnpTxnRef());
+                var result = streamBridge.send("sendRefund-out-0",paymentTransactionRefund.getVnpTxnRef());
+                log.debug("Receive payment callback :{}",result);
+            }
+            return VnpayRefundResponseDto.builder()
+                    .vnp_ResponseCode(vnpayRefundResponseDto.getVnp_ResponseCode())
+                    .vnp_Message(vnpayRefundResponseDto.getVnp_Message())
+                    .vnp_Amount(vnpayRefundResponseDto.getVnp_Amount()/100)
+                    .vnp_TransactionStatus(vnpayRefundResponseDto.getVnp_TransactionStatus())
+                    .vnp_OrderInfo(vnpayRefundResponseDto.getVnp_OrderInfo())
+                    .vnp_PayDate(vnpayRefundResponseDto.getVnp_PayDate())
+                    .vnp_TxnRef(vnpayRefundResponseDto.getVnp_TxnRef())
+                    .vnp_TransactionType(vnpayRefundResponseDto.getVnp_TransactionType())
+                    .build();
     }
 }

@@ -1,9 +1,11 @@
 package com.thuc.payments.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.thuc.payments.constant.PaymentConstant;
 import com.thuc.payments.dto.BookingDto;
 import com.thuc.payments.dto.PaymentResponseDto;
 import com.thuc.payments.dto.SuccessResponseDto;
+import com.thuc.payments.dto.VnpayRefundResponseDto;
 import com.thuc.payments.service.IPaymentService;
 import com.thuc.payments.service.IPaymentTransactionService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,9 +38,9 @@ public class PaymentControllers {
         return ResponseEntity.ok(response);
     }
     @GetMapping("/refund/{billCode}")
-    public ResponseEntity<SuccessResponseDto<String>> refund(HttpServletRequest request, @PathVariable String billCode) {
+    public ResponseEntity<SuccessResponseDto<VnpayRefundResponseDto>> refund(HttpServletRequest request, @PathVariable String billCode) throws JsonProcessingException {
         log.debug("Request to refund payment url : {}", request);
-        SuccessResponseDto<String> response = SuccessResponseDto.<String>builder()
+        SuccessResponseDto<VnpayRefundResponseDto> response = SuccessResponseDto.<VnpayRefundResponseDto>builder()
                 .code(PaymentConstant.STATUS_200)
                 .message(PaymentConstant.MESSAGE_200)
                 .data(paymentService.refund(request,billCode))

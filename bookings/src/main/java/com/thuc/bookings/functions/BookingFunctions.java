@@ -32,4 +32,13 @@ public class BookingFunctions {
             return BillConverter.toBillDto(bill);
         };
     }
+    @Bean
+    public Function<String, BillDto> sendRefund(){
+        return billCode->{
+            log.debug("Sending refund for order code: {}", billCode);
+            bookingService.updateBillStatus(billCode,BillStatus.CANCEL);
+            Bill bill = billRepository.findByBillCode(billCode);
+            return BillConverter.toBillDto(bill);
+        };
+    }
 }

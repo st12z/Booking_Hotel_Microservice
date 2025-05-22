@@ -77,4 +77,50 @@ public class MessageFunctions {
           }
         };
     }
+    @Bean
+    public Function<BillDto,String> sendEmailRefundBill(){
+        return billDto->{
+            try {
+                log.debug("send email with billDto={}", billDto.toString());
+                String subject = "Thông tin hủy phòng";
+                String content = "<h3>Thông tin chi tiết về hủy phòng" +
+                        "<table border='1'>\n" +
+                        "    <thead>\n" +
+                        "      <tr>\n" +
+                        "        <th>Mã hóa đơn</th>\n" +
+                        "        <th>Họ tên</th>\n" +
+                        "        <th>Tên</th>\n" +
+                        "        <th>Email</th>\n" +
+                        "        <th>Số điện thoại</th>\n" +
+                        "        <th>Huyện</th>\n" +
+                        "        <th>Thành phố</th>\n" +
+                        "        <th>Quốc gia</th>\n" +
+                        "        <th>Địa chỉ chi tiết</th>\n" +
+                        "        <th>Tổng tiền</th>\n" +
+                        "        <th>Trạng thái</th>\n" +
+                        "      </tr>\n" +
+                        "    </thead>\n" +
+                        "    <tbody>\n" +
+                        "      <tr>\n" +
+                        "        <td>" + billDto.billCode() + "</td>\n" +
+                        "        <td>" + billDto.firstName() + "</td>\n" +
+                        "        <td>" + billDto.lastName() + "</td>\n" +
+                        "        <td>" + billDto.email() + "</td>\n" +
+                        "        <td>" + billDto.phoneNumber() + "</td>\n" +
+                        "        <td>" + billDto.district() + "</td>\n" +
+                        "        <td>" + billDto.city() + "</td>\n" +
+                        "        <td>" + billDto.country() + "</td>\n" +
+                        "        <td>" + billDto.addressDetail() + "</td>\n" +
+                        "        <td>" + billDto.originTotalPayment() + "</td>\n" +
+                        "        <td>" + billDto.billStatus() + "</td>\n" +
+                        "        <tr>\n" +
+                        "  </table>";
+                mailSender.sendMail(billDto.email(),content,subject);
+                return "Gửi mail thành công";
+            }catch (Exception e){
+                log.debug("send email failed with {}", billDto.toString());
+                throw new RuntimeException(e);
+            }
+        };
+    }
 }
