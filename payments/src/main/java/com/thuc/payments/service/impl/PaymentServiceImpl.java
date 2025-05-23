@@ -8,6 +8,7 @@ import com.thuc.payments.config.VnpayConfig;
 import com.thuc.payments.config.VnpayRefundConfig;
 import com.thuc.payments.dto.BookingDto;
 import com.thuc.payments.dto.PaymentResponseDto;
+import com.thuc.payments.dto.RefundBillDto;
 import com.thuc.payments.dto.VnpayRefundResponseDto;
 import com.thuc.payments.entity.PaymentTransaction;
 import com.thuc.payments.exception.ResourceNotFoundException;
@@ -94,6 +95,7 @@ public class PaymentServiceImpl implements IPaymentService {
     @Override
     public VnpayRefundResponseDto refund(HttpServletRequest request, String billCode) throws JsonProcessingException {
             ObjectMapper objectMapper = new ObjectMapper();
+            String email = request.getHeader("X-User-Email");
             PaymentTransaction paymentTransaction = paymentTransactionRepository.
                     findByVnpTxnRefAndTransactionType(billCode,TransactionType.PAYMENT);
             if (paymentTransaction == null) {
@@ -146,16 +148,33 @@ public class PaymentServiceImpl implements IPaymentService {
             PaymentTransaction existPaymentTransaction = paymentTransactionRepository.findByVnpTxnRefAndTransactionType(paymentTransaction.getVnpTxnRef(), TransactionType.REFUND);
             if(existPaymentTransaction==null &&vnpayRefundResponseDto.getVnp_ResponseCode().equals("00")){
                 PaymentTransaction paymentTransactionRefund = PaymentTransaction.builder()
-                        .vnpTransactionNo(paymentTransaction.getVnpTransactionNo())
-                        .vnpAmount(paymentTransaction.getVnpAmount()/100)
-                        .vnpResponseCode(paymentTransaction.getVnpResponseCode())
-                        .vnpTransactionDate(paymentTransaction.getVnpTransactionDate())
-                        .vnpTxnRef(paymentTransaction.getVnpTxnRef())
+                        .vnpTransactionNo(vnpayRefundResponseDto.getVnp_TransactionNo())
+                        .vnpAmount(vnpayRefundResponseDto.getVnp_Amount()/100)
+                        .vnpResponseCode(vnpayRefundResponseDto.getVnp_ResponseCode())
+                        .vnpTransactionDate(vnpayRefundResponseDto.getVnp_PayDate())
+                        .vnpTxnRef(vnpayRefundResponseDto.getVnp_TxnRef())
                         .transactionType(TransactionType.REFUND)
                         .build();
+                RefundBillDto refundBillDto = RefundBillDto.builder()
+                        .vnp_Command(vnpayRefundResponseDto.getVnp_Command())
+                        .vnp_BankCode(vnpayRefundResponseDto.getVnp_BankCode())
+                        .vnp_TransactionNo(paymentTransaction.getVnpTransactionNo())
+                        .vnp_ResponseId(vnpayRefundResponseDto.getVnp_ResponseId())
+                        .vnp_TmnCode(vnpayRefundResponseDto.getVnp_TmnCode())
+                        .vnp_Amount(vnpayRefundResponseDto.getVnp_Amount()/100)
+                        .vnp_Message(vnpayRefundResponseDto.getVnp_Message())
+                        .vnp_TransactionStatus(vnpayRefundResponseDto.getVnp_TransactionStatus())
+                        .vnp_OrderInfo(vnpayRefundResponseDto.getVnp_OrderInfo())
+                        .vnp_PayDate(vnpayRefundResponseDto.getVnp_PayDate())
+                        .vnp_ResponseCode(vnpayRefundResponseDto.getVnp_ResponseCode())
+                        .vnp_SecureHash(vnpayRefundResponseDto.getVnp_SecureHash())
+                        .vnp_TransactionType(vnpayRefundResponseDto.getVnp_TransactionType())
+                        .vnp_TxnRef(vnpayRefundResponseDto.getVnp_TxnRef())
+                        .email(email)
+                        .build();
                 paymentTransactionRepository.save(paymentTransactionRefund);
-                log.debug("send refund callback :{}", paymentTransactionRefund.getVnpTxnRef());
-                var result = streamBridge.send("sendRefund-out-0",paymentTransactionRefund.getVnpTxnRef());
+                log.debug("send refund callback :{}", refundBillDto);
+                var result = streamBridge.send("sendRefund-out-0",refundBillDto);
                 log.debug("Receive payment callback :{}",result);
             }
             return VnpayRefundResponseDto.builder()

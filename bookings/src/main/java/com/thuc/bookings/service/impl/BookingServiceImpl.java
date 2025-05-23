@@ -1,17 +1,11 @@
 package com.thuc.bookings.service.impl;
 
-import com.thuc.bookings.converter.BillConverter;
-import com.thuc.bookings.converter.BookingCarsConverter;
-import com.thuc.bookings.converter.BookingRoomsConverter;
-import com.thuc.bookings.converter.VehicleConverter;
+import com.thuc.bookings.converter.*;
 import com.thuc.bookings.dto.requestDto.BookingCarsRequestDto;
 import com.thuc.bookings.dto.requestDto.BookingDto;
 import com.thuc.bookings.dto.requestDto.BookingRoomTypeDto;
 import com.thuc.bookings.dto.responseDto.*;
-import com.thuc.bookings.entity.Bill;
-import com.thuc.bookings.entity.BookingCars;
-import com.thuc.bookings.entity.BookingRooms;
-import com.thuc.bookings.entity.Vehicles;
+import com.thuc.bookings.entity.*;
 import com.thuc.bookings.exception.ResourceNotFoundException;
 import com.thuc.bookings.repository.BillRepository;
 import com.thuc.bookings.repository.BookingCarsRepository;
@@ -89,6 +83,7 @@ public class BookingServiceImpl implements IBookingService {
         bill.setBillStatus(status);
         billRepository.save(bill);
     }
+
 
     @Override
     public void removeHoldInRedis(String billCode) {
@@ -168,6 +163,8 @@ public class BookingServiceImpl implements IBookingService {
             return BookingCarsConverter.toBookingCarsResponseDto(bookingCar,vehicleDto);
         }).toList();
     }
+
+
 
     private List<Integer> findRoomNumber(BookingRoomTypeDto bookingRoomTypeDto, int propertyId) {
         ResponseEntity<SuccessResponseDto<List<Integer>>> response = roomsFeignClient.availableRooms(bookingRoomTypeDto,propertyId);

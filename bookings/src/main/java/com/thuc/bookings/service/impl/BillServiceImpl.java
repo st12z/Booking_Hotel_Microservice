@@ -5,8 +5,10 @@ import com.thuc.bookings.dto.responseDto.BillDto;
 import com.thuc.bookings.dto.responseDto.PageResponseDto;
 import com.thuc.bookings.dto.responseDto.StatisticBillByMonth;
 import com.thuc.bookings.entity.Bill;
+import com.thuc.bookings.entity.RefundBill;
 import com.thuc.bookings.exception.ResourceNotFoundException;
 import com.thuc.bookings.repository.BillRepository;
+import com.thuc.bookings.repository.RefundBillRepository;
 import com.thuc.bookings.service.IBillService;
 import com.thuc.bookings.utils.BillStatus;
 import jakarta.persistence.EntityManager;
@@ -27,7 +29,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class BillServiceImpl implements IBillService {
     private final BillRepository billRepository;
-
+    private final RefundBillRepository refundBillRepository;
     @PersistenceContext
     private EntityManager entityManager;
     @Override
@@ -58,7 +60,7 @@ public class BillServiceImpl implements IBillService {
         LocalDate today = LocalDate.now();
         LocalDateTime startOfDay = today.atStartOfDay();
         LocalDateTime endOfDay = today.atTime(LocalTime.MAX);
-        return (int) billRepository.countByCreatedAt(startOfDay,endOfDay);
+        return (int) billRepository.countByCreatedAtAndBillStatus(startOfDay,endOfDay,BillStatus.SUCCESS);
     }
 
     @Override
@@ -66,7 +68,11 @@ public class BillServiceImpl implements IBillService {
         LocalDate today = LocalDate.now();
         LocalDateTime startOfDay = today.atStartOfDay();
         LocalDateTime endOfDay = today.atTime(LocalTime.MAX);
-        return  billRepository.getTotalPaymentToday(startOfDay,endOfDay) !=null ? billRepository.getTotalPaymentToday(startOfDay,endOfDay):0 ;
+        int totalRevenue=  billRepository.getTotalPaymentToday(startOfDay,endOfDay) !=null ?
+                billRepository.getTotalPaymentToday(startOfDay,endOfDay):0 ;
+        int totalRefund = refundBillRepository.getTotalRefundToday(startOfDay,endOfDay) != null ?
+                refundBillRepository.getTotalRefundToday(startOfDay,endOfDay) : 0;
+        return totalRevenue-totalRefund;
     }
 
     @Override
@@ -78,7 +84,7 @@ public class BillServiceImpl implements IBillService {
         for(int i=1;i<=daysInMonth;i++){
             LocalDateTime startOfDay = LocalDateTime.of(currentYear.getValue(),month,i,0,0,0);
             LocalDateTime endOfDay = LocalDateTime.of(currentYear.getValue(),month,i,23,59,59,999_999_999);
-            int total=billRepository.countByCreatedAt(startOfDay,endOfDay);
+            int total=billRepository.countByCreatedAtAndBillStatus(startOfDay,endOfDay,BillStatus.SUCCESS);
             result.add(new StatisticBillByMonth(i,total));
         }
         return result;
@@ -94,8 +100,11 @@ public class BillServiceImpl implements IBillService {
         for(int i=1;i<=daysInMonth;i++){
             LocalDateTime startOfDay = LocalDateTime.of(currentYear.getValue(),month,i,0,0,0);
             LocalDateTime endOfDay = LocalDateTime.of(currentYear.getValue(),month,i,23,59,59,999_999_999);
-            int total=billRepository.getTotalPaymentToday(startOfDay,endOfDay) !=null ? billRepository.getTotalPaymentToday(startOfDay,endOfDay):0 ;
-            result.add(new StatisticBillByMonth(i,total));
+            int totalRevenue=  billRepository.getTotalPaymentToday(startOfDay,endOfDay) !=null ?
+                    billRepository.getTotalPaymentToday(startOfDay,endOfDay):0 ;
+            int totalRefund = refundBillRepository.getTotalRefundToday(startOfDay,endOfDay) != null ?
+                    refundBillRepository.getTotalRefundToday(startOfDay,endOfDay) : 0;
+            result.add(new StatisticBillByMonth(i,totalRevenue-totalRefund));
         }
         return result;
     }
@@ -122,7 +131,12 @@ public class BillServiceImpl implements IBillService {
         Map<Integer,Integer> result = new HashMap<>();
         for(Integer propertyId:propertyIds){
             List<Bill> bills = billRepository.findByPropertyId(propertyId);
-            Integer total = bills.stream().mapToInt(Bill::getNewTotalPayment).sum();
+            Integer total = bills.stream().mapToInt(item->{
+                int totalPayment = item.getNewTotalPayment();
+                RefundBill refundBill = refundBillRepository.findByVnpTxnRef(item.getBillCode());
+                int totalRefund = refundBill.getVnp_Amount();
+                return totalPayment-totalRefund;
+            }).sum();
             result.put(propertyId,total);
         }
         return result;

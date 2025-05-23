@@ -17,8 +17,12 @@ public interface BillRepository extends JpaRepository<Bill, Integer> {
     Bill findByBillCode(String billCode);
 
 
-    @Query("SELECT COUNT(*) FROM Bill b where b.createdAt BETWEEN :startOfDay AND :endOfDay")
-    Integer countByCreatedAt(@Param("startOfDay") LocalDateTime startOfDay, @Param("endOfDay") LocalDateTime endOfDay);
+    @Query("SELECT COUNT(*) FROM Bill b where b.createdAt BETWEEN :startOfDay AND :endOfDay AND b.billStatus=:billStatus")
+    Integer countByCreatedAtAndBillStatus(
+            @Param("startOfDay") LocalDateTime startOfDay,
+            @Param("endOfDay") LocalDateTime endOfDay,
+            @Param("billStatus") BillStatus billStatus
+    );
 
     @Query("SELECT SUM(b.newTotalPayment) FROM Bill b where b.createdAt BETWEEN :startOfDay AND :endOfDay")
     Integer getTotalPaymentToday(@Param("startOfDay") LocalDateTime startOfDay, @Param("endOfDay") LocalDateTime endOfDay);
@@ -30,7 +34,7 @@ public interface BillRepository extends JpaRepository<Bill, Integer> {
             " OR unaccent(b.last_name) ILIKE unaccent(:keyword) " +
             " OR b.email ILIKE (:keyword) " +
             " OR EXISTS(SELECT 1 FROM properties p  WHERE p.id=b.property_id AND unaccent(p.name) ILIKE unaccent(:keyword)))" +
-            " ORDER BY created_at",
+            " ORDER BY created_at desc",
             countQuery = "SELECT COUNT(*) FROM bill b WHERE b.user_email =:email AND ( " +
                     " b.bill_code LIKE :keyword " +
                     " OR b.phone_number LIKE :keyword " +
@@ -39,9 +43,11 @@ public interface BillRepository extends JpaRepository<Bill, Integer> {
                     " OR b.email ILIKE (:keyword) " +
                     " OR EXISTS(SELECT 1 FROM properties p  WHERE p.id=b.property_id AND unaccent(p.name) ILIKE unaccent(:keyword)))"
             , nativeQuery = true)
+
     Page<Bill> findByKeyword(String email, String keyword, Pageable pageable);
 
     Integer countByPropertyId(Integer propertyId);
 
     List<Bill> findByPropertyId(Integer propertyId);
+
 }

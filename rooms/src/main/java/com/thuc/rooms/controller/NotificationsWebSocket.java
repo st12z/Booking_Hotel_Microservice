@@ -56,9 +56,9 @@ public class NotificationsWebSocket {
         }
     }
     @MessageMapping("/sendAmountBillsToday")
-    public void sendAmountBills(@Payload String message) {
+    public void sendAmountBills(@Payload Integer count) {
         try{
-            messagingTemplate.convertAndSendToUser("manager@gmail.com", "/queue/amount-bills-today", message);
+            messagingTemplate.convertAndSendToUser("manager@gmail.com", "/queue/amount-bills-today", count);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -72,15 +72,13 @@ public class NotificationsWebSocket {
         }
     }
     @MessageMapping("/sendAmountRevenueToday")
-    public Integer sendAmountRevenueToday(@Payload Integer amountRevenueToday) {
+    public void sendAmountRevenueToday(@Payload Integer amountRevenueToday) {
         try{
             log.debug("sendAmountRevenueToday :{}", amountRevenueToday);
             messagingTemplate.convertAndSendToUser("manager@gmail.com", "/queue/amount-revenue-today", amountRevenueToday);
-            return amountRevenueToday;
         }catch (Exception e){
             e.printStackTrace();
         }
-        return null;
     }
     @MessageMapping("/sendNotifyMessage")
     public void sendNotifyMessage(@Payload String message) {
@@ -91,5 +89,6 @@ public class NotificationsWebSocket {
             e.printStackTrace();
         }
     }
+
 
 }

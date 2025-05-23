@@ -1,6 +1,7 @@
 package com.thuc.messages.functions;
 
 import com.thuc.messages.dto.BillDto;
+import com.thuc.messages.dto.RefundBillDto;
 import com.thuc.messages.dto.UserDto;
 import com.thuc.messages.utils.CustomMailSender;
 import lombok.RequiredArgsConstructor;
@@ -78,47 +79,49 @@ public class MessageFunctions {
         };
     }
     @Bean
-    public Function<BillDto,String> sendEmailRefundBill(){
-        return billDto->{
+    public Function<RefundBillDto,String> sendEmailRefundBill(){
+        return refundBillDto->{
             try {
-                log.debug("send email with billDto={}", billDto.toString());
+                log.debug("send email with billDto={}", refundBillDto.toString());
                 String subject = "Thông tin hủy phòng";
                 String content = "<h3>Thông tin chi tiết về hủy phòng" +
                         "<table border='1'>\n" +
                         "    <thead>\n" +
                         "      <tr>\n" +
-                        "        <th>Mã hóa đơn</th>\n" +
-                        "        <th>Họ tên</th>\n" +
-                        "        <th>Tên</th>\n" +
-                        "        <th>Email</th>\n" +
-                        "        <th>Số điện thoại</th>\n" +
-                        "        <th>Huyện</th>\n" +
-                        "        <th>Thành phố</th>\n" +
-                        "        <th>Quốc gia</th>\n" +
-                        "        <th>Địa chỉ chi tiết</th>\n" +
-                        "        <th>Tổng tiền</th>\n" +
-                        "        <th>Trạng thái</th>\n" +
+                        "        <th>vnp_response_id</th>\n" +
+                        "        <th>vnp_response_code</th>\n" +
+                        "        <th>vnp_tmn_code</th>\n" +
+                        "        <th>vnp_transaction_no</th>\n" +
+                        "        <th>vnp_transaction_status</th>\n" +
+                        "        <th>vnp_transaction_type</th>\n" +
+                        "        <th>vnp_txn_ref</th>\n" +
+                        "        <th>vnp_amount</th>\n" +
+                        "        <th>vnp_bank_code</th>\n" +
+                        "        <th>vnp_command</th>\n" +
+                        "        <th>vnp_message</th>\n" +
+                        "        <th>vnp_order_info</th>\n" +
                         "      </tr>\n" +
                         "    </thead>\n" +
                         "    <tbody>\n" +
                         "      <tr>\n" +
-                        "        <td>" + billDto.billCode() + "</td>\n" +
-                        "        <td>" + billDto.firstName() + "</td>\n" +
-                        "        <td>" + billDto.lastName() + "</td>\n" +
-                        "        <td>" + billDto.email() + "</td>\n" +
-                        "        <td>" + billDto.phoneNumber() + "</td>\n" +
-                        "        <td>" + billDto.district() + "</td>\n" +
-                        "        <td>" + billDto.city() + "</td>\n" +
-                        "        <td>" + billDto.country() + "</td>\n" +
-                        "        <td>" + billDto.addressDetail() + "</td>\n" +
-                        "        <td>" + billDto.originTotalPayment() + "</td>\n" +
-                        "        <td>" + billDto.billStatus() + "</td>\n" +
+                        "        <td>" + refundBillDto.vnp_ResponseId() + "</td>\n" +
+                        "        <td>" + refundBillDto.vnp_ResponseCode() + "</td>\n" +
+                        "        <td>" + refundBillDto.vnp_TmnCode() + "</td>\n" +
+                        "        <td>" + refundBillDto.vnp_TransactionNo() + "</td>\n" +
+                        "        <td>" + refundBillDto.vnp_TransactionStatus() + "</td>\n" +
+                        "        <td>" + refundBillDto.vnp_TransactionType() + "</td>\n" +
+                        "        <td>" + refundBillDto.vnp_TxnRef() + "</td>\n" +
+                        "        <td>" + refundBillDto.vnp_Amount() + "</td>\n" +
+                        "        <td>" + refundBillDto.vnp_BankCode() + "</td>\n" +
+                        "        <td>" + refundBillDto.vnp_Command() + "</td>\n" +
+                        "        <td>" + refundBillDto.vnp_Message() + "</td>\n" +
+                        "        <td>" + refundBillDto.vnp_OrderInfo() + "</td>\n" +
                         "        <tr>\n" +
                         "  </table>";
-                mailSender.sendMail(billDto.email(),content,subject);
+                mailSender.sendMail(refundBillDto.email(),content,subject);
                 return "Gửi mail thành công";
             }catch (Exception e){
-                log.debug("send email failed with {}", billDto.toString());
+                log.debug("send email failed with {}", refundBillDto.toString());
                 throw new RuntimeException(e);
             }
         };

@@ -61,6 +61,7 @@ public class BillConverter {
                 .billCode(bill.getBillCode())
                 .discountHotelId(bill.getDiscountHotelId())
                 .discountCarId(bill.getDiscountCarId())
+                .createdAt(bill.getCreatedAt())
                 .build();
         return billDto;
     }

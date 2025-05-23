@@ -1,11 +1,10 @@
 package com.thuc.bookings.service;
 
 import com.thuc.bookings.dto.requestDto.BookingDto;
-import com.thuc.bookings.dto.requestDto.BookingRoomTypeDto;
 import com.thuc.bookings.dto.responseDto.BookingCarsResponseDto;
 import com.thuc.bookings.dto.responseDto.BookingRoomsDto;
+import com.thuc.bookings.dto.responseDto.RefundBillDto;
 import com.thuc.bookings.utils.BillStatus;
-import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
 
@@ -23,4 +22,6 @@ public interface IBookingService {
     List<BookingRoomsDto> getListBookingRoomsByBillId(Integer billId);
 
     List<BookingCarsResponseDto> getListBookingCarsByBillId(Integer billId);
+
+
 }
