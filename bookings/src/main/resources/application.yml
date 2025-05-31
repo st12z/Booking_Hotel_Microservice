@@ -36,7 +36,22 @@ spring:
         sendPayment-out-0:
           destination: send-confirm-bill
 
-
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    readiness-state:
+      enabled: true
+    liveness-state:
+      enabled: true
+  endpoint:
+    shutdown:
+      access: unrestricted
+    health:
+      probes:
+        enabled: true
 
 server:
   port: 8081

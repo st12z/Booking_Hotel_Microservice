@@ -74,3 +74,19 @@ keycloak-authorization:
   grant-type: authorization_code
   realm: master
   redirect-uri: http://localhost:3000/callback
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    readiness-state:
+      enabled: true
+    liveness-state:
+      enabled: true
+  endpoint:
+    shutdown:
+      access: unrestricted
+    health:
+      probes:
+        enabled: true

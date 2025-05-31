@@ -1,0 +1,343 @@
+version: "3.8"
+services:
+  eurekaserver:
+    image: thucng04/eurekaserver:s1
+    container_name: eurekaserver-ms
+    ports:
+      - "8070:8070"
+    environment:
+      SPRING_APPLICATION_NAME: eurekaserver
+    healthcheck:
+      test: "curl --fail --silent localhost:8070/actuator/health/readiness | grep UP || exit 1"
+      interval: 20s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+    networks:
+      - thuc-bookings
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+  bookings:
+    image: thucng04/bookings:s1
+    container_name: bookings-ms
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_APPLICATION_NAME : bookings
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql:5432/booking-hotel
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 123
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: guest
+      SPRING_RABBITMQ_PASSWORD: guest
+    healthcheck:
+      test: "curl --fail --silent localhost:8081/actuator/health/readiness | grep UP || exit 1"
+      interval: 20s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      postgresql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      eurekaserver:
+        condition: service_healthy
+    networks:
+      - thuc-bookings
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+  messages:
+    image: thucng04/messages:s1
+    container_name: messages-ms
+    ports:
+      - "8084:8084"
+    environment:
+      SPRING_APPLICATION_NAME : messages
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+      MAIL_HOST: smtp.gmail.com
+      MAIL_USERNAME: ckp2004vn@gmail.com
+      MAIL_PASSWORD: kltqohttmkznubrc
+      MAIL_PORT: 587
+      MAIL_SMTP_AUTH: true
+      MAIL_SMTP_STARTTLS_ENABLE: true
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: guest
+      SPRING_RABBITMQ_PASSWORD: guest
+    healthcheck:
+      test: "curl --fail --silent localhost:8084/actuator/health/readiness | grep UP || exit 1"
+      interval: 20s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      eurekaserver:
+        condition: service_healthy
+    networks:
+      - thuc-bookings
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+  payments:
+    image: thucng04/payments:s1
+    container_name: payments-ms
+    ports:
+      - "8083:8083"
+    environment:
+      SPRING_APPLICATION_NAME: payments
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+      PAYMENT_VNPAY_VNP_PAYURL: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
+      PAYMENT_VNPAY_VNP_TMNCODE: 58X4B4HP
+      PAYMENT_VNPAY_SECRETKEY: VRLDWNVWDNPCOEPBZUTWSEDQAGXJCNGZ
+      PAYMENT_VNPAY_VNP_RETURNURL: http://localhost:8072/bookinghotel/payments/api/payments/vn-pay-callback
+      PAYMENT_VNPAY_VNP_VERSION: 2.1.0
+      PAYMENT_VNPAY_VNP_COMMAND: pay
+      PAYMENT_VNPAY_ORDERTYPE: other
+
+      REFUND_VNPAY_VNP_REFUNDURL: https://sandbox.vnpayment.vn/merchant_webapi/api/transaction
+      REFUND_VNPAY_VNP_VERSION: 2.1.0
+      REFUND_VNPAY_VNP_COMMAND: refund
+      REFUND_VNPAY_VNP_TMNCODE: 58X4B4HP
+      REFUND_VNPAY_SECRETKEY: VRLDWNVWDNPCOEPBZUTWSEDQAGXJCNGZ
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql:5432/booking-hotel
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 123
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: guest
+      SPRING_RABBITMQ_PASSWORD: guest
+    networks:
+      - thuc-bookings
+    healthcheck:
+      test: "curl --fail --silent localhost:8083/actuator/health/readiness | grep UP || exit 1"
+      interval: 20s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      postgresql:
+        condition: service_healthy
+      eurekaserver:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+  rooms:
+    image: thucng04/rooms:s1
+    container_name: rooms-ms
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_APPLICATION_NAME: rooms
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+      CLOUDINARY_CLOUD_NAME: dcerbz3nm
+      CLOUDINARY_API_KEY: 427363942477423
+      CLOUDINARY_API_SECRET: Xmq5dBuDDhgjcL9Wu37Kl9a83a0
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql:5432/booking-hotel
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 123
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: guest
+      SPRING_RABBITMQ_PASSWORD: guest
+    healthcheck:
+      test: "curl --fail --silent localhost:8080/actuator/health/readiness | grep UP || exit 1"
+      interval: 20s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+    networks:
+      - thuc-bookings
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      postgresql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      eurekaserver:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+  users:
+    image: thucng04/users:s1
+    container_name: users-ms
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_APPLICATION_NAME: users
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+      # Keycloak Credential
+      KEYCLOAK_AUTH_URL: http://keycloak:7080
+      KEYCLOAK_CLIENT_ID: create-account-keycloak
+      KEYCLOAK_CLIENT_SECRET: 0W7a0F3AUhnkYiFMXSQK4CgpBGoky1Uv
+      KEYCLOAK_GRANT_TYPE: client_credentials
+      KEYCLOAK_REALM: master
+
+      # Keycloak Authorization
+      KEYCLOAK_TOKEN_ENDPOINT: http://keycloak:7080/realms/master/protocol/openid-connect/token
+      KEYCLOAK_LOGOUT_ENDPOINT: http://keycloak:7080/realms/master/protocol/openid-connect/logout
+      KEYCLOAK_AUTH_CLIENT_ID: booking-hotel
+      KEYCLOAK_AUTH_CLIENT_SECRET: jF3vzjXlXy6IzUDfINR4vY8TnK9S2PBd
+      KEYCLOAK_AUTH_GRANT_TYPE: authorization_code
+      KEYCLOAK_REDIRECT_URI: http://localhost:3000/callback
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql:5432/booking-hotel
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 123
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: guest
+      SPRING_RABBITMQ_PASSWORD: guest
+    networks:
+      - thuc-bookings
+    healthcheck:
+      test: "curl --fail --silent localhost:8082/actuator/health/readiness | grep UP || exit 1"
+      interval: 20s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      postgresql:
+        condition: service_healthy
+      eurekaserver:
+        condition: service_healthy
+      keycloak:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+  gatewayserver:
+    image: thucng04/gatewayserver:s1
+    container_name: gatewayserver-ms
+    ports:
+      - "8072:8072"
+    environment:
+      SPRING_APPLICATION_NAME: gatewayserver
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI: "http://keycloak:7080/realms/master/protocol/openid-connect/certs"
+    networks:
+      - thuc-bookings
+    depends_on:
+      eurekaserver:
+        condition: service_healthy
+      bookings:
+        condition: service_healthy
+      rooms:
+        condition: service_healthy
+      messages:
+        condition: service_healthy
+      payments:
+        condition: service_healthy
+      users:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+  redis:
+    image: redis:latest
+    container_name: redis-ms
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - thuc-bookings
+  rabbitmq:
+    image: rabbitmq:4-management
+    container_name: rabbitmq-ms
+    ports:
+      - "5672:5672"       # Cổng AMQP
+      - "15672:15672"     # Cổng Web UI
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    healthcheck:
+      test: [ "CMD", "rabbitmq-diagnostics", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+    volumes:
+      - rabbitmqdata:/var/lib/rabbitmq
+    networks:
+      - thuc-bookings
+  postgresql:
+    image: postgres:15-alpine
+    container_name: postgresql-ms
+    environment:
+      POSTGRES_DB: booking-hotel
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 123
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U root -d booking-hotel" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - thuc-bookings
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.0.7
+    container_name: keycloak-ms
+    ports:
+      - "7080:8080"
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: "admin"
+      KC_BOOTSTRAP_ADMIN_PASSWORD: "admin"
+      KC_HEALTH_ENABLED: "true"
+    command:
+      - start-dev
+    networks:
+      - thuc-bookings
+    healthcheck:
+      test: [
+        "CMD-SHELL",
+        "exec 3<>/dev/tcp/localhost/9000 && echo -e 'GET /health/ready HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\n' >&3 && cat <&3 | grep -q '200 OK'"
+      ]
+      interval: 30s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - keycloakdata:/opt/keycloak/data
+
+
+networks:
+  thuc-bookings:
+    driver: bridge
+volumes:
+  pgdata:
+  rabbitmqdata:
+  keycloakdata:

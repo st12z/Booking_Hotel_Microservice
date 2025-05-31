@@ -55,6 +55,7 @@ spring:
         smtp:
           starttls:
             enable: true
+
   rabbitmq:
     port: 5672
     host: localhost
@@ -67,3 +68,19 @@ server:
 logging:
   level:
     com.thuc.messages: debug
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    readiness-state:
+      enabled: true
+    liveness-state:
+      enabled: true
+  endpoint:
+    shutdown:
+      access: unrestricted
+    health:
+      probes:
+        enabled: true
