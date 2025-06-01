@@ -3,6 +3,8 @@ package com.thuc.payments.config;
 import com.thuc.payments.utils.VnpayUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Data;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,6 +17,7 @@ import java.util.TimeZone;
 @Data
 @Configuration
 public class VnpayConfig {
+    private final Logger log = LoggerFactory.getLogger(VnpayConfig.class);
     @Value("${payment.vnpay.vnp_PayUrl}")
     private String vnp_PayUrl;
 
@@ -49,13 +52,19 @@ public class VnpayConfig {
         config.put("vnp_BankCode","NCB");
         String ipAddress = VnpayUtil.getIpAddress(request);
         config.put("vnp_IpAddr", ipAddress);
-        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
+        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Ho_Chi_Minh"));
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        sdf.setTimeZone(TimeZone.getTimeZone("Asia/Ho_Chi_Minh"));
+
         String vnpCreateDate = sdf.format(cal.getTime());
         config.put("vnp_CreateDate", vnpCreateDate);
-        cal.add(Calendar.MINUTE,10);
+
+        cal.add(Calendar.MINUTE, 10);
         String vnpExpireDate = sdf.format(cal.getTime());
         config.put("vnp_ExpireDate", vnpExpireDate);
+
+        log.info("CreateDate: {}", vnpCreateDate);
+        log.info("ExpireDate: {}", vnpExpireDate);
         return config;
     }
 }

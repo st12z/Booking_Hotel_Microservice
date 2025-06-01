@@ -39,16 +39,29 @@ public class VnpayUtil {
             throw new RuntimeException("Error while generating HMAC SHA512", ex);
         }
     }
-    public static String getIpAddress(HttpServletRequest request){
-        String ipAdress;
-        try {
-            ipAdress = request.getHeader("X-FORWARDED-FOR");
-            if (ipAdress == null) {
-                ipAdress = request.getRemoteAddr();
+    public static String getIpAddress(HttpServletRequest request) {
+        String ip = request.getHeader("X-Forwarded-For");
+        if (ip != null && ip.length() != 0 && !"unknown".equalsIgnoreCase(ip)) {
+            // X-Forwarded-For có thể là chuỗi nhiều IP, lấy IP đầu tiên
+            if (ip.contains(",")) {
+                ip = ip.split(",")[0].trim();
             }
-        } catch (Exception e) {
-            ipAdress = "Invalid IP:" + e.getMessage();
+            return ip;
         }
-        return ipAdress;
+        ip = request.getHeader("X-Real-IP");
+        if (ip != null && ip.length() != 0 && !"unknown".equalsIgnoreCase(ip)) {
+            return ip;
+        }
+        ip = request.getHeader("Proxy-Client-IP");
+        if (ip != null && ip.length() != 0 && !"unknown".equalsIgnoreCase(ip)) {
+            return ip;
+        }
+        ip = request.getHeader("WL-Proxy-Client-IP");
+        if (ip != null && ip.length() != 0 && !"unknown".equalsIgnoreCase(ip)) {
+            return ip;
+        }
+        ip = request.getRemoteAddr();
+        return ip;
     }
+
 }

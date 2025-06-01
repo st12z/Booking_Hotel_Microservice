@@ -49,6 +49,6 @@ public class UserRequestDto {
 
     private String address;
 
-    private String avatar;
+    private String avatar="https://i.pinimg.com/236x/5e/e0/82/5ee082781b8c41406a2a50a0f32d6aa6.jpg";
 
 }

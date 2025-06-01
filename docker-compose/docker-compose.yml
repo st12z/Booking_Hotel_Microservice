@@ -103,7 +103,7 @@ services:
       PAYMENT_VNPAY_VNP_PAYURL: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
       PAYMENT_VNPAY_VNP_TMNCODE: 58X4B4HP
       PAYMENT_VNPAY_SECRETKEY: VRLDWNVWDNPCOEPBZUTWSEDQAGXJCNGZ
-      PAYMENT_VNPAY_VNP_RETURNURL: http://localhost:8072/bookinghotel/payments/api/payments/vn-pay-callback
+      PAYMENT_VNPAY_VNP_RETURNURL: http://192.168.0.102:8072/bookinghotel/payments/api/payments/vn-pay-callback
       PAYMENT_VNPAY_VNP_VERSION: 2.1.0
       PAYMENT_VNPAY_VNP_COMMAND: pay
       PAYMENT_VNPAY_ORDERTYPE: other
@@ -113,6 +113,7 @@ services:
       REFUND_VNPAY_VNP_COMMAND: refund
       REFUND_VNPAY_VNP_TMNCODE: 58X4B4HP
       REFUND_VNPAY_SECRETKEY: VRLDWNVWDNPCOEPBZUTWSEDQAGXJCNGZ
+
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql:5432/booking-hotel
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: Anhthucdz1234!
@@ -190,36 +191,45 @@ services:
     environment:
       SPRING_APPLICATION_NAME: users
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
-      # Keycloak Credential
-      KEYCLOAK_AUTH_URL: http://keycloak:7080
-      KEYCLOAK_CLIENT_ID: create-account-keycloak
-      KEYCLOAK_CLIENT_SECRET: 0W7a0F3AUhnkYiFMXSQK4CgpBGoky1Uv
-      KEYCLOAK_GRANT_TYPE: client_credentials
-      KEYCLOAK_REALM: master
 
-      # Keycloak Authorization
-      KEYCLOAK_TOKEN_ENDPOINT: http://keycloak:7080/realms/master/protocol/openid-connect/token
-      KEYCLOAK_LOGOUT_ENDPOINT: http://keycloak:7080/realms/master/protocol/openid-connect/logout
-      KEYCLOAK_AUTH_CLIENT_ID: booking-hotel
-      KEYCLOAK_AUTH_CLIENT_SECRET: jF3vzjXlXy6IzUDfINR4vY8TnK9S2PBd
-      KEYCLOAK_AUTH_GRANT_TYPE: authorization_code
-      KEYCLOAK_REDIRECT_URI: http://localhost:3000/callback
+      # Keycloak Credential
+      KEYCLOAK_CREDENTIAL_AUTH_SERVER_URL: http://keycloak:8080
+      KEYCLOAK_CREDENTIAL_CLIENT_ID: create-account-keycloak
+      KEYCLOAK_CREDENTIAL_CLIENT_SECRET: IRuujMjPKQUFLx9iSCJZeZvzCwWcva3F
+      KEYCLOAK_CREDENTIAL_GRANT_TYPE: client_credentials
+      KEYCLOAK_CREDENTIAL_REALM: master
+
+    # Keycloak Authorization
+      KEYCLOAK_AUTHORIZATION_TOKEN_ENDPOINT: http://keycloak:8080/realms/master/protocol/openid-connect/token
+      KEYCLOAK_AUTHORIZATION_LOGOUT_ENDPOINT: http://keycloak:8080/realms/master/protocol/openid-connect/logout
+      KEYCLOAK_AUTHORIZATION_CLIENT_ID: booking-hotel
+      KEYCLOAK_AUTHORIZATION_CLIENT_SECRET: umGHEeVGAKrX535Q3dA7XEPzkgTNcNZ1
+      KEYCLOAK_AUTHORIZATION_GRANT_TYPE: authorization_code
+      KEYCLOAK_AUTHORIZATION_REALM: master
+      KEYCLOAK_AUTHORIZATION_REDIRECT_URI: http://localhost:3000/callback
+
+      # Database
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql:5432/booking-hotel
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: Anhthucdz1234!
       SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
+
+      # RabbitMQ
       SPRING_RABBITMQ_HOST: rabbitmq
       SPRING_RABBITMQ_PORT: 5672
       SPRING_RABBITMQ_USERNAME: guest
       SPRING_RABBITMQ_PASSWORD: guest
+
     networks:
       - thuc-bookings
+
     healthcheck:
       test: "curl --fail --silent localhost:8082/actuator/health/readiness | grep UP || exit 1"
       interval: 20s
       timeout: 5s
       retries: 20
       start_period: 10s
+
     depends_on:
       rabbitmq:
         condition: service_healthy
@@ -229,10 +239,12 @@ services:
         condition: service_healthy
       keycloak:
         condition: service_healthy
+
     deploy:
       resources:
         limits:
           memory: 700m
+
   gatewayserver:
     image: thucng04/gatewayserver:s1
     container_name: gatewayserver-ms
@@ -241,7 +253,7 @@ services:
     environment:
       SPRING_APPLICATION_NAME: gatewayserver
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
-      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI: "http://keycloak:7080/realms/master/protocol/openid-connect/certs"
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI: "http://keycloak:8080/realms/master/protocol/openid-connect/certs"
     networks:
       - thuc-bookings
     depends_on:
