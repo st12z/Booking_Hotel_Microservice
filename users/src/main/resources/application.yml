@@ -62,7 +62,7 @@ logging:
 keycloak-credential:
   auth-server-url: http://localhost:7080
   client-id: create-account-keycloak
-  client-secret: 0W7a0F3AUhnkYiFMXSQK4CgpBGoky1Uv
+  client-secret: td6utuMyxK0I0l7GQ5ZNw4SwiCjBhwr4
   grant-type: client_credentials
   realm: master
 
@@ -70,7 +70,7 @@ keycloak-authorization:
   token-endpoint: http://localhost:7080/realms/master/protocol/openid-connect/token
   logout-endpoint: http://localhost:7080/realms/master/protocol/openid-connect/logout
   client-id: booking-hotel
-  client-secret: jF3vzjXlXy6IzUDfINR4vY8TnK9S2PBd
+  client-secret: 4UuKnDcoZ9E7IhDmhCfioI1xNb3CsAs9
   grant-type: authorization_code
   realm: master
   redirect-uri: http://localhost:3000/callback
