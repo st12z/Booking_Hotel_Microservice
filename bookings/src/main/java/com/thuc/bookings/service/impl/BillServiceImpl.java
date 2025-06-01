@@ -134,7 +134,10 @@ public class BillServiceImpl implements IBillService {
             Integer total = bills.stream().mapToInt(item->{
                 int totalPayment = item.getNewTotalPayment();
                 RefundBill refundBill = refundBillRepository.findByVnpTxnRef(item.getBillCode());
-                int totalRefund = refundBill.getVnp_Amount();
+                int totalRefund = 0;
+                if(refundBill!=null){
+                    totalRefund=refundBill.getVnp_Amount();
+                }
                 return totalPayment-totalRefund;
             }).sum();
             result.put(propertyId,total);
