@@ -2,16 +2,13 @@ package com.thuc.rooms.service.impl;
 
 import com.thuc.rooms.converter.PropertyConverter;
 import com.thuc.rooms.dto.*;
-import com.thuc.rooms.entity.City;
-import com.thuc.rooms.entity.Property;
-import com.thuc.rooms.entity.RoomType;
+import com.thuc.rooms.entity.*;
 import com.thuc.rooms.exception.ResourceNotFoundException;
-import com.thuc.rooms.repository.CityRepository;
-import com.thuc.rooms.repository.PropertyRepository;
-import com.thuc.rooms.repository.RoomTypeRepository;
+import com.thuc.rooms.repository.*;
 import com.thuc.rooms.service.IPropertyService;
 import com.thuc.rooms.service.IRedisPropertyService;
 import com.thuc.rooms.service.client.BillsFeignClient;
+import com.thuc.rooms.utils.UploadCloudinary;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
@@ -23,6 +20,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -36,6 +34,9 @@ public class PropertyServiceImpl implements IPropertyService {
     private final IRedisPropertyService redisPropertyService;
     private final RoomTypeRepository roomTypeRepository;
     private final BillsFeignClient billsFeignClient;
+    private final FacilitiesRepository facilitiesRepository;
+    private final UploadCloudinary uploadCloudinary;
+    private final PropertyImagesRepository propertyImagesRepository;
     @PersistenceContext
     private EntityManager entityManager;
     @Override
@@ -154,7 +155,34 @@ public class PropertyServiceImpl implements IPropertyService {
                 .build();
     }
 
-
+    @Override
+    public PropertyDto updateProperty(PropertyDto propertyDto, List<MultipartFile> images) {
+        Property property = propertyRepository.findById(propertyDto.getId()).orElseThrow(()-> new ResourceNotFoundException("Property","id",String.valueOf(propertyDto.getId())));
+        property.setName(propertyDto.getName());
+        property.setAddress(propertyDto.getAddress());
+        List<String> facilityNames = propertyDto.getFacilities();
+        List<Facilities> facilitiesList = facilityNames.stream().map(name->{
+           Facilities facilities = facilitiesRepository.findByName(name);
+           if(facilities==null){
+               throw new ResourceNotFoundException("Facilities","name",name);
+           }
+           return facilities;
+        }).collect(Collectors.toList());
+        property.setFacilities(facilitiesList);
+        property.setSlug(propertyDto.getSlug());
+        property.setOverview(propertyDto.getOverview());
+        List<String> imagesUpload = images.stream().map(uploadCloudinary::uploadCloudinary).toList();
+        propertyImagesRepository.deleteByPropertyId(propertyDto.getId());
+        imagesUpload.forEach(image->{
+            PropertyImages propertyImages = PropertyImages.builder()
+                    .image(image)
+                    .property(property)
+                    .build();
+            propertyImagesRepository.save(propertyImages);
+        });
+        Property savedProperty = propertyRepository.save(property);
+        return PropertyConverter.toPropertyDto(savedProperty);
+    }
 
 
 }

@@ -20,12 +20,22 @@ public class RoomTypeController {
     private final IRoomTypeService roomTypeService;
     private final Logger log = LoggerFactory.getLogger(RoomTypeController.class);
     @GetMapping("")
-    public ResponseEntity<SuccessResponseDto<List<RoomTypeDto>>> getRoomTypes(@RequestParam String slugProperty) {
+    public ResponseEntity<SuccessResponseDto<List<RoomTypeDto>>> getRoomTypesBySlug(@RequestParam String slugProperty) {
         log.debug("Request to get RoomTypes slugProperty with {}", slugProperty);
         SuccessResponseDto<List<RoomTypeDto>> response = SuccessResponseDto.<List<RoomTypeDto>>builder()
                 .code(RoomTypeConstant.STATUS_200)
                 .message(RoomTypeConstant.MESSAGE_200)
-                .data(roomTypeService.getAllRoomTypes(slugProperty))
+                .data(roomTypeService.getAllRoomTypesBySlug(slugProperty))
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+    @GetMapping("/all")
+    public ResponseEntity<SuccessResponseDto<List<RoomTypeDto>>> getAllRoomTypes(){
+        log.debug("Request to get all roomtypes");
+        SuccessResponseDto<List<RoomTypeDto>> response = SuccessResponseDto.<List<RoomTypeDto>>builder()
+                .code(RoomTypeConstant.STATUS_200)
+                .message(RoomTypeConstant.MESSAGE_200)
+                .data(roomTypeService.getAllRoomTypes())
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
@@ -124,5 +134,15 @@ public class RoomTypeController {
                 .data(roomTypeService.confirmBooking(bookingRoomConfirmDto,discountCarId,discountHotelId))
                 .build();
         return  ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+    @PostMapping("/create")
+    public ResponseEntity<SuccessResponseDto<RoomTypeDto>> createRoomType(@RequestBody @Valid RoomTypeRequestDto roomTypeDto) {
+        log.debug("Request to create room type with {}", roomTypeDto);
+        SuccessResponseDto<RoomTypeDto> response = SuccessResponseDto.<RoomTypeDto>builder()
+                .code(RoomTypeConstant.STATUS_200)
+                .message(RoomTypeConstant.MESSAGE_200)
+                .data(roomTypeService.createRoomType(roomTypeDto))
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

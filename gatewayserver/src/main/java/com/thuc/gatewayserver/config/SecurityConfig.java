@@ -41,7 +41,9 @@ public class SecurityConfig {
                                         "/bookinghotel/rooms/api/properties/amount-properties",
                                         "/bookinghotel/rooms/api/notifications/**",
                                         "/bookinghotel/rooms/api/properties/search",
-                                        "/bookinghotel/rooms/api/export/**"
+                                        "/bookinghotel/rooms/api/export/**",
+                                        "/bookinghotel/rooms/api/property-types/**",
+                                        "/bookinghotel/rooms/api/roomtypes/create"
                                 ).hasAnyRole("ADMIN","MANAGER","STAFF")
                                 .pathMatchers("/bookinghotel/bookings/api/bills/**",
                                         "/bookinghotel/bookings/api/bookingcars/**",
@@ -52,7 +54,8 @@ public class SecurityConfig {
                                         "/bookinghotel/rooms/api/upload/**",
                                         "/bookinghotel/rooms/api/room-chats/**",
                                         "/bookinghotel/payments/api/payments/refund/**",
-                                        "/bookinghotel/payments/api/payments/get-url/**"
+                                        "/bookinghotel/payments/api/payments/get-url/**",
+                                        "/bookinghotel/rooms/api/roomtypes/**"
                                 )
                                 .hasAnyRole("ADMIN","MANAGER","STAFF","USER")
                                 .anyExchange().permitAll()

@@ -48,11 +48,21 @@ public class PropertyDto implements Serializable {
     private Integer cityId;
 
     private List<ReviewDto> reviews;
+
+    private List<RoomDto> rooms;
+
+    private List<RoomTypeDto> roomTypes;
+
     private double ratingWifi;
+
     private double ratingLocation;
+
     private double ratingFacilities;
+
     private double ratingClean;
+
     private double ratingStaff;
+
     private double ratingComfort;
 
     private int totalPayments;

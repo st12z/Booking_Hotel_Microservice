@@ -7,7 +7,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 
 public interface IRoomTypeService {
-    List<RoomTypeDto> getAllRoomTypes(String slugProperty);
+    List<RoomTypeDto> getAllRoomTypesBySlug(String slugProperty);
 
     List<RoomTypeDto> getAllRoomTypesBySearch(String slugProperty,SearchDto searchDto);
 
@@ -22,4 +22,8 @@ public interface IRoomTypeService {
     List<Integer> getAvailableRooms(BookingRoomTypeDto bookingRoomTypeDto, int propertyId);
 
     boolean confirmBooking(@Valid BookingRoomConfirmDto bookingRoomConfirmDto,Integer discountCarId,Integer discountHotelId);
+
+    List<RoomTypeDto> getAllRoomTypes();
+
+    RoomTypeDto createRoomType(@Valid RoomTypeRequestDto roomTypeDto);
 }

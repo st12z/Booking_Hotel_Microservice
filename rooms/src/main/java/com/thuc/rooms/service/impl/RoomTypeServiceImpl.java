@@ -3,6 +3,7 @@ package com.thuc.rooms.service.impl;
 import com.thuc.rooms.converter.RoomTypeConverter;
 import com.thuc.rooms.dto.*;
 import com.thuc.rooms.entity.*;
+import com.thuc.rooms.exception.ResourceAlreadyExistsException;
 import com.thuc.rooms.exception.ResourceNotFoundException;
 import com.thuc.rooms.repository.*;
 import com.thuc.rooms.service.IRedisHoldRooms;
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 // class check phòng của 1 property
 @Service
@@ -39,13 +41,14 @@ public class RoomTypeServiceImpl implements IRoomTypeService {
     private final UserDiscountRepository userDiscountRepository;
     private final UserDiscountCarsRepository userDiscountCarsRepository;
     private final BookingsFeignClient bookingsFeignClient;
+    private final FacilitiesRepository facilitiesRepository;
     @PersistenceContext
     private EntityManager entityManager;
     // Trả về room type mà còn phòng đến tại thời điểm bây giờ
     // Lấy được Property => Query các RoomType có propertyId => Có phòng thuộc loại RoomType mà checkOun< currentDateTime
     // tìm kiếm phòng có sẵn tại thời điểm hiện tại
     @Override
-    public List<RoomTypeDto> getAllRoomTypes(String slugProperty) {
+    public List<RoomTypeDto> getAllRoomTypesBySlug(String slugProperty) {
         logger.debug("Requested to getAllRoomTypes successfully");
         Property property = propertyRepository.findBySlug(slugProperty);
 
@@ -229,6 +232,40 @@ public class RoomTypeServiceImpl implements IRoomTypeService {
         }
 
         return true;
+    }
+
+    @Override
+    public List<RoomTypeDto> getAllRoomTypes() {
+        List<RoomType> roomTypes = roomTypeRepository.findAll();
+        return roomTypes.stream().map(RoomTypeConverter::toRoomTypDto).toList();
+    }
+
+    @Override
+    public RoomTypeDto createRoomType(RoomTypeRequestDto roomTypeDto) {
+        RoomType existRoomType = roomTypeRepository.findByName(roomTypeDto.getName());
+        if(existRoomType!=null){
+            throw new ResourceAlreadyExistsException("RoomType","name",roomTypeDto.getName());
+        }
+        Property property = propertyRepository.findById(roomTypeDto.getPropertyId())
+                .orElseThrow(() -> new ResourceNotFoundException("Property","id",String.valueOf(roomTypeDto.getPropertyId())));
+        List<Facilities> facilities = roomTypeDto.getFacilities().stream().map(id->{
+            Facilities facility = facilitiesRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Facilities","id",String.valueOf(id)));
+            return facility;
+        }).collect(Collectors.toList());
+        RoomType roomType = RoomType.builder()
+                .name(roomTypeDto.getName())
+                .area(roomTypeDto.getArea())
+                .price(roomTypeDto.getPrice())
+                .freeServices(facilities)
+                .discount(roomTypeDto.getDiscount())
+                .numBeds(roomTypeDto.getNumBeds())
+                .property(property)
+                .status(true)
+                .maxGuests(roomTypeDto.getMaxGuests())
+                .build();
+        RoomType savedRoomType=roomTypeRepository.save(roomType);
+        return RoomTypeConverter.toRoomTypDto(savedRoomType);
+
     }
 
 

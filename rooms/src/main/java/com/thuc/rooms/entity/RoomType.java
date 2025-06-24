@@ -2,10 +2,7 @@ package com.thuc.rooms.entity;
 
 import com.thuc.rooms.utils.StringConverter;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -15,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="room_type")
+@Builder
 public class RoomType extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,15 +27,14 @@ public class RoomType extends BaseEntity{
 
     private String name;
 
-    @Convert(converter = StringConverter.class)
-    @Column(columnDefinition = "jsonb")
-    private List<String> freeServices;
+    @ManyToMany(mappedBy = "roomTypes")
+    private List <Facilities> freeServices;
 
     private Integer price;
 
     private Integer maxGuests;
 
-    private Integer totalRooms;
+
 
     private Integer area;
 

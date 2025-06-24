@@ -1,6 +1,8 @@
 package com.thuc.rooms.controller;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thuc.rooms.constants.PropertyConstant;
 import com.thuc.rooms.dto.*;
 import com.thuc.rooms.service.IPropertyService;
@@ -10,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -80,6 +83,22 @@ public class PropertiesController {
                 .message(PropertyConstant.MESSAGE_200)
                 .code(PropertyConstant.STATUS_200)
                 .data(propertyService.getPropertiesByFilter(filterDto))
+                .build();
+        return ResponseEntity.ok(response);
+    }
+    @PostMapping("/update")
+    public ResponseEntity<SuccessResponseDto<PropertyDto>> updateProperty(
+            @RequestPart String property,
+            @RequestPart List<MultipartFile> images
+    ) throws JsonProcessingException {
+        logger.debug("Request to update properties by  propertyDto {}", property);
+        logger.debug("Request to update properties by  images {}", images);
+        ObjectMapper objectMapper = new ObjectMapper();
+        PropertyDto propertyDto = objectMapper.readValue(property, PropertyDto.class);
+        SuccessResponseDto<PropertyDto> response = SuccessResponseDto.<PropertyDto>builder()
+                .code(PropertyConstant.STATUS_200)
+                .message(PropertyConstant.MESSAGE_200)
+                .data(propertyService.updateProperty(propertyDto,images))
                 .build();
         return ResponseEntity.ok(response);
     }

@@ -25,4 +25,10 @@ public class Facilities {
         inverseJoinColumns = @JoinColumn(name="property_id")
     )
     private List<Property> properties;
+
+    @ManyToMany
+    @JoinTable(name="roomtypes_facilities",joinColumns = @JoinColumn(name="facility_id"),
+        inverseJoinColumns = @JoinColumn(name="room_type_id")
+    )
+    private List<RoomType> roomTypes;
 }

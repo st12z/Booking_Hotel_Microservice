@@ -7,8 +7,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
 @EnableFeignClients
-@EnableJpaAuditing
-
+@EnableJpaAuditing(auditorAwareRef = "auditorAwareImpl")
 public class RoomsApplication {
 
 	public static void main(String[] args) throws Exception {

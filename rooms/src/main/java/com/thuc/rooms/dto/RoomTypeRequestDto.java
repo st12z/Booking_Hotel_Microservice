@@ -1,22 +1,15 @@
 package com.thuc.rooms.dto;
 
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.List;
 
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
-public class RoomTypeDto implements Serializable {
-    private Integer id;
-
+@Data
+public class RoomTypeRequestDto implements Serializable {
     @NotNull(message = "propertyId is null")
     private Integer propertyId;
 
@@ -39,8 +32,5 @@ public class RoomTypeDto implements Serializable {
     private Integer numBeds;
 
     @NotEmpty(message = "freeServices is not empty")
-    private List<String> freeServices;
-
-    private Boolean status;
-
+    private List<Integer> facilities;
 }

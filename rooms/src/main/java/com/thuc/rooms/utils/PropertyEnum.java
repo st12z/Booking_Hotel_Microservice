@@ -1,6 +1,7 @@
 package com.thuc.rooms.utils;
 
 import lombok.Getter;
+import org.springframework.context.annotation.Bean;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,7 +20,7 @@ public enum PropertyEnum {
     PropertyEnum(String propertyName) {
         this.propertyName = propertyName;
     }
-    public List<String> getProperties() {
+    public static List<String> getProperties() {
         List<String> properties = new ArrayList<String>();
         for (PropertyEnum propertyEnum : PropertyEnum.values()) {
             properties.add(propertyEnum.getPropertyName());
