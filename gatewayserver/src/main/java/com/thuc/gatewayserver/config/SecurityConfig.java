@@ -43,7 +43,9 @@ public class SecurityConfig {
                                         "/bookinghotel/rooms/api/properties/search",
                                         "/bookinghotel/rooms/api/export/**",
                                         "/bookinghotel/rooms/api/property-types/**",
-                                        "/bookinghotel/rooms/api/roomtypes/create"
+                                        "/bookinghotel/rooms/api/roomtypes/create",
+                                        "/bookinghotel/rooms/api/rooms/create",
+                                        "/bookinghotel/rooms/api/rooms/delete"
                                 ).hasAnyRole("ADMIN","MANAGER","STAFF")
                                 .pathMatchers("/bookinghotel/bookings/api/bills/**",
                                         "/bookinghotel/bookings/api/bookingcars/**",

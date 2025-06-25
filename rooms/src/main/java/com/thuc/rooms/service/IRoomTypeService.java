@@ -26,4 +26,6 @@ public interface IRoomTypeService {
     List<RoomTypeDto> getAllRoomTypes();
 
     RoomTypeDto createRoomType(@Valid RoomTypeRequestDto roomTypeDto);
+
+
 }

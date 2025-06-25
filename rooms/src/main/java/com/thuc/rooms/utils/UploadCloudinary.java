@@ -10,6 +10,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
+
 @Component
 public class UploadCloudinary {
     @Value("${cloudinary.cloud_name}")
@@ -30,11 +32,11 @@ public class UploadCloudinary {
     }
     public String uploadCloudinary(MultipartFile imageFile)  {
         try{
+            String publicId = UUID.randomUUID().toString();
             Map<String, Object> uploadParams = ObjectUtils.asMap(
                     "resource_type", "auto",
-                    "use_filename", true,
-                    "unique_filename", false,
-                    "overwrite", true
+                    "public_id", publicId,
+                    "overwrite", false
             );
 
             // Upload trực tiếp từ byte[]
@@ -43,7 +45,6 @@ public class UploadCloudinary {
             );
 
             // Tạo URL với các tham số biến đổi
-            String publicId = (String) uploadResult.get("public_id");
 
             String transformedImageUrl = cloudinary.url()
                     .transformation(new Transformation()

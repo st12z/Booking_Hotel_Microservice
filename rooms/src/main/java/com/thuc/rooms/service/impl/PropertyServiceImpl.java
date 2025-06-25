@@ -22,6 +22,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -156,7 +157,7 @@ public class PropertyServiceImpl implements IPropertyService {
     }
 
     @Override
-    public PropertyDto updateProperty(PropertyDto propertyDto, List<MultipartFile> images) {
+    public PropertyDto updateProperty(PropertyDto propertyDto, List<MultipartFile> images) throws IOException {
         Property property = propertyRepository.findById(propertyDto.getId()).orElseThrow(()-> new ResourceNotFoundException("Property","id",String.valueOf(propertyDto.getId())));
         property.setName(propertyDto.getName());
         property.setAddress(propertyDto.getAddress());
@@ -171,7 +172,18 @@ public class PropertyServiceImpl implements IPropertyService {
         property.setFacilities(facilitiesList);
         property.setSlug(propertyDto.getSlug());
         property.setOverview(propertyDto.getOverview());
-        List<String> imagesUpload = images.stream().map(uploadCloudinary::uploadCloudinary).toList();
+        for (MultipartFile file : images) {
+            System.out.println("File name: " + file.getOriginalFilename());
+            System.out.println("Size: " + file.getSize());
+            System.out.println("Hash: " + Arrays.hashCode(file.getBytes()));
+        }
+        List<String> imagesUpload = images.stream()
+                .map(f -> {
+                    String url = uploadCloudinary.uploadCloudinary(f);
+                    System.out.println("Uploaded: " + f.getOriginalFilename() + " => " + url);
+                    return url;
+                })
+                .toList();
         propertyImagesRepository.deleteByPropertyId(propertyDto.getId());
         imagesUpload.forEach(image->{
             PropertyImages propertyImages = PropertyImages.builder()
