@@ -111,18 +111,28 @@ public class PropertyServiceImpl implements IPropertyService {
                     " OR EXISTS(SELECT 1 FROM cities c WHERE p.city_id=c.id AND unaccent(c.name) ILIKE unaccent(:keyword))) ");
 
         }
+        Query queryTotal = entityManager.createNativeQuery(builder.toString().replace("SELECT *", "SELECT COUNT(*)"),Long.class);
         builder.append(" ORDER BY p.id ");
+        builder.append(" LIMIT :limit OFFSET :offset");
         Query query = entityManager.createNativeQuery(builder.toString(), Property.class);
         if(rateStar!=0){
             query.setParameter("rateStar", rateStar);
+            queryTotal.setParameter("rateStar", rateStar);
         }
         if(propertyType!=null && !propertyType.isEmpty()){
             query.setParameter("propertyType", propertyType);
+            queryTotal.setParameter("propertyType", propertyType);
         }
         if(keyword != null && !keyword.isEmpty()){
             query.setParameter("keyword",'%'+ keyword+'%');
+            queryTotal.setParameter("keyword",'%'+ keyword+'%');
         }
-        List<Property> properties = query.getResultList();
+        long total = ((Number) queryTotal.getSingleResult()).longValue();
+        int limit = pageSize;
+        int offset = (pageNo-1)*pageSize;
+        query.setParameter("limit",limit);
+        query.setParameter("offset",offset);
+        List <Property> properties = query.getResultList();
         List<Integer> propertyIds = properties.stream().map(Property::getId).toList();
         Map<Integer,Integer> billMap = billsFeignClient.getBillByPropertyIds(propertyIds).getBody().getData();
         Map<Integer,Integer> revenueMap = billsFeignClient.getRevenueByPropertyIds(propertyIds).getBody().getData();
@@ -138,21 +148,20 @@ public class PropertyServiceImpl implements IPropertyService {
             if(topBill<propertiesDtos.size()){
                 propertiesDtos = propertiesDtos.subList(0, topBill);
             }
+            if(topBill<=pageSize) total = (long)topBill;
         }
         if(topRevenue!=0 ){
             propertiesDtos.sort(Comparator.comparing(PropertyDto::getTotalPayments).reversed());
             if(topRevenue<propertiesDtos.size()){
                 propertiesDtos = propertiesDtos.subList(0, topRevenue);
             }
+            if(topRevenue<=pageSize) total = (long)topRevenue;
         }
-        int start = (pageNo-1) * pageSize;
-        int end = Math.min(start + pageSize, propertiesDtos.size());
-        propertiesDtos = propertiesDtos.subList(start, end);
         return PageResponseDto.<List<PropertyDto>>builder()
                 .pageNo(pageNo)
                 .pageSize(pageSize)
                 .dataPage(propertiesDtos)
-                .total((long)properties.size())
+                .total(total)
                 .build();
     }
 
@@ -194,6 +203,12 @@ public class PropertyServiceImpl implements IPropertyService {
         });
         Property savedProperty = propertyRepository.save(property);
         return PropertyConverter.toPropertyDto(savedProperty);
+    }
+
+    @Override
+    public List<PropertyDto> getAllProperties() {
+        List<Property> properties = propertyRepository.findAll();
+        return properties.stream().map(PropertyConverter::toPropertyDto).toList();
     }
 
 

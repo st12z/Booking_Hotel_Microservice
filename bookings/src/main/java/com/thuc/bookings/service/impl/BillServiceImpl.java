@@ -1,6 +1,7 @@
 package com.thuc.bookings.service.impl;
 
 import com.thuc.bookings.converter.BillConverter;
+import com.thuc.bookings.dto.requestDto.FilterBillsDto;
 import com.thuc.bookings.dto.responseDto.BillDto;
 import com.thuc.bookings.dto.responseDto.PageResponseDto;
 import com.thuc.bookings.dto.responseDto.StatisticBillByMonth;
@@ -21,6 +22,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.*;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -143,6 +146,153 @@ public class BillServiceImpl implements IBillService {
             result.put(propertyId,total);
         }
         return result;
+    }
+
+    @Override
+    public PageResponseDto<List<BillDto>> getAllBills(FilterBillsDto filterBillsDto) throws ParseException {
+        StringBuilder builder = new StringBuilder("SELECT * FROM bill b WHERE 1=1 ");
+        Map<String,Object> params = new HashMap<>();
+        int pageNo = filterBillsDto.getPageNo();
+        int pageSize = filterBillsDto.getPageSize();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        if(!filterBillsDto.getTimeOption().equals("0")){
+            builder.append(" AND b.created_at >=:beginDate AND b.created_at <=:endDate");
+            LocalDate now = LocalDate.now();
+            switch (filterBillsDto.getTimeOption()) {
+                case "custom":{
+                    Date beginDate = sdf.parse(filterBillsDto.getBeginDate());
+                    Date endDate = sdf.parse(filterBillsDto.getEndDate());
+                    params.put("beginDate",beginDate);
+                    params.put("endDate",endDate);
+                }
+                case "today": {
+                    LocalDate today = LocalDate.now();
+                    params.put("beginDate", today.atStartOfDay());
+                    params.put("endDate", today.plusDays(1).atStartOfDay());
+                    break;
+                }
+                case "yesterday": {
+                    LocalDate yesterday = LocalDate.now().minusDays(1);
+                    params.put("beginDate", yesterday.atStartOfDay());
+                    params.put("endDate", yesterday.plusDays(1).atStartOfDay());
+                    break;
+                }
+                case "last_7_days": {
+                    params.put("beginDate", now.minusDays(7).atTime(LocalTime.MIN));
+                    params.put("endDate", now.atTime(LocalTime.MAX));
+                    break;
+                }
+                case "last_30_days": {
+                    params.put("beginDate", now.minusDays(30).atTime(LocalTime.MIN));
+                    params.put("endDate", now.atTime(LocalTime.MAX));
+                    break;
+                }
+                case "this_week": {
+                    LocalDate today = LocalDate.now();
+                    LocalDate startOfWeek = today.with(DayOfWeek.MONDAY);
+                    LocalDate endOfWeek = startOfWeek.plusDays(7);
+                    params.put("beginDate", startOfWeek.atStartOfDay());
+                    params.put("endDate", endOfWeek.atStartOfDay());
+                    break;
+                }
+                case "this_month": {
+                    LocalDate today = LocalDate.now();
+                    LocalDate firstDay = today.withDayOfMonth(1);
+                    LocalDate firstOfNextMonth = firstDay.plusMonths(1);
+                    params.put("beginDate", firstDay.atStartOfDay());
+                    params.put("endDate", firstOfNextMonth.atStartOfDay());
+                    break;
+                }
+                case "this_year": {
+                    LocalDate today = LocalDate.now();
+                    LocalDate firstDay = today.withDayOfYear(1);
+                    LocalDate firstOfNextYear = firstDay.plusYears(1);
+                    params.put("beginDate", firstDay.atStartOfDay());
+                    params.put("endDate", firstOfNextYear.atStartOfDay());
+                    break;
+                }
+            }
+        }
+
+
+        if(filterBillsDto.getPropertyId()!=0){
+            builder.append(" AND b.property_id=:propertyId ");
+            params.put("propertyId",filterBillsDto.getPropertyId());
+        }
+        if(!filterBillsDto.getBillTypeStatus().equals("0")){
+            builder.append(" AND b.bill_status=:billType ");
+            params.put("billType",filterBillsDto.getBillTypeStatus());
+        }
+        Query queryTotal = entityManager.createNativeQuery(builder.toString().replace("SELECT *","SELECT COUNT(*)"),Long.class);
+        if(!filterBillsDto.getSortOption().equals("0")){
+            switch (filterBillsDto.getSortOption()) {
+                case "price_desc":
+                    builder.append(" ORDER BY b.new_total_payment DESC ");
+                    break;
+                case "price_asc":
+                    builder.append(" ORDER BY b.new_total_payment ASC ");
+                    break;
+                case "date_desc":
+                    builder.append(" ORDER BY b.created_at DESC ");
+                    break;
+                case "date_asc":
+                    builder.append(" ORDER BY b.created_at ASC ");
+                    break;
+                default:
+                    break;
+            }
+        }
+        int limit = pageSize;
+        int offset= (pageNo-1)*pageSize;
+        Query query = entityManager.createNativeQuery(builder.toString(),Bill.class);
+        query.setFirstResult(offset).setMaxResults(limit);
+        params.forEach(query::setParameter);
+        params.forEach(queryTotal::setParameter);
+        List<Bill> bills = query.getResultList();
+        List<BillDto> billDtos=bills.stream().map(BillConverter::toBillDto).toList();
+        Long total = ((Number)queryTotal.getSingleResult()).longValue();
+        return PageResponseDto.<List<BillDto>>builder()
+                .pageNo(pageNo)
+                .pageSize(pageSize)
+                .total(total)
+                .dataPage(billDtos)
+                .build();
+    }
+
+    @Override
+    public List<String> getAllTypeOfBillStatus() {
+        return BillStatus.getAllValues();
+    }
+
+    @Override
+    public PageResponseDto<List<BillDto>> getBillsByKeyword(String keyword, Integer pageNo, Integer pageSize) {
+        StringBuilder builder = new StringBuilder("SELECT * FROM Bill b WHERE 1=1 ");
+        if(!keyword.equals("")){
+            builder.append(" AND (b.email ILIKE :keyword ");
+            builder.append(" OR unaccent(lower(b.first_name)) ILIKE unaccent(:keyword) ");
+            builder.append(" OR unaccent(lower(b.last_name)) ILIKE unaccent(:keyword) ");
+            builder.append(" OR unaccent(b.bill_code) ILIKE unaccent(:keyword) ");
+            builder.append(" OR b.phone_number ILIKE :keyword ) ");
+        }
+        Query query = entityManager.createNativeQuery(builder.toString(),Bill.class);
+        Query queryTotal = entityManager.createNativeQuery(builder.toString().replace("SELECT *","SELECT COUNT(*)"),Long.class);
+        if(!keyword.equals("")){
+            query.setParameter("keyword",'%'+keyword+'%');
+            queryTotal.setParameter("keyword",'%'+keyword+'%');
+        }
+        int limit = pageSize;
+        int offset= (pageNo-1)*pageSize;
+        query.setFirstResult(offset).setMaxResults(limit);
+        List<Bill> bills = query.getResultList();
+        List<BillDto> billDtos=bills.stream().map(BillConverter::toBillDto).toList();
+        Long total = ((Number)queryTotal.getSingleResult()).longValue();
+        return PageResponseDto.<List<BillDto>>builder()
+                .pageNo(pageNo)
+                .pageSize(pageSize)
+                .total(total)
+                .dataPage(billDtos)
+                .build();
+
     }
 
 }

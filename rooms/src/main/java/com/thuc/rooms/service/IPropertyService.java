@@ -24,4 +24,6 @@ public interface IPropertyService {
     PageResponseDto<List<PropertyDto>> getPropertiesByFilter(FilterDtoManage filterDto);
 
     PropertyDto updateProperty(PropertyDto propertyDto, List<MultipartFile> images) throws IOException;
+
+    List<PropertyDto> getAllProperties();
 }

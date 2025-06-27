@@ -3,6 +3,7 @@ package com.thuc.rooms.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import com.thuc.rooms.constants.PropertyConstant;
 import com.thuc.rooms.dto.*;
 import com.thuc.rooms.service.IPropertyService;
@@ -100,6 +101,16 @@ public class PropertiesController {
                 .code(PropertyConstant.STATUS_200)
                 .message(PropertyConstant.MESSAGE_200)
                 .data(propertyService.updateProperty(propertyDto,images))
+                .build();
+        return ResponseEntity.ok(response);
+    }
+    @GetMapping("/all")
+    public ResponseEntity<SuccessResponseDto<List<PropertyDto>>> getAllProperties() {
+        logger.debug("Request to get all properties");
+        SuccessResponseDto<List<PropertyDto>> response = SuccessResponseDto.<List<PropertyDto>>builder()
+                .code(PropertyConstant.STATUS_200)
+                .message(PropertyConstant.MESSAGE_200)
+                .data(propertyService.getAllProperties())
                 .build();
         return ResponseEntity.ok(response);
     }
