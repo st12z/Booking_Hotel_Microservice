@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class FilterDtoManage {
+public class FilterPropertiesManageDto {
     private int id;
 
     private int rateStar;

@@ -15,10 +15,6 @@ import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -90,7 +86,7 @@ public class PropertyServiceImpl implements IPropertyService {
 
 
     @Override
-    public PageResponseDto<List<PropertyDto>> getPropertiesByFilter(FilterDtoManage filterDto) {
+    public PageResponseDto<List<PropertyDto>> getPropertiesByFilter(FilterPropertiesManageDto filterDto) {
         int pageNo = filterDto.getPageNo();
         int pageSize = filterDto.getPageSize();
         String keyword =filterDto.getKeyword();
@@ -171,6 +167,7 @@ public class PropertyServiceImpl implements IPropertyService {
         property.setName(propertyDto.getName());
         property.setAddress(propertyDto.getAddress());
         List<String> facilityNames = propertyDto.getFacilities();
+        List<Facilities> oldFacilities = property.getFacilities();
         List<Facilities> facilitiesList = facilityNames.stream().map(name->{
            Facilities facilities = facilitiesRepository.findByName(name);
            if(facilities==null){
@@ -178,8 +175,9 @@ public class PropertyServiceImpl implements IPropertyService {
            }
            return facilities;
         }).collect(Collectors.toList());
-        property.setFacilities(facilitiesList);
+        property.getFacilities().clear();
         property.setSlug(propertyDto.getSlug());
+        property.setFacilities(facilitiesList);
         property.setOverview(propertyDto.getOverview());
         for (MultipartFile file : images) {
             System.out.println("File name: " + file.getOriginalFilename());
@@ -202,6 +200,14 @@ public class PropertyServiceImpl implements IPropertyService {
             propertyImagesRepository.save(propertyImages);
         });
         Property savedProperty = propertyRepository.save(property);
+        for(Facilities facilities : oldFacilities){
+            facilities.getProperties().remove(property);
+            facilitiesRepository.save(facilities);
+        }
+        for(Facilities facilities: facilitiesList){
+            facilities.getProperties().add(savedProperty);
+            facilitiesRepository.save(facilities);
+        }
         return PropertyConverter.toPropertyDto(savedProperty);
     }
 

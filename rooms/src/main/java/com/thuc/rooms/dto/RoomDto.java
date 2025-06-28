@@ -16,7 +16,6 @@ public class RoomDto {
 
     private String status;
 
-    private RoomTypeDto roomType;
-
+    private Integer roomTypeId;
 
 }

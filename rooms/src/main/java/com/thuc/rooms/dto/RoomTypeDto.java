@@ -17,29 +17,23 @@ import java.util.List;
 public class RoomTypeDto implements Serializable {
     private Integer id;
 
-    @NotNull(message = "propertyId is null")
     private Integer propertyId;
 
-    @NotBlank(message = "name is blank")
     private String name;
 
-    @NotNull(message = "price is null")
     private Integer price;
 
-    @NotNull(message = "maxGuests is null")
     private Integer maxGuests;
 
-    @NotNull(message = "area is null")
     private Integer area;
 
-    @NotNull(message = "discount is null")
     private Integer discount;
 
-    @NotNull(message = "numBeds is null")
     private Integer numBeds;
 
-    @NotEmpty(message = "freeServices is not empty")
     private List<String> freeServices;
+
+    private List<RoomDto> rooms;
 
     private Boolean status;
 

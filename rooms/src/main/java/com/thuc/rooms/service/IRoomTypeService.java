@@ -28,4 +28,5 @@ public interface IRoomTypeService {
     RoomTypeDto createRoomType(@Valid RoomTypeRequestDto roomTypeDto);
 
 
+    RoomTypeDto updateRoomType(Integer id, RoomTypeRequestDto roomTypeDto);
 }

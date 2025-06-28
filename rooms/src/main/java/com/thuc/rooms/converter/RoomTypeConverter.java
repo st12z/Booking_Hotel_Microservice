@@ -4,9 +4,11 @@ import com.thuc.rooms.dto.RoomTypeDto;
 import com.thuc.rooms.entity.Facilities;
 import com.thuc.rooms.entity.RoomType;
 
+import java.util.stream.Collectors;
+
 public class RoomTypeConverter {
     public static  RoomTypeDto toRoomTypDto(RoomType roomType){
-        return RoomTypeDto.builder()
+        RoomTypeDto room = RoomTypeDto.builder()
                 .id(roomType.getId())
                 .name(roomType.getName())
                 .area(roomType.getArea())
@@ -15,8 +17,14 @@ public class RoomTypeConverter {
                 .discount(roomType.getDiscount())
                 .maxGuests(roomType.getMaxGuests())
                 .numBeds(roomType.getNumBeds())
-                .freeServices(roomType.getFreeServices().stream().map(Facilities::getName).toList())
                 .status(roomType.getStatus())
                 .build();
+        if(roomType.getRooms() != null && !roomType.getRooms().isEmpty()){
+            room.setRooms(roomType.getRooms().stream().map(RoomConverter::toRoomDto).collect(Collectors.toList()));
+        }
+        if(roomType.getFreeServices()!=null){
+            room.setFreeServices(roomType.getFreeServices().stream().map(Facilities::getName).collect(Collectors.toList()));
+        }
+        return room;
     }
 }

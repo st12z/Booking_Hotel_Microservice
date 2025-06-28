@@ -5,9 +5,7 @@ import com.thuc.rooms.dto.*;
 import com.thuc.rooms.entity.Facilities;
 import com.thuc.rooms.entity.Property;
 import com.thuc.rooms.entity.RoomType;
-import com.thuc.rooms.exception.ResourceNotFoundException;
 import com.thuc.rooms.service.IFilterService;
-import com.thuc.rooms.service.IPropertyService;
 import com.thuc.rooms.service.IRedisPropertyService;
 import com.thuc.rooms.service.ISearchService;
 import jakarta.persistence.EntityManager;
@@ -21,7 +19,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -33,7 +30,7 @@ public class FilterServiceImpl implements IFilterService {
     @PersistenceContext
     private EntityManager entityManager;
     @Override
-    public PageResponseDto<List<PropertyDto>> filterByCondition(SearchDto searchDto, FilterDto filter,int pageNo,int pageSize) {
+    public PageResponseDto<List<PropertyDto>> filterByCondition(SearchDto searchDto, FilterPropertiesDto filter, int pageNo, int pageSize) {
         log.debug("filtering by condition with search:{} and filter:{}", searchDto, filter);
         List<Integer> ids = getIdsPropertyInRedis(searchDto) !=null ? getIdsPropertyInRedis(searchDto) : null;
         if(ids==null){
@@ -56,7 +53,7 @@ public class FilterServiceImpl implements IFilterService {
 
 
     // get list
-    private List<PropertyDto> getPropertyByCriteria(List<FilterCriteria> filterCriterias,FilterDto filter,int pageNo,int pageSize) {
+    private List<PropertyDto> getPropertyByCriteria(List<FilterCriteria> filterCriterias, FilterPropertiesDto filter, int pageNo, int pageSize) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Tuple> query = builder.createTupleQuery();
         Root<Property> root = query.from(Property.class);
@@ -131,7 +128,7 @@ public class FilterServiceImpl implements IFilterService {
     }
 
     // total
-    private Long getTotalElements(List<FilterCriteria> filterCriterias, FilterDto filter, int pageNo, int pageSize) {
+    private Long getTotalElements(List<FilterCriteria> filterCriterias, FilterPropertiesDto filter, int pageNo, int pageSize) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Long> query = builder.createQuery(Long.class);
         Root<Property> root = query.from(Property.class);
@@ -176,7 +173,7 @@ public class FilterServiceImpl implements IFilterService {
     }
 
     // create filtercriteria
-    private List<FilterCriteria> getFilterCriteria(FilterDto filterDto,List<Integer> ids){
+    private List<FilterCriteria> getFilterCriteria(FilterPropertiesDto filterDto, List<Integer> ids){
         List<FilterCriteria> filterCriteriaList = new ArrayList<>();
         if(ids!=null && ids.size()>0){
             filterCriteriaList.add(new FilterCriteria("id","IN",ids));

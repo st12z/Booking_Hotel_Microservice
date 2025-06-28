@@ -1,13 +1,10 @@
 package com.thuc.rooms.controller;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import com.thuc.rooms.constants.PropertyConstant;
 import com.thuc.rooms.dto.*;
 import com.thuc.rooms.service.IPropertyService;
-import jakarta.ws.rs.POST;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,7 +76,7 @@ public class PropertiesController {
     @PostMapping("/filter")
     public ResponseEntity<
             SuccessResponseDto<PageResponseDto<List<PropertyDto>>>
-            > getPropertiesByFilter(@RequestBody FilterDtoManage filterDto) {
+            > getPropertiesByFilter(@RequestBody FilterPropertiesManageDto filterDto) {
         logger.debug("Request to get properties by  filterDto {}", filterDto);
         SuccessResponseDto<PageResponseDto<List<PropertyDto>>> response = SuccessResponseDto.<PageResponseDto<List<PropertyDto>>>builder()
                 .message(PropertyConstant.MESSAGE_200)

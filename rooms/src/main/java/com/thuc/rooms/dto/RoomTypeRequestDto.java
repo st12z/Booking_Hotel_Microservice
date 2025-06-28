@@ -31,6 +31,7 @@ public class RoomTypeRequestDto implements Serializable {
     @NotNull(message = "numBeds is null")
     private Integer numBeds;
 
-    @NotEmpty(message = "freeServices is not empty")
-    private List<Integer> facilities;
+    private List<Integer> freeServices;
+
+    private List<Integer> rooms;
 }

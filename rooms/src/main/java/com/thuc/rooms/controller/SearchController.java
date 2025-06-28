@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.logging.Filter;
 
 @RestController
 @RequestMapping("/api/search")
@@ -49,7 +48,7 @@ public class SearchController {
             @RequestParam(required = false)  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Integer quantityBeds,
             @RequestParam(defaultValue="1") int pageNo,
             @RequestParam(defaultValue="10") int pageSize,
-            @RequestBody FilterDto filter
+            @RequestBody FilterPropertiesDto filter
     ){
         SearchDto searchDto = new SearchDto(destination, checkIn, checkOut, quantityBeds);
         log.debug("Requested to filter with search:{} and filter:{}",searchDto, filter);

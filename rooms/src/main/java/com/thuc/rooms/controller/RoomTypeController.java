@@ -145,4 +145,14 @@ public class RoomTypeController {
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+    @PostMapping("/update/{id}")
+    public ResponseEntity<SuccessResponseDto<RoomTypeDto>> updateRoomType(@PathVariable Integer id,@RequestBody RoomTypeRequestDto roomTypeDto) {
+        log.debug("Request to update room type with {}", roomTypeDto);
+        SuccessResponseDto<RoomTypeDto> response = SuccessResponseDto.<RoomTypeDto>builder()
+                .code(RoomTypeConstant.STATUS_200)
+                .message(RoomTypeConstant.MESSAGE_200)
+                .data(roomTypeService.updateRoomType(id,roomTypeDto))
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 }

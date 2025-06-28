@@ -248,10 +248,11 @@ public class RoomTypeServiceImpl implements IRoomTypeService {
         }
         Property property = propertyRepository.findById(roomTypeDto.getPropertyId())
                 .orElseThrow(() -> new ResourceNotFoundException("Property","id",String.valueOf(roomTypeDto.getPropertyId())));
-        List<Facilities> facilities = roomTypeDto.getFacilities().stream().map(id->{
+        List<Facilities> facilities = roomTypeDto.getFreeServices().stream().map(id->{
             Facilities facility = facilitiesRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Facilities","id",String.valueOf(id)));
             return facility;
         }).collect(Collectors.toList());
+
         RoomType roomType = RoomType.builder()
                 .name(roomTypeDto.getName())
                 .area(roomTypeDto.getArea())
@@ -263,9 +264,60 @@ public class RoomTypeServiceImpl implements IRoomTypeService {
                 .status(true)
                 .maxGuests(roomTypeDto.getMaxGuests())
                 .build();
+        for(Facilities facility : facilities){
+            facility.getRoomTypes().add(roomType);
+            facilitiesRepository.save(facility);
+        }
         RoomType savedRoomType=roomTypeRepository.save(roomType);
+        roomTypeDto.getRooms().forEach(roomNumber->{
+            Room room = Room.builder()
+                    .roomNumber(roomNumber)
+                    .property(property)
+                    .roomType(savedRoomType)
+                    .status("available")
+                    .build();
+            roomRepository.save(room);
+        });
+
         return RoomTypeConverter.toRoomTypDto(savedRoomType);
 
+    }
+
+    @Override
+    public RoomTypeDto updateRoomType(Integer id, RoomTypeRequestDto roomTypeDto) {
+        RoomType roomType = roomTypeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("RoomType","id",String.valueOf(id)));
+        roomRepository.deleteByRoomTypeIdAndPropertyId(id,roomTypeDto.getPropertyId());
+        roomTypeDto.getRooms().forEach(roomNumber->{
+            Room room = Room.builder()
+                    .roomNumber(roomNumber)
+                    .roomType(roomType)
+                    .property(roomType.getProperty())
+                    .status("available")
+                    .build();
+            roomRepository.save(room);
+        });
+        roomType.getFreeServices().clear();
+        List<Facilities> oldFacilities = roomType.getFreeServices();
+        List<Facilities> facilities =roomTypeDto.getFreeServices().stream().map(facilityId->{
+          Facilities findFacility = facilitiesRepository.findById(facilityId).orElseThrow(() -> new ResourceNotFoundException("Facilities","id",String.valueOf(facilityId)));
+          return findFacility;
+        }).toList();
+        roomType.setArea(roomType.getArea());
+        roomType.setPrice(roomType.getPrice());
+        roomType.setNumBeds(roomType.getNumBeds());
+        roomType.setMaxGuests(roomType.getMaxGuests());
+        roomType.setName(roomType.getName());
+        roomType.setDiscount(roomType.getDiscount());
+        RoomType newRoomType=roomTypeRepository.save(roomType);
+        for(Facilities facility : oldFacilities){
+            facility.getRoomTypes().remove(roomType);
+            facilitiesRepository.save(facility);
+        }
+        for(Facilities facility : facilities){
+            facility.getRoomTypes().add(newRoomType);
+            facilitiesRepository.save(facility);
+        }
+        return RoomTypeConverter.toRoomTypDto(newRoomType);
     }
 
 

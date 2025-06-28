@@ -7,9 +7,9 @@ public class RoomConverter {
     public static RoomDto toRoomDto(Room room){
         return RoomDto.builder()
                 .id(room.getId())
-                .roomType(RoomTypeConverter.toRoomTypDto(room.getRoomType()))
                 .roomNumber(room.getRoomNumber())
                 .status(room.getStatus())
+                .roomTypeId(room.getRoomType().getId())
                 .build();
     }
 }

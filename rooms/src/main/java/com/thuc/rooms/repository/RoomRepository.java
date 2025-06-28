@@ -1,9 +1,11 @@
 package com.thuc.rooms.repository;
 
 import com.thuc.rooms.entity.Room;
+import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -24,4 +26,9 @@ public interface RoomRepository extends JpaRepository<Room,Integer> {
     @Query("SELECT COUNT(*) FROM Room r WHERE r.roomType.id = :roomTypeId AND r.property.id = :propertyId")
     Integer countByPropertyIdAndRoomTypeId(@Param("propertyId") Integer propertyId,
                                            @Param("roomTypeId") Integer roomTypeId);
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Room r WHERE r.roomType.id=:id AND r.property.id=:propertyId")
+    void deleteByRoomTypeIdAndPropertyId(Integer id, @NotNull(message = "propertyId is null") Integer propertyId);
 }

@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FilterDto {
+public class FilterPropertiesDto {
     private Integer budget;
     private List<String> distance;
     private List<String> facilities;
