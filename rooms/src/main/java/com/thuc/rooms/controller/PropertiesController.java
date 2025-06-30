@@ -54,7 +54,7 @@ public class PropertiesController {
         return ResponseEntity.ok(response);
     }
     @GetMapping("/id/{id}")
-    public ResponseEntity<?> getPropertyId(@PathVariable Integer id) {
+    public ResponseEntity<SuccessResponseDto<PropertyDto>> getPropertyId(@PathVariable Integer id) {
         logger.debug("Request to get properties by  id {}", id);
         SuccessResponseDto<PropertyDto> response = SuccessResponseDto.<PropertyDto>builder()
                 .message(PropertyConstant.MESSAGE_200)

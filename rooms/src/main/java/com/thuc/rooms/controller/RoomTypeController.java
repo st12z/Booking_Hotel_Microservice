@@ -2,6 +2,7 @@ package com.thuc.rooms.controller;
 
 import com.thuc.rooms.constants.RoomTypeConstant;
 import com.thuc.rooms.dto.*;
+import com.thuc.rooms.entity.Room;
 import com.thuc.rooms.service.IRoomTypeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -85,7 +86,7 @@ public class RoomTypeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getRoomTypeById(@PathVariable Integer id) {
+    public ResponseEntity<SuccessResponseDto<RoomTypeDto>> getRoomTypeById(@PathVariable Integer id) {
         log.debug("Request to get RoomType by id {}", id);
         SuccessResponseDto<RoomTypeDto> response = SuccessResponseDto.<RoomTypeDto>builder()
                 .code(RoomTypeConstant.STATUS_200)

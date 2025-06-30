@@ -13,16 +13,12 @@ import com.thuc.bookings.repository.BookingRoomsRepository;
 import com.thuc.bookings.repository.VehiclesRepository;
 import com.thuc.bookings.service.IBookingService;
 import com.thuc.bookings.service.IRedisVehicleService;
-import com.thuc.bookings.service.IVehiclesService;
 import com.thuc.bookings.service.client.PaymentsFeignClient;
-import com.thuc.bookings.service.client.RoomsFeignClient;
+import com.thuc.bookings.service.client.RoomTypesFeignClient;
 import com.thuc.bookings.service.client.UsersFeignClient;
 import com.thuc.bookings.utils.BillStatus;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.Query;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +34,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class BookingServiceImpl implements IBookingService {
-    private final RoomsFeignClient roomsFeignClient;
+    private final RoomTypesFeignClient roomsFeignClient;
     private final UsersFeignClient usersFeignClient;
     private final PaymentsFeignClient paymentsFeignClient;
     private final BookingCarsRepository bookingCarsRepository;

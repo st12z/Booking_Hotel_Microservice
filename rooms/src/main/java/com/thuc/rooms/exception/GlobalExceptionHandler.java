@@ -13,16 +13,6 @@ import java.time.LocalDateTime;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<ErrorResponseDto> handleException(ResourceNotFoundException e, WebRequest request) {
-        ErrorResponseDto errorResponseDto = new ErrorResponseDto();
-        errorResponseDto.setCode(HttpStatus.NOT_FOUND.value());
-        errorResponseDto.setError(e.getMessage());
-        errorResponseDto.setPath(request.getDescription(false).replace("uri=",""));
-        errorResponseDto.setTime(LocalDateTime.now());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponseDto);
-    }
 
     @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
@@ -53,5 +43,15 @@ public class GlobalExceptionHandler {
         errorResponseDto.setPath(request.getDescription(false).replace("uri=",""));
         errorResponseDto.setTime(LocalDateTime.now());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponseDto);
+    }
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseEntity<ErrorResponseDto> handleException(Exception e, WebRequest request) {
+        ErrorResponseDto errorResponseDto = new ErrorResponseDto();
+        errorResponseDto.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        errorResponseDto.setError(e.getMessage());
+        errorResponseDto.setPath(request.getDescription(false).replace("uri=",""));
+        errorResponseDto.setTime(LocalDateTime.now());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponseDto);
     }
 }
