@@ -4,6 +4,7 @@ import com.thuc.rooms.utils.ConvertToSlug;
 import com.thuc.rooms.utils.StringConverter;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.geo.Point;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -74,5 +75,7 @@ public class Property extends BaseEntity {
     private int ratingStar;
 
     private double avgReviewScore;
+
+
 
 }

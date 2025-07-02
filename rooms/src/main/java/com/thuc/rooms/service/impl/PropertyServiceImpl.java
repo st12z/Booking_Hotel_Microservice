@@ -3,6 +3,7 @@ package com.thuc.rooms.service.impl;
 import com.thuc.rooms.converter.PropertyConverter;
 import com.thuc.rooms.dto.*;
 import com.thuc.rooms.entity.*;
+import com.thuc.rooms.exception.ResourceAlreadyExistsException;
 import com.thuc.rooms.exception.ResourceNotFoundException;
 import com.thuc.rooms.repository.*;
 import com.thuc.rooms.service.IPropertyService;
@@ -15,10 +16,13 @@ import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -161,6 +165,7 @@ public class PropertyServiceImpl implements IPropertyService {
                 .build();
     }
 
+    @Transactional
     @Override
     public PropertyDto updateProperty(PropertyDto propertyDto, List<MultipartFile> images) throws IOException {
         Property property = propertyRepository.findById(propertyDto.getId()).orElseThrow(()-> new ResourceNotFoundException("Property","id",String.valueOf(propertyDto.getId())));
@@ -215,6 +220,68 @@ public class PropertyServiceImpl implements IPropertyService {
     public List<PropertyDto> getAllProperties() {
         List<Property> properties = propertyRepository.findAll();
         return properties.stream().map(PropertyConverter::toPropertyDto).toList();
+    }
+
+    public void updateDistanceFromCenter(Integer propertyId){
+        StringBuilder builder = new StringBuilder("UPDATE properties SET distance_from_center= ST_Distance(properties.geog, cities.geog)" +
+                "FROM cities WHERE properties.city_id = cities.id AND properties.id=:propertyId");
+        entityManager.createNativeQuery(builder.toString()).setParameter("propertyId", propertyId).executeUpdate();
+    }
+
+    public void updateGeog(Integer propertyId, BigDecimal latitude, BigDecimal longitude){
+        StringBuilder builder = new StringBuilder("UPDATE properties SET geog = ST_SetSRID(ST_MakePoint(:longitude, :latitude), 4326)\n" +
+                "    WHERE id = :propertyId");
+        Map<String,Object> params = new HashMap<>();
+        params.put("longitude", longitude);
+        params.put("latitude", latitude);
+        params.put("propertyId", propertyId);
+        Query query = entityManager.createNativeQuery(builder.toString());
+        params.forEach(query::setParameter);
+        query.executeUpdate();
+    }
+    @Transactional
+    @Override
+    public PropertyDto createProperty(PropertyRequestDto propertyDto, List<MultipartFile> images) {
+        Property existProperty = propertyRepository.findByName(propertyDto.getName());
+        if(existProperty!=null){
+            throw new ResourceAlreadyExistsException("Property","name",propertyDto.getName());
+        }
+        List<String> imagesUpload = images.stream().map(uploadCloudinary::uploadCloudinary).toList();
+        City city = cityRepository.findById(propertyDto.getCityId()).
+                orElseThrow(()-> new ResourceNotFoundException("City","id",String.valueOf(propertyDto.getCityId())));
+        List<Facilities> facilities = propertyDto.getFacilities().stream().map(id->{
+            Facilities facility = facilitiesRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Facilities","id",String.valueOf(id)));
+            return facility;
+        }).toList();
+        Property property = Property.builder()
+                .name(propertyDto.getName())
+                .address(propertyDto.getAddress())
+                .city(city)
+                .overview(propertyDto.getOverview())
+                .propertyType(propertyDto.getPropertyType())
+                .latitude(propertyDto.getLatitude())
+                .longitude(propertyDto.getLongitude())
+                .build();
+        Property savedProperty = propertyRepository.save(property);
+        propertyRepository.flush();
+        for(Facilities facility: facilities){
+            facility.getProperties().add(savedProperty);
+            facilitiesRepository.save(facility);
+        }
+        List<PropertyImages> propertyImages = imagesUpload.stream().map(image->{
+            PropertyImages propertyImage = PropertyImages.builder()
+                    .image(image)
+                    .property(property)
+                    .build();
+            PropertyImages savedPropertyImages= propertyImagesRepository.save(propertyImage);
+            return  savedPropertyImages;
+        }).toList();
+        savedProperty.setPropertyImages(propertyImages);
+        savedProperty.setFacilities(facilities);
+        updateGeog(savedProperty.getId(),savedProperty.getLatitude(),savedProperty.getLongitude());
+        updateDistanceFromCenter(savedProperty.getId());
+        Property savedProperty2 = propertyRepository.findById(savedProperty.getId()).orElseThrow(()-> new ResourceNotFoundException("Property","id",String.valueOf(savedProperty.getId())));
+        return PropertyConverter.toPropertyDto(savedProperty2);
     }
 
 

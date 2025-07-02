@@ -18,27 +18,22 @@ public class PropertyConverter {
     public static PropertyDto toPropertyDto(Property property) {
 
         RatingDto ratingDto = CaculateRating.caculateRating(property);
-        return PropertyDto.builder()
+        PropertyDto propertyDto= PropertyDto.builder()
                 .id(property.getId())
                 .name(property.getName())
                 .propertyType(property.getPropertyType())
                 .avgReviewScore(ratingDto.getAvgReviewScore())
-                .facilities(property.getFacilities().stream().map(Facilities::getName).toList())
                 .address(property.getAddress())
                 .overview(property.getOverview())
                 .images(property.getPropertyImages().stream().map(PropertyImages::getImage).toList())
                 .latitude(property.getLatitude())
                 .longitude(property.getLongitude())
                 .ratingStar(ratingDto.getRatingStar())
-                .numReviews(property.getReviews().size())
                 .distanceFromCenter(property.getDistanceFromCenter())
                 .distanceFromTrip(property.getDistanceFromTrip())
                 .slug(property.getSlug())
                 .cityName(property.getCity().getName())
                 .cityId(property.getCity().getId())
-                .reviews(property.getReviews().stream().map(ReviewConverter::toReviewDto).toList())
-                .roomTypes(property.getRoomTypes().stream().map(RoomTypeConverter::toRoomTypDto).toList())
-                .rooms(property.getRooms().stream().map(RoomConverter::toRoomDto).toList())
                 .ratingWifi(ratingDto.getRatingWifi())
                 .ratingClean(ratingDto.getRatingClean())
                 .ratingComfort(ratingDto.getRatingComfort())
@@ -46,5 +41,19 @@ public class PropertyConverter {
                 .ratingLocation(ratingDto.getRatingLocation())
                 .ratingStaff(ratingDto.getRatingStaff())
                 .build();
+        if(property.getReviews() != null && !property.getReviews().isEmpty()) {
+            propertyDto.setReviews(property.getReviews().stream().map(ReviewConverter::toReviewDto).toList());
+            propertyDto.setNumReviews(property.getReviews().size());
+        }
+        if(property.getRooms() != null && !property.getRooms().isEmpty()) {
+            propertyDto.setRooms(property.getRooms().stream().map(RoomConverter::toRoomDto).toList());
+        }
+        if(property.getFacilities() != null && !property.getFacilities().isEmpty()) {
+            propertyDto.setFacilities(property.getFacilities().stream().map(Facilities::getName).toList());
+        }
+        if(property.getRoomTypes() != null && !property.getRoomTypes().isEmpty()) {
+            propertyDto.setRoomTypes(property.getRoomTypes().stream().map(RoomTypeConverter::toRoomTypDto).toList());
+        }
+        return propertyDto;
     }
 }

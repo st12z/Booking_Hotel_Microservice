@@ -3,6 +3,7 @@ package com.thuc.rooms.entity;
 import com.thuc.rooms.utils.ConvertToSlug;
 import jakarta.persistence.*;
 import lombok.*;
+import org.locationtech.jts.geom.Point;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -35,6 +36,8 @@ public class City extends BaseEntity {
     private BigDecimal latitudeCenter;
     @Column(precision = 50, scale = 10)
     private BigDecimal longitudeCenter;
+
+
 
     @Column(unique = true, nullable = false)
     private String slug;

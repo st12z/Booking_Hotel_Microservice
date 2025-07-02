@@ -1,6 +1,7 @@
 package com.thuc.rooms.repository;
 
 import com.thuc.rooms.entity.Property;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -29,4 +30,6 @@ public interface PropertyRepository extends JpaRepository<Property,Integer> {
                                  @Param("rateStar") int rateStar,
                                  @Param("propertyType") String propertyType,
                                  Pageable pageable);
+
+    Property findByName(@NotBlank(message = "name not blank") String name);
 }

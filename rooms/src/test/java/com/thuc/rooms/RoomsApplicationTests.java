@@ -1,13 +1,13 @@
-package com.thuc.hotel_service;
+package com.thuc.rooms;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class HotelServiceApplicationTests {
+class RoomsApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+    @Test
+    void contextLoads() {
+    }
 
 }

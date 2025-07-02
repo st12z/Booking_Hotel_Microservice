@@ -1,5 +1,4 @@
 package com.thuc.rooms.utils;
-import org.postgresql.util.PGobject;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

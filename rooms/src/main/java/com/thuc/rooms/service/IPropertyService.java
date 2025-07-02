@@ -26,4 +26,6 @@ public interface IPropertyService {
     PropertyDto updateProperty(PropertyDto propertyDto, List<MultipartFile> images) throws IOException;
 
     List<PropertyDto> getAllProperties();
+
+    PropertyDto createProperty(PropertyRequestDto propertyDto, List<MultipartFile> images);
 }

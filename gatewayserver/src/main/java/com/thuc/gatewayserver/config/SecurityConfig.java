@@ -39,15 +39,16 @@ public class SecurityConfig {
                                         "/bookinghotel/users/api/users/amount-users",
                                         "/bookinghotel/users/api/users/amount-visits-month",
                                         "/bookinghotel/rooms/api/properties/amount-properties",
-                                        "/bookinghotel/rooms/api/notifications/**",
                                         "/bookinghotel/rooms/api/properties/search",
+                                        "/bookinghotel/rooms/api/properties/create",
+                                        "/bookinghotel/rooms/api/notifications/**",
                                         "/bookinghotel/rooms/api/export/**",
                                         "/bookinghotel/rooms/api/property-types/**",
                                         "/bookinghotel/rooms/api/roomtypes/create",
+                                        "/bookinghotel/rooms/api/roomtypes/update",
                                         "/bookinghotel/rooms/api/rooms/create",
                                         "/bookinghotel/rooms/api/rooms/delete",
                                         "/bookinghotel/bookings/api/bills/search",
-                                        "/bookinghotel/rooms/api/roomtypes/update",
                                         "/bookinghotel/bookings/api/prints/**"
                                 ).hasAnyRole("ADMIN","MANAGER","STAFF")
                                 .pathMatchers("/bookinghotel/bookings/api/bills/**",

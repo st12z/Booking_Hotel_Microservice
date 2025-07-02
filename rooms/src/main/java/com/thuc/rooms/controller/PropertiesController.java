@@ -8,11 +8,13 @@ import com.thuc.rooms.service.IPropertyService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -108,6 +110,20 @@ public class PropertiesController {
                 .code(PropertyConstant.STATUS_200)
                 .message(PropertyConstant.MESSAGE_200)
                 .data(propertyService.getAllProperties())
+                .build();
+        return ResponseEntity.ok(response);
+    }
+    @PostMapping( "/create")
+    public ResponseEntity<SuccessResponseDto<PropertyDto>> createProperty(@RequestPart String propertyRequestDto,@RequestPart List<MultipartFile> images) throws IOException {
+        logger.debug("Request to create properties by  propertyDto {}", propertyRequestDto);
+        logger.debug("Request to create properties by  images {}", images);
+        ObjectMapper objectMapper = new ObjectMapper();
+        PropertyRequestDto propertyDto = objectMapper.readValue(propertyRequestDto, PropertyRequestDto.class);
+        System.out.println(propertyDto.getLatitude().add(propertyDto.getLongitude()));
+        SuccessResponseDto<PropertyDto> response = SuccessResponseDto.<PropertyDto>builder()
+                .code(PropertyConstant.STATUS_200)
+                .message(PropertyConstant.MESSAGE_200)
+                .data(propertyService.createProperty(propertyDto,images))
                 .build();
         return ResponseEntity.ok(response);
     }
