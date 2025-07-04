@@ -1,5 +1,6 @@
 package com.thuc.bookings.entity;
 
+import com.thuc.bookings.dto.responseDto.RefundBillDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,6 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+
 public class RefundBill extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

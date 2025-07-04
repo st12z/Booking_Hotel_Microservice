@@ -2,7 +2,7 @@ package com.thuc.bookings.controller;
 
 import com.thuc.bookings.constants.VehicleConstant;
 import com.thuc.bookings.dto.requestDto.BookingDto;
-import com.thuc.bookings.dto.requestDto.FilterDto;
+import com.thuc.bookings.dto.requestDto.FilterCarDto;
 import com.thuc.bookings.dto.requestDto.VehicleRequestDto;
 import com.thuc.bookings.dto.responseDto.SuccessResponseDto;
 import com.thuc.bookings.dto.responseDto.VehicleDto;
@@ -23,7 +23,7 @@ public class VehicleControllers {
     private final IVehiclesService vehiclesService;
     private final Logger log = LoggerFactory.getLogger(VehicleControllers.class);
     @PostMapping("")
-    public ResponseEntity<SuccessResponseDto<List<VehicleDto>>> getAllVehicles(@RequestBody FilterDto filterDto) {
+    public ResponseEntity<SuccessResponseDto<List<VehicleDto>>> getAllVehicles(@RequestBody FilterCarDto filterDto) {
         log.debug("Request to get all Vehicles with {}", filterDto);
         SuccessResponseDto<List<VehicleDto>> response = SuccessResponseDto.<List<VehicleDto>>builder()
                 .code(VehicleConstant.STATUS_200)

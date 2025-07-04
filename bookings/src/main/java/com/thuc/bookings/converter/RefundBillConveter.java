@@ -25,14 +25,13 @@ public class RefundBillConveter {
     }
     public static RefundBillDto toRefundBillDto(RefundBill refundBill) {
         return RefundBillDto.builder()
-                .vnp_Message(refundBill.getVnp_Message())
-                .vnp_OrderInfo(refundBill.getVnp_OrderInfo())
-                .vnp_PayDate(refundBill.getVnp_PayDate())
-                .vnp_ResponseCode(refundBill.getVnp_ResponseCode())
+                .id(refundBill.getId())
                 .vnp_TxnRef(refundBill.getVnp_TxnRef())
                 .vnp_Amount(refundBill.getVnp_Amount())
                 .email(refundBill.getEmail())
                 .createdAt(refundBill.getCreatedAt())
+                .vnp_TransactionType(refundBill.getVnp_TransactionType())
+                .vnp_TransactionNo(refundBill.getVnp_TransactionNo())
                 .build();
     }
 }

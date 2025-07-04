@@ -3,7 +3,7 @@ package com.thuc.bookings.service.impl;
 import com.thuc.bookings.converter.VehicleConverter;
 import com.thuc.bookings.dto.requestDto.BookingCarsRequestDto;
 import com.thuc.bookings.dto.requestDto.BookingDto;
-import com.thuc.bookings.dto.requestDto.FilterDto;
+import com.thuc.bookings.dto.requestDto.FilterCarDto;
 import com.thuc.bookings.dto.requestDto.VehicleRequestDto;
 import com.thuc.bookings.dto.responseDto.VehicleDto;
 import com.thuc.bookings.entity.Vehicles;
@@ -23,10 +23,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -41,7 +39,7 @@ public class VehiclesServiceImpl implements IVehiclesService {
     private EntityManager entityManager;
 
     @Override
-    public List<VehicleDto> getAllVehicles(FilterDto filterDto) {
+    public List<VehicleDto> getAllVehicles(FilterCarDto filterDto) {
         StringBuilder builder = new StringBuilder("SELECT * FROM vehicles WHERE 1=1 ");
         // noi dieu kien
         if(filterDto.getChoosedPrice()!=0){

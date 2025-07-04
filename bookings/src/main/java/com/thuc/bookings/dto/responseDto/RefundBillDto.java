@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class RefundBillDto {
+    private Integer id;
     private String vnp_ResponseId;
     private String vnp_Command;
     private String vnp_ResponseCode;
@@ -28,4 +29,5 @@ public class RefundBillDto {
     private String vnp_SecureHash;
     private String email;
     private LocalDateTime createdAt;
+    private Integer originPayment;
 }

@@ -262,13 +262,15 @@ public class RoomTypeServiceImpl implements IRoomTypeService {
                 .numBeds(roomTypeDto.getNumBeds())
                 .property(property)
                 .status(true)
+                .freeServices(facilities)
                 .maxGuests(roomTypeDto.getMaxGuests())
                 .build();
+        RoomType savedRoomType=roomTypeRepository.save(roomType);
         for(Facilities facility : facilities){
             facility.getRoomTypes().add(roomType);
             facilitiesRepository.save(facility);
         }
-        RoomType savedRoomType=roomTypeRepository.save(roomType);
+
         roomTypeDto.getRooms().forEach(roomNumber->{
             Room room = Room.builder()
                     .roomNumber(roomNumber)

@@ -4,7 +4,7 @@ import lombok.Data;
 
 import java.util.List;
 @Data
-public class FilterDto {
+public class FilterCarDto {
     List<Integer> choosedStars;
     List<String> choosedCarTypes;
     int choosedPrice;
