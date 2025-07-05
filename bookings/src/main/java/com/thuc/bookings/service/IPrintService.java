@@ -4,4 +4,6 @@ import java.io.FileNotFoundException;
 
 public interface IPrintService {
     byte[] exportBill(Integer id) throws FileNotFoundException;
+
+    byte[] exportRefundBills(Integer id);
 }

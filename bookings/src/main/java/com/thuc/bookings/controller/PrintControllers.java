@@ -20,7 +20,6 @@ public class PrintControllers {
     private final IPrintService printService;
     @GetMapping("bills/{id}")
     public ResponseEntity<byte[]> printBill(@PathVariable Integer id) throws FileNotFoundException {
-        printService.exportBill(id);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);
         headers.setContentDisposition(ContentDisposition.attachment()
@@ -29,5 +28,16 @@ public class PrintControllers {
         return ResponseEntity.status(HttpStatus.OK)
                 .headers(headers)
                 .body(printService.exportBill(id));
+    }
+    @GetMapping("refund-bills/{id}")
+    public ResponseEntity<byte[]> printRefundBill(@PathVariable Integer id) throws FileNotFoundException {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDisposition(ContentDisposition.attachment()
+                .filename("refund-bills_HD" + id + ".pdf")
+                .build());
+        return ResponseEntity.status(HttpStatus.OK)
+                .headers(headers)
+                .body(printService.exportRefundBills(id));
     }
 }
