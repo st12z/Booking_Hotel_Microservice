@@ -1,7 +1,9 @@
 package com.thuc.bookings.service.impl;
 
 import com.thuc.bookings.entity.Bill;
+import com.thuc.bookings.entity.RefundBill;
 import com.thuc.bookings.repository.BillRepository;
+import com.thuc.bookings.repository.RefundBillRepository;
 import com.thuc.bookings.service.IExportFileService;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,6 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ExportFileServiceImpl implements IExportFileService {
     private final BillRepository billRepository;
+    private final RefundBillRepository refundBillRepository;
     @Override
     public void generateExcelFileOfBills(HttpServletResponse response) {
         try{
@@ -65,5 +68,60 @@ public class ExportFileServiceImpl implements IExportFileService {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void generateExcelFileOfRefundBills(HttpServletResponse response) {
+        try{
+            List<RefundBill> refundBills = refundBillRepository.findAll();
+            HSSFWorkbook workbook = new HSSFWorkbook();
+            HSSFSheet sheet= workbook.createSheet("Refund Bills");
+            HSSFRow row=sheet.createRow(0);
+            row.createCell(0).setCellValue("ID");
+            row.createCell(1).setCellValue("VNP_BANK_CODE");
+            row.createCell(2).setCellValue("VNP_COMMAND");
+            row.createCell(3).setCellValue("VNP_MESSAGE");
+            row.createCell(4).setCellValue("VNP_ORDER_INFO");
+            row.createCell(5).setCellValue("VNP_PAY_DATE");
+            row.createCell(6).setCellValue("VNP_RESPONSE_CODE");
+            row.createCell(7).setCellValue("VNP_SECURE_HASH");
+            row.createCell(8).setCellValue("VNP_TMN_CODE");
+            row.createCell(9).setCellValue("VNP_TRANSACTION_NO");
+            row.createCell(10).setCellValue("VNP_TRANSACTION_STATUS");
+            row.createCell(11).setCellValue("VNP_TRANSACTION_TYPE");
+            row.createCell(12).setCellValue("VNP_TXN_REF");
+            row.createCell(13).setCellValue("EMAIL");
+            row.createCell(14).setCellValue("VNP_AMOUNT");
+            row.createCell(15).setCellValue("CREATED_AT");
+            int dataRowIndex = 1;
+            for(RefundBill refundBill:refundBills){
+                HSSFRow dataRow=sheet.createRow(dataRowIndex);
+                dataRow.createCell(0).setCellValue(refundBill.getId());
+                dataRow.createCell(1).setCellValue(refundBill.getVnp_Command());
+                dataRow.createCell(2).setCellValue(refundBill.getVnp_BankCode());
+                dataRow.createCell(3).setCellValue(refundBill.getVnp_Message());
+                dataRow.createCell(4).setCellValue(refundBill.getVnp_OrderInfo());
+                dataRow.createCell(5).setCellValue(refundBill.getVnp_ResponseCode());
+                dataRow.createCell(6).setCellValue(refundBill.getVnp_SecureHash());
+                dataRow.createCell(7).setCellValue(refundBill.getVnp_TmnCode());
+                dataRow.createCell(8).setCellValue(refundBill.getVnp_TransactionNo());
+                dataRow.createCell(9).setCellValue(refundBill.getVnp_TransactionStatus());
+                dataRow.createCell(10).setCellValue(refundBill.getVnp_TransactionType());
+                dataRow.createCell(11).setCellValue(refundBill.getVnp_TransactionType());
+                dataRow.createCell(12).setCellValue(refundBill.getVnp_TxnRef());
+                dataRow.createCell(13).setCellValue(refundBill.getEmail());
+                dataRow.createCell(14).setCellValue(refundBill.getVnp_Amount());
+                dataRow.createCell(15).setCellValue(refundBill.getCreatedAt());
+                dataRowIndex++;
+
+            }
+            ServletOutputStream ops = response.getOutputStream();
+            workbook.write(ops);
+            workbook.close();
+            ops.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 }

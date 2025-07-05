@@ -164,6 +164,7 @@ public class BillServiceImpl implements IBillService {
                     Date endDate = sdf.parse(filterBillsDto.getEndDate());
                     params.put("beginDate",beginDate);
                     params.put("endDate",endDate);
+                    break;
                 }
                 case "today": {
                     LocalDate today = LocalDate.now();

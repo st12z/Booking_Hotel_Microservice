@@ -68,6 +68,7 @@ public class RefundServiceImpl implements IRefundBillService {
                     Date endDate = sdf.parse(filterDto.getEndDate());
                     params.put("beginDate",beginDate);
                     params.put("endDate",endDate);
+                    break;
                 }
                 case "today": {
                     LocalDate today = LocalDate.now();

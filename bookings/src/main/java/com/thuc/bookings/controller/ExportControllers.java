@@ -17,11 +17,15 @@ public class ExportControllers {
     private final Logger log = LoggerFactory.getLogger(ExportControllers.class);
     private final IExportFileService exportFileService;
     @GetMapping("bills")
-    public void exportProperties(HttpServletResponse response) {
+    public void exportBills(HttpServletResponse response) {
         response.setHeader("Content-Disposition", "attachment; filename=bills.xls");
         response.setContentType("application/octet-stream");
         exportFileService.generateExcelFileOfBills(response);
-
-
+    }
+    @GetMapping("refund-bills")
+    public void exportRefundBills(HttpServletResponse response) {
+        response.setHeader("Content-Disposition", "attachment; filename=refund-bills.xls");
+        response.setContentType("application/octet-stream");
+        exportFileService.generateExcelFileOfRefundBills(response);
     }
 }
