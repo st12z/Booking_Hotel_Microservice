@@ -1,17 +1,43 @@
 package com.thuc.gatewayserver;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.core.env.MapPropertySource;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @SpringBootApplication
 
 public class GatewayserverApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(GatewayserverApplication.class, args);
+
+		SpringApplication app = new SpringApplication(GatewayserverApplication.class);
+
+		app.addInitializers(applicationContext -> {
+			try {
+				Dotenv dotenv = Dotenv.configure()
+						.directory(System.getProperty("user.dir")+"/gatewayserver")
+						.load();
+
+				Map<String, Object> dotenvMap = new HashMap<>();
+				dotenv.entries().forEach(entry -> dotenvMap.put(entry.getKey(), entry.getValue()));
+
+				ConfigurableEnvironment env = applicationContext.getEnvironment();
+				env.getPropertySources().addFirst(new MapPropertySource("dotenv", dotenvMap));
+
+			} catch (Exception e) {
+				System.err.println("Không load được file .env: " + e.getMessage());
+				throw e;
+			}
+		});
+		app.run(args);
 	}
 	@Bean
 	public RouteLocator BooKingHotelRoutesConfig(RouteLocatorBuilder routeLocatorBuilder) {

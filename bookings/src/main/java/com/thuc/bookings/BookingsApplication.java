@@ -1,9 +1,15 @@
 package com.thuc.bookings;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.core.env.MapPropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 @SpringBootApplication
@@ -12,7 +18,27 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 public class BookingsApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BookingsApplication.class, args);
+		SpringApplication app = new SpringApplication(BookingsApplication.class);
+
+		app.addInitializers(applicationContext -> {
+			try {
+				Dotenv dotenv = Dotenv.configure()
+						.directory(System.getProperty("user.dir")+"/bookings")
+						.load();
+
+				Map<String, Object> dotenvMap = new HashMap<>();
+				dotenv.entries().forEach(entry -> dotenvMap.put(entry.getKey(), entry.getValue()));
+
+				ConfigurableEnvironment env = applicationContext.getEnvironment();
+				env.getPropertySources().addFirst(new MapPropertySource("dotenv", dotenvMap));
+
+			} catch (Exception e) {
+				System.err.println("Không load được file .env: " + e.getMessage());
+				throw e;
+			}
+		});
+
+		app.run(args);
 	}
 
 }

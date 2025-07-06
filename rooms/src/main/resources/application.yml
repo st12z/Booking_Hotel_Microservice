@@ -3,9 +3,9 @@ spring:
   application:
     name: rooms
   datasource:
-    url: jdbc:postgresql://localhost:5432/booking-hotel
-    username: postgres
-    password: Anhthucdz1234!
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: org.postgresql.Driver
     hikari:
       # Cấu hình tối ưu cho Connection Pool
@@ -29,15 +29,15 @@ spring:
       ddl-auto: update
   data:
     redis:
-      host: localhost
-      port: 6379
+      host: ${REDIS_HORT}
+      port: ${REDIS_PORT}
       connect-timeout: 2s
       timeout: 4s
   rabbitmq:
-    port: 5672
-    host: localhost
-    username: guest
-    password: guest
+    port: ${RABBITMQ_PORT}
+    host: ${RABBITMQ_HOST}
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_PASSWORD}
     connection-timeout: 5s
 server:
   port: 8080
@@ -49,7 +49,7 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      defaultZone: http://localhost:8070/eureka/
+      defaultZone: ${EUREKA_CLIENT_URL}
 logging:
   level:
     com.thuc.rooms: DEBUG

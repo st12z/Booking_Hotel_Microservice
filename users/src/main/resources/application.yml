@@ -53,27 +53,27 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      defaultZone: http://localhost:8070/eureka/
+      defaultZone: ${EUREKA_CLIENT_URL}
 
 logging:
   level:
     com.thuc.users: debug
 
 keycloak-credential:
-  auth-server-url: http://localhost:7080
-  client-id: create-account-keycloak
-  client-secret: td6utuMyxK0I0l7GQ5ZNw4SwiCjBhwr4
-  grant-type: client_credentials
-  realm: master
+  auth-server-url: ${KEYCLOAK_CREDENTIAL_AUTH_SERVER_URL}
+  client-id: ${KEYCLOAK_CREDENTIAL_CLIENT_ID}
+  client-secret: ${KEYCLOAK_CREDENTIAL_CLIENT_SECRET}
+  grant-type: ${KEYCLOAK_CREDENTIAL_GRANT_TYPE}
+  realm: ${KEYCLOAK_CREDENTIAL_REALM}
 
 keycloak-authorization:
-  token-endpoint: http://localhost:7080/realms/master/protocol/openid-connect/token
-  logout-endpoint: http://localhost:7080/realms/master/protocol/openid-connect/logout
-  client-id: booking-hotel
-  client-secret: 4UuKnDcoZ9E7IhDmhCfioI1xNb3CsAs9
-  grant-type: authorization_code
-  realm: master
-  redirect-uri: http://localhost:3000/callback
+  token-endpoint: ${KEYCLOAK_AUTHORIZATION_TOKEN_ENDPOINT}
+  logout-endpoint: ${KEYCLOAK_AUTHORIZATION_LOGOUT_ENDPOINT}
+  client-id: ${KEYCLOAK_AUTHORIZATION_CLIENT_ID}
+  client-secret: ${KEYCLOAK_AUTHORIZATION_CLIENT_SECRET}
+  grant-type: ${KEYCLOAK_AUTHORIZATION_GRANT_TYPE}
+  realm: ${KEYCLOAK_AUTHORIZATION_REALM}
+  redirect-uri: ${KEYCLOAK_AUTHORIZATION_REDIRECT_URI}
 management:
   endpoints:
     web:

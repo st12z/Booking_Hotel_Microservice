@@ -44,10 +44,10 @@ spring:
           destination: refund-bill-send
 
   mail:
-    host: smtp.gmail.com
-    username: ckp2004vn@gmail.com
-    password: kltqohttmkznubrc
-    port: 587
+    host: ${MAIL_HOST}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    port: ${MAIL_PORT}
     properties:
       smtp:
         auth: true
@@ -57,10 +57,10 @@ spring:
             enable: true
 
   rabbitmq:
-    port: 5672
-    host: localhost
-    username: guest
-    password: guest
+    port: ${RABBITMQ_PORT}
+    host: ${RABBITMQ_HOST}
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_PASSWORD}
 
 server:
   port: 8084

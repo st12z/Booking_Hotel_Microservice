@@ -12,7 +12,7 @@ spring:
       resourceserver:
         jwt:
           # download public certificates de resourceserver ket noi authserver validate token
-          jwk-set-uri: http://localhost:7080/realms/master/protocol/openid-connect/certs
+          jwk-set-uri: ${SECURITY_OAUTH2_RESOURCESERVER_JWT_SET_URI}
   main:
     allow-bean-definition-overriding: true
 management:
@@ -31,7 +31,7 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      defaultZone: http://localhost:8070/eureka/
+      defaultZone: ${EUREKA_CLIENT_URL}
 server:
   port: 8072
 logging:
