@@ -2,9 +2,7 @@ package com.thuc.bookings.controller;
 
 import com.thuc.bookings.constants.RefundBillConstant;
 import com.thuc.bookings.dto.requestDto.FilterRefundBillDto;
-import com.thuc.bookings.dto.responseDto.PageResponseDto;
-import com.thuc.bookings.dto.responseDto.RefundBillDto;
-import com.thuc.bookings.dto.responseDto.SuccessResponseDto;
+import com.thuc.bookings.dto.responseDto.*;
 import com.thuc.bookings.service.IRefundBillService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -22,6 +20,16 @@ import java.util.List;
 public class RefundControllers {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final IRefundBillService refundBillService;
+    @GetMapping("{id}")
+    public ResponseEntity<SuccessResponseDto<RefundBillDto>> getRefundBillById(@PathVariable Integer id){
+        logger.debug(" get refund bill by id {}",id);
+        SuccessResponseDto<RefundBillDto> response = SuccessResponseDto.<RefundBillDto>builder()
+                .code(RefundBillConstant.STATUS_200)
+                .message(RefundBillConstant.MESSAGE_200)
+                .data(refundBillService.getRefundBillById(id))
+                .build();
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
     @PostMapping("/filter")
     public ResponseEntity<SuccessResponseDto<PageResponseDto<List<RefundBillDto>>>> getAllRefundBills(
             @RequestBody FilterRefundBillDto filterDto
@@ -48,4 +56,15 @@ public class RefundControllers {
                 .build();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+    @GetMapping("/amount-refund-month/{month}")
+    public ResponseEntity<SuccessResponseDto<List<StatisticRefundBillByMonth>>> getAmountRefundMonth(@PathVariable Integer month){
+        logger.debug(" get amount refund month {}",month);
+        SuccessResponseDto<List<StatisticRefundBillByMonth>> response = SuccessResponseDto.<List<StatisticRefundBillByMonth>>builder()
+                .code(RefundBillConstant.STATUS_200)
+                .message(RefundBillConstant.MESSAGE_200)
+                .data(refundBillService.getAmountRefundMonth(month))
+                .build();
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
 }

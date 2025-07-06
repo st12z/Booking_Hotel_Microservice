@@ -2,10 +2,7 @@ package com.thuc.payments.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.thuc.payments.constant.PaymentConstant;
-import com.thuc.payments.dto.BookingDto;
-import com.thuc.payments.dto.PaymentResponseDto;
-import com.thuc.payments.dto.SuccessResponseDto;
-import com.thuc.payments.dto.VnpayRefundResponseDto;
+import com.thuc.payments.dto.*;
 import com.thuc.payments.service.IPaymentService;
 import com.thuc.payments.service.IPaymentTransactionService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,10 +11,12 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.stream.function.StreamBridge;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/payments")
@@ -70,5 +69,34 @@ public class PaymentControllers {
         response.sendRedirect("http://localhost:3000/payments?status=" + status + "&billCode=" + billCode);
 
     }
-
+    @PostMapping("amount-transaction-month")
+    public ResponseEntity<SuccessResponseDto<List<StatisticTransactionDto>>> getAmountTransactionMonth(@RequestBody FilterStatistic filterDto) {
+        log.debug("Request to get amount transaction filter : {}", filterDto);
+        SuccessResponseDto<List<StatisticTransactionDto>> response = SuccessResponseDto.<List<StatisticTransactionDto>>builder()
+                .code(PaymentConstant.STATUS_200)
+                .message(PaymentConstant.MESSAGE_200)
+                .data(paymentService.getAmountTransactionMonth(filterDto))
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+    @PostMapping("revenue-transaction-month")
+    public ResponseEntity<SuccessResponseDto<List<StatisticTransactionDto>>> getRevenueTransactionMonth(@RequestBody FilterStatistic filterDto) {
+        log.debug("Request to get amount transaction filter : {}", filterDto);
+        SuccessResponseDto<List<StatisticTransactionDto>> response = SuccessResponseDto.<List<StatisticTransactionDto>>builder()
+                .code(PaymentConstant.STATUS_200)
+                .message(PaymentConstant.MESSAGE_200)
+                .data(paymentService.getRevenueTransactionByMonth(filterDto))
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+    @GetMapping("statistic-transactiontype-month/{month}")
+    public ResponseEntity<SuccessResponseDto<List<StatisticTransactionTypeDto>>> getRevenueTransactionMonth(@PathVariable Integer month) {
+        log.debug("Request to get statistic transaction month : {}", month);
+        SuccessResponseDto<List<StatisticTransactionTypeDto>> response = SuccessResponseDto.<List<StatisticTransactionTypeDto>>builder()
+                .code(PaymentConstant.STATUS_200)
+                .message(PaymentConstant.MESSAGE_200)
+                .data(paymentService.getStatisticTransactionType(month))
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 }

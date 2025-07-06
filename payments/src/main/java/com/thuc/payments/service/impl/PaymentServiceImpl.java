@@ -2,14 +2,10 @@ package com.thuc.payments.service.impl;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thuc.payments.config.VnpayConfig;
 import com.thuc.payments.config.VnpayRefundConfig;
-import com.thuc.payments.dto.BookingDto;
-import com.thuc.payments.dto.PaymentResponseDto;
-import com.thuc.payments.dto.RefundBillDto;
-import com.thuc.payments.dto.VnpayRefundResponseDto;
+import com.thuc.payments.dto.*;
 import com.thuc.payments.entity.PaymentTransaction;
 import com.thuc.payments.exception.ResourceNotFoundException;
 import com.thuc.payments.repository.PaymentTransactionRepository;
@@ -20,6 +16,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cglib.core.Local;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -31,6 +28,8 @@ import org.springframework.web.client.RestTemplate;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.time.Year;
+import java.time.YearMonth;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
@@ -187,5 +186,82 @@ public class PaymentServiceImpl implements IPaymentService {
                     .vnp_TxnRef(vnpayRefundResponseDto.getVnp_TxnRef())
                     .vnp_TransactionType(vnpayRefundResponseDto.getVnp_TransactionType())
                     .build();
+    }
+
+    @Override
+    public List<StatisticTransactionDto> getAmountTransactionMonth(FilterStatistic filterDto) {
+        int month = filterDto.getMonth();
+
+        List<StatisticTransactionDto> listAmountTransaction = new ArrayList<>();
+        Year currentYear = Year.now();
+        YearMonth yearMonth = currentYear.atMonth(month);
+        int daysInMonth = yearMonth.lengthOfMonth();
+        for(int i=1;i<=daysInMonth;i++){
+            LocalDateTime startDay = LocalDateTime.of(currentYear.getValue(),month,i,0,0,0);
+            LocalDateTime endDay = LocalDateTime.of(currentYear.getValue(),month,i,23,59,59);
+            List<PaymentTransaction> paymentTransactions = new ArrayList<>();
+            if(filterDto.getTransactionType().equals("0")){
+                paymentTransactions = paymentTransactionRepository.findByCreatedAtBetween(startDay,endDay);
+            }
+            else{
+                TransactionType transactionType = TransactionType.valueOf(filterDto.getTransactionType());
+                paymentTransactions = paymentTransactionRepository
+                        .findByTransactionTypeAndCreatedAtBetween(transactionType,startDay,endDay);
+            }
+            int amount = paymentTransactions.size();
+            listAmountTransaction.add(new StatisticTransactionDto(i,amount));
+        }
+        return listAmountTransaction;
+    }
+
+    @Override
+    public List<StatisticTransactionDto> getRevenueTransactionByMonth(FilterStatistic filterDto) {
+        int month = filterDto.getMonth();
+
+        List<StatisticTransactionDto> listAmountTransaction = new ArrayList<>();
+        Year currentYear = Year.now();
+        YearMonth yearMonth = currentYear.atMonth(month);
+        int daysInMonth = yearMonth.lengthOfMonth();
+        for(int i=1;i<=daysInMonth;i++){
+            LocalDateTime startDay = LocalDateTime.of(currentYear.getValue(),month,i,0,0,0);
+            LocalDateTime endDay = LocalDateTime.of(currentYear.getValue(),month,i,23,59,59);
+            List<PaymentTransaction> paymentTransactions = new ArrayList<>();
+            if(filterDto.getTransactionType().equals("0")){
+                paymentTransactions = paymentTransactionRepository.findByCreatedAtBetween(startDay,endDay);
+            }
+            else{
+                TransactionType transactionType = TransactionType.valueOf(filterDto.getTransactionType());
+                paymentTransactions = paymentTransactionRepository
+                        .findByTransactionTypeAndCreatedAtBetween(transactionType,startDay,endDay);
+            }
+            int amount = paymentTransactions.stream().mapToInt(PaymentTransaction::getVnpAmount).sum();
+            listAmountTransaction.add(new StatisticTransactionDto(i,amount));
+        }
+        return listAmountTransaction;
+    }
+
+    @Override
+    public List<StatisticTransactionTypeDto> getStatisticTransactionType(Integer month) {
+        Year currentYear = Year.now();
+        YearMonth yearMonth = currentYear.atMonth(month);
+        int daysInMonth = yearMonth.lengthOfMonth();
+        LocalDateTime startDayOfMonth = LocalDateTime.of(currentYear.getValue(),month,1,0,0,0);
+        LocalDateTime endDayOfMonth = LocalDateTime.of(currentYear.getValue(),month,daysInMonth,0,0,0);
+        List<PaymentTransaction> paymentTransactions = paymentTransactionRepository.findByCreatedAtBetween(startDayOfMonth,endDayOfMonth);
+        int amountRefund = 0;
+        int amountPayment= 0;
+        for(PaymentTransaction paymentTransaction : paymentTransactions){
+            if(paymentTransaction.getTransactionType().getValue().equals("REFUND")){
+                amountRefund+=1;
+            }
+            else{
+                amountPayment+=1;
+            }
+        }
+        return List.of(
+                new StatisticTransactionTypeDto(TransactionType.REFUND.getValue(),amountRefund),
+                new StatisticTransactionTypeDto(TransactionType.PAYMENT.getValue(),amountPayment)
+        );
+
     }
 }

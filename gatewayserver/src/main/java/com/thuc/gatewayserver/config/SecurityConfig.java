@@ -50,7 +50,11 @@ public class SecurityConfig {
                                         "/bookinghotel/rooms/api/rooms/delete",
                                         "/bookinghotel/bookings/api/bills/search",
                                         "/bookinghotel/bookings/api/refund-bills/filter",
-                                        "/bookinghotel/bookings/api/prints/**"
+                                        "/bookinghotel/bookings/api/refund-bills/amount-refund-month",
+                                        "/bookinghotel/bookings/api/prints/**",
+                                        "/bookinghotel/payments/api/payments/amount-transaction-month/**",
+                                        "/bookinghotel/payments/api/payments/revenue-transaction-month/**",
+                                        "/bookinghotel/payments/api/payments/statistic-transaction-month/**"
                                 ).hasAnyRole("ADMIN","MANAGER","STAFF")
                                 .pathMatchers("/bookinghotel/bookings/api/bills/**",
                                         "/bookinghotel/bookings/api/bookingcars/**",

@@ -4,11 +4,10 @@ import com.thuc.bookings.converter.BillConverter;
 import com.thuc.bookings.converter.RefundBillConveter;
 import com.thuc.bookings.dto.requestDto.FilterBillsDto;
 import com.thuc.bookings.dto.requestDto.FilterRefundBillDto;
-import com.thuc.bookings.dto.responseDto.BillDto;
-import com.thuc.bookings.dto.responseDto.PageResponseDto;
-import com.thuc.bookings.dto.responseDto.RefundBillDto;
+import com.thuc.bookings.dto.responseDto.*;
 import com.thuc.bookings.entity.Bill;
 import com.thuc.bookings.entity.RefundBill;
+import com.thuc.bookings.exception.ResourceNotFoundException;
 import com.thuc.bookings.repository.BillRepository;
 import com.thuc.bookings.repository.RefundBillRepository;
 import com.thuc.bookings.service.IRefundBillService;
@@ -20,9 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -196,5 +193,34 @@ public class RefundServiceImpl implements IRefundBillService {
                 .total(total)
                 .build();
 
+    }
+
+    @Override
+    public RefundBillDto getRefundBillById(Integer id) {
+        RefundBill refundBill = refundBillRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("RefundBill","id",String.valueOf(id)));
+        Bill bill = billRepository.findByBillCode(refundBill.getVnp_TxnRef());
+        RefundBillDto refundBillDto= RefundBillConveter.toRefundBillDto(refundBill);
+        refundBillDto.setOriginPayment(bill.getNewTotalPayment());
+        return refundBillDto;
+    }
+
+    @Override
+    public List<StatisticRefundBillByMonth> getAmountRefundMonth(Integer month) {
+        List<StatisticRefundBillByMonth> listStatisticMonth = new ArrayList<>();
+        Year currentYear = Year.now();
+        YearMonth currentYearMonth = currentYear.atMonth(month);
+        int daysInMonth = currentYearMonth.lengthOfMonth();
+        for (int i=1;i<= daysInMonth;i++){
+            LocalDateTime startDay = LocalDateTime.of(currentYear.getValue(),month,i,0,0,0);
+            LocalDateTime endDay = LocalDateTime.of(currentYear.getValue(),month,i,23,59,59);
+            List<RefundBill> refundBills = refundBillRepository.findByCreatedAtBetween(startDay,endDay);
+            int amount = 0;
+            for(RefundBill refundBill : refundBills){
+                amount+=refundBill.getVnp_Amount();
+            }
+            listStatisticMonth.add(new StatisticRefundBillByMonth(i,amount));
+
+        }
+        return listStatisticMonth;
     }
 }

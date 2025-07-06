@@ -32,6 +32,14 @@ public class RefundBillConveter {
                 .createdAt(refundBill.getCreatedAt())
                 .vnp_TransactionType(refundBill.getVnp_TransactionType())
                 .vnp_TransactionNo(refundBill.getVnp_TransactionNo())
+                .vnp_ResponseCode(refundBill.getVnp_ResponseCode())
+                .vnp_ResponseId(refundBill.getVnp_ResponseId())
+                .vnp_SecureHash(refundBill.getVnp_SecureHash())
+                .vnp_TransactionStatus(refundBill.getVnp_TransactionStatus())
+                .vnp_Command(refundBill.getVnp_Command())
+                .vnp_Message(refundBill.getVnp_Message())
+                .vnp_OrderInfo(refundBill.getVnp_OrderInfo())
+                .vnp_PayDate(refundBill.getVnp_PayDate())
                 .build();
     }
 }

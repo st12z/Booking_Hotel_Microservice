@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Repository
 public interface RefundBillRepository extends JpaRepository<RefundBill, Integer> {
@@ -15,4 +16,6 @@ public interface RefundBillRepository extends JpaRepository<RefundBill, Integer>
 
     @Query("SELECT rf from  RefundBill rf WHERE rf.vnp_TxnRef=:vnpTxnRef")
     RefundBill findByVnpTxnRef(@Param("vnpTxnRef")String vnpTxnRef);
+
+    List<RefundBill> findByCreatedAtBetween(LocalDateTime startDay, LocalDateTime endDay);
 }
