@@ -54,7 +54,10 @@ public class SecurityConfig {
                                         "/bookinghotel/bookings/api/prints/**",
                                         "/bookinghotel/payments/api/payments/amount-transaction-month/**",
                                         "/bookinghotel/payments/api/payments/revenue-transaction-month/**",
-                                        "/bookinghotel/payments/api/payments/statistic-transaction-month/**"
+                                        "/bookinghotel/payments/api/payments/statistic-transaction-month/**",
+                                        "/bookinghotel/payments/api/payments/list-transactions/**",
+                                        "/bookinghotel/payments/api/payments/transaction-types/**",
+                                        "/bookinghotel/payments/api/payments/search/**"
                                 ).hasAnyRole("ADMIN","MANAGER","STAFF")
                                 .pathMatchers("/bookinghotel/bookings/api/bills/**",
                                         "/bookinghotel/bookings/api/bookingcars/**",

@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -57,10 +58,9 @@ public class PaymentControllers {
 
         int status = vnpResponseCode.equals("00") ? PaymentConstant.STATUS_200 : PaymentConstant.STATUS_500;
         String billCode =request.getParameter("vnp_TxnRef");
+        paymentTransactionService.createPayment(vnpResponseCode,vnpTxnRef,vnpAmount,vnpTransactionNo,vnpTransactionDate);
         if(vnpResponseCode.equals("00")) {
             // tạo payment transaction
-            paymentTransactionService.createPayment(vnpResponseCode,vnpTxnRef,vnpAmount,vnpTransactionNo,vnpTransactionDate);
-
             // send message đến booking cập nhật đơn hàng
             log.debug("send payment callback :{}",request.getParameter("vnp_TxnRef"));
             var result = streamBridge.send("sendPayment-out-0",request.getParameter("vnp_TxnRef"));
@@ -96,6 +96,40 @@ public class PaymentControllers {
                 .code(PaymentConstant.STATUS_200)
                 .message(PaymentConstant.MESSAGE_200)
                 .data(paymentService.getStatisticTransactionType(month))
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+    @PostMapping("list-transactions")
+    public ResponseEntity<SuccessResponseDto<PageResponseDto<List<PaymentTransactionDto>>>> getAllTransactions(@RequestBody FilterTransactionDto filterDto) throws ParseException {
+        log.debug("Request to get all transactions");
+        SuccessResponseDto<PageResponseDto<List<PaymentTransactionDto>>> response = SuccessResponseDto.<PageResponseDto<List<PaymentTransactionDto>>>builder()
+                .code(PaymentConstant.STATUS_200)
+                .message(PaymentConstant.MESSAGE_200)
+                .data(paymentTransactionService.getAllTransactions(filterDto))
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+    @GetMapping("transaction-types")
+    public ResponseEntity<SuccessResponseDto<List<String>>> getAllTransactionTypes() {
+        log.debug("Request to get all transaction types");
+        SuccessResponseDto<List<String>> response = SuccessResponseDto.<List<String>>builder()
+                .code(PaymentConstant.STATUS_200)
+                .message(PaymentConstant.MESSAGE_200)
+                .data(paymentTransactionService.getALlTransactionTypes())
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+    @GetMapping("search")
+    public ResponseEntity<SuccessResponseDto<PageResponseDto<List<PaymentTransactionDto>>>> searchTransactions(
+            @RequestParam(defaultValue = "1",required = false) Integer pageNo,
+            @RequestParam(defaultValue = "10",required = false) Integer pageSize,
+            @RequestParam(defaultValue = "",required = false) String keyword
+    ) {
+        log.debug("Request to search transactions : {}", keyword);
+        SuccessResponseDto<PageResponseDto<List<PaymentTransactionDto>>> response = SuccessResponseDto.<PageResponseDto<List<PaymentTransactionDto>>>builder()
+                .code(PaymentConstant.STATUS_200)
+                .message(PaymentConstant.MESSAGE_200)
+                .data(paymentTransactionService.getSearchTransaction(keyword,pageNo,pageSize))
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }

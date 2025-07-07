@@ -127,19 +127,35 @@ public class BookingServiceImpl implements IBookingService {
 
     @Override
     public List<BookingRoomsDto> getListBookingRooms(Integer roomTypeId,Integer propertyId) {
+        List<BookingRooms> result = new ArrayList<>();
         List<BookingRooms> bookingRooms = new ArrayList<>();
         log.debug("roomTypeId :{}, propertyId :{}",roomTypeId,propertyId);
         if(roomTypeId!=null){
             bookingRooms = bookingRoomsRepository.findByRoomTypeIdAndPropertyId(roomTypeId,propertyId);
             log.debug("bookingRooms :{}",bookingRooms);
             if(!bookingRooms.isEmpty()){
-                return bookingRooms.stream().map(BookingRoomsConverter::toBookingRoomsDto).collect(Collectors.toList());
+                for(BookingRooms item :bookingRooms){
+                    Integer billId = item.getBillId();
+                    Bill bill = billRepository.findById(billId).orElseThrow(()-> new ResourceNotFoundException("Bill","id",String.valueOf(billId)));
+                    if(bill.getBillStatus().equals(BillStatus.SUCCESS)){
+                        result.add(item);
+                    }
+                }
+                return result.stream().map(BookingRoomsConverter::toBookingRoomsDto).collect(Collectors.toList());
             }
             return new ArrayList<>();
         }
         bookingRooms= bookingRoomsRepository.findByPropertyId(propertyId);
-        log.debug("bookingRooms :{}",bookingRooms);
-        return bookingRooms.stream().map(BookingRoomsConverter::toBookingRoomsDto).toList();
+        log.debug("bookingRooms :{}",result);
+        for(BookingRooms item :bookingRooms){
+                Integer billId = item.getBillId();
+                Bill bill = billRepository.findById(billId).orElseThrow(()-> new ResourceNotFoundException("Bill","id",String.valueOf(billId)));
+                if(bill.getBillStatus().equals(BillStatus.SUCCESS)){
+                    result.add(item);
+                }
+        }
+        return result.stream().map(BookingRoomsConverter::toBookingRoomsDto).collect(Collectors.toList());
+
 
     }
 
