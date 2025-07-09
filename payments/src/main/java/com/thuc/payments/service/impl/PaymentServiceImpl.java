@@ -24,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.stream.function.StreamBridge;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -50,6 +51,8 @@ public class PaymentServiceImpl implements IPaymentService {
     private final SuspiciousPaymentLogRepository suspiciousPaymentLogRepository;
     private final IRedisPrimitive redisPrimitive;
     private final IRedisBookingService redisBookingService;
+    private final RedisTemplate<String, Object> redisTemplate;
+
     private Double getAvgPaymentTransaction(Integer userId){
         return paymentTransactionRepository
                 .avgByUserIdAndVnpResponseCodeAndTransactionType(userId,"00",TransactionType.PAYMENT);
@@ -295,7 +298,26 @@ public class PaymentServiceImpl implements IPaymentService {
         boolean checkExceedAmount = checkAmountExceedAvg(request,bookingDto);
         String ipAddress = VnpayUtil.getIpAddress(request);
         int userId = getUserId(request);
+        Boolean blocked = redisTemplate.hasKey(String.format("payment-block-%d",userId));
+        if(blocked){
+            SuspiciousPaymentLog suspiciousPaymentLog = SuspiciousPaymentLog.builder()
+                    .amount(bookingDto.getNewTotalPayment())
+                    .suspiciousReason("Đã thanh toán thất bại 3 lần liên tiêp. Vui long thử lại sau!")
+                    .ipAddress(ipAddress)
+                    .suspiciousType(SuspiciousTypeEnum.FREQUENCY)
+                    .userId(userId)
+                    .build();
+            SuspiciousPaymentLog savedSuspiciousPaymentLog=suspiciousPaymentLogRepository.save(suspiciousPaymentLog);
+            return CheckBookingDto.builder()
+                    .check(blocked)
+                    .suspiciousType(SuspiciousTypeEnum.FREQUENCY)
+                    .build();
+        }
         String uniqueCheck = VnpayUtil.getRandomString(6);
+        CheckBookingDto checkBookingDto = CheckBookingDto.builder()
+                .check(checkExceedAmount)
+                .uniqueCheck(uniqueCheck)
+                .build();
         if(checkExceedAmount){
             SuspiciousPaymentLog suspiciousPaymentLog = SuspiciousPaymentLog.builder()
                     .amount(bookingDto.getNewTotalPayment())
@@ -309,13 +331,10 @@ public class PaymentServiceImpl implements IPaymentService {
             OtpDto otpDto = new OtpDto(bookingDto.getUserEmail(),uniqueCheck);
             var result = streamBridge.send("sendOtpCheckBooking-out-0",otpDto);
             log.debug("Receive send otp callback :{}",result);
+            checkBookingDto.setSuspiciousType(SuspiciousTypeEnum.AMOUNT);
         }
         redisBookingService.saveData(String.format("bookings-%s",uniqueCheck), bookingDto);
-        return CheckBookingDto.builder()
-                .check(checkExceedAmount)
-                .suspiciousType(SuspiciousTypeEnum.AMOUNT)
-                .uniqueCheck(uniqueCheck)
-                .build();
+        return checkBookingDto;
     }
 
     @Override

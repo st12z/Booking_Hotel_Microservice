@@ -5,6 +5,7 @@ import com.thuc.payments.constant.PaymentConstant;
 import com.thuc.payments.dto.*;
 import com.thuc.payments.service.IPaymentService;
 import com.thuc.payments.service.IPaymentTransactionService;
+import com.thuc.payments.service.IRedisPrimitive;
 import com.thuc.payments.utils.VnpayUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -28,6 +29,7 @@ public class PaymentControllers {
     private final Logger log = LoggerFactory.getLogger(PaymentControllers.class);
     private final StreamBridge streamBridge;
     private final IPaymentTransactionService paymentTransactionService;
+    private final IRedisPrimitive redisPrimitive;
     @PostMapping("/check-booking")
     public ResponseEntity<SuccessResponseDto<CheckBookingDto>> checkBooking(HttpServletRequest request
             , @RequestBody BookingDto bookingDto)  {
@@ -63,6 +65,7 @@ public class PaymentControllers {
         int status = vnpResponseCode.equals("00") ? PaymentConstant.STATUS_200 : PaymentConstant.STATUS_500;
         String billCode =request.getParameter("vnp_TxnRef");
         paymentTransactionService.createPayment(vnpResponseCode,vnpTxnRef,vnpAmount,vnpTransactionNo,vnpTransactionDate,ipAddress);
+
         if(vnpResponseCode.equals("00")) {
             // tạo payment transaction
             // send message đến booking cập nhật đơn hàng

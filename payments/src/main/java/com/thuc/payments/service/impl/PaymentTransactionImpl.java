@@ -7,6 +7,7 @@ import com.thuc.payments.repository.PaymentTransactionRepository;
 import com.thuc.payments.service.IPaymentTransactionService;
 import com.thuc.payments.service.client.BookingsFeignClient;
 import com.thuc.payments.service.client.UsersFeignClient;
+import com.thuc.payments.utils.CheckExceed;
 import com.thuc.payments.utils.TransactionType;
 import com.thuc.payments.utils.VnpayUtil;
 import jakarta.persistence.EntityManager;
@@ -16,12 +17,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
@@ -37,6 +40,7 @@ public class PaymentTransactionImpl implements IPaymentTransactionService {
     private final Logger log = LoggerFactory.getLogger(PaymentTransactionImpl.class);
     private final UsersFeignClient usersFeignClient;
     private final BookingsFeignClient bookingsFeignClient;
+    private final RedisTemplate<String,Object> redisTemplate;
     @PersistenceContext
     private EntityManager entityManager;
     @Override
@@ -49,7 +53,23 @@ public class PaymentTransactionImpl implements IPaymentTransactionService {
             BillDto billDto = responseBill.getData();
             SuccessResponseDto<UserDto> responseUser = usersFeignClient.getUserInfo(billDto.getUserEmail()).getBody();
             UserDto userDto = responseUser.getData();
-
+            int userId = userDto.getId();
+            String failStreakKey = String.format("payment-fail-streak-%d",userId);
+            if(vnpResponseCode.equals("00")){
+                redisTemplate.delete(failStreakKey);
+            }
+            else{
+                Long streak = redisTemplate.opsForValue().increment(failStreakKey);
+                log.debug("streak :{}",streak);
+                if(streak==1){
+                    redisTemplate.expire(failStreakKey, Duration.ofHours(1));
+                }
+                if(streak>= CheckExceed.FREQUENCY.getValue()){
+                    String blockKey = String.format("payment-block-%d",userId);
+                    redisTemplate.opsForValue().set(blockKey, "true", Duration.ofHours(1));
+                    log.debug("fail payment with streak : {}",CheckExceed.FREQUENCY.getValue());
+                }
+            }
             PaymentTransaction paymentTransaction =  PaymentTransaction.builder()
                     .transactionType(TransactionType.PAYMENT)
                     .vnpResponseCode(vnpResponseCode)
