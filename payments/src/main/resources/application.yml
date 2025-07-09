@@ -25,8 +25,22 @@ spring:
       hibernate:
         format_sql: true
   cloud:
+    function:
+      definition: sendUpdateSuspiciousTran
     stream:
       bindings:
+        sendUpdateSuspiciousTran-in-0:
+          destination: send-update-suspicious
+          group: ${spring.application.name}
+          consumer:
+            max-attempts: 3 #
+            back-off-initial-interval: 2000 # đợi 2s retry lần đaầu
+            back-off-multiplier: 2.0 # x2 khi retry
+            default-retryable: true # retry tất cả lỗi
+            retryable-exceptions:
+              java.lang.RuntimeException: true
+        sendUpdateSuspiciousTran-out-0:
+          destination: suspicious-update-send
         sendPayment-out-0:
           destination: send-update-status
         sendRefund-out-0:

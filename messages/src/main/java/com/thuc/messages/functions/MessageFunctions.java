@@ -137,7 +137,7 @@ public class MessageFunctions {
                 log.debug("send email with otpDto={}", otpDto.toString());
                 String uniqueKey = otpDto.getUniqueKey();
                 String otp = RandomString.getRandomString(6);
-                redisPrimitive.saveData(uniqueKey, otp);
+                redisPrimitive.saveData(String.format("otp-%s",uniqueKey), otp);
                 log.debug("send otp ={}",otpDto);
                 String subject = "Thông tin mã xác nhận đặt phòng";
                 String content= "<span>Mã xác nhận OTP: </span>" +

@@ -22,6 +22,7 @@ import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -45,6 +46,7 @@ public class BookingServiceImpl implements IBookingService {
     private final VehiclesRepository vehiclesRepository;
     private final RedisTemplate<String,Object> redisTemplate;
     private final IRedisBookingService redisBookingService;
+    private final StreamBridge streamBridge;
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -54,6 +56,14 @@ public class BookingServiceImpl implements IBookingService {
         ResponseEntity<SuccessResponseDto<PaymentResponseDto>> response = paymentsFeignClient.getUrl(bookingDto);
         PaymentResponseDto data =(PaymentResponseDto) Objects.requireNonNull(response.getBody().getData());
         Bill bill= billRepository.save(createBill(bookingDto,data.getBillCode()));
+        log.debug("send uniqueCheck to payments-sevice");
+        SuspiciousUpdateDto suspiciousUpdateDto = SuspiciousUpdateDto.builder()
+                .billCode(data.getBillCode())
+                .uniqueCheck(uniqueCheck)
+                .build();
+        log.debug("suspiciousUpdateDto :{}",suspiciousUpdateDto);
+        var result = streamBridge.send("sendUpdateSuspiciousTran-out-0",suspiciousUpdateDto);
+        log.debug("result : {}", result);
         for(BookingRoomTypeDto bookingRoomTypeDto: bookingDto.getRoomTypes()){
             List<Integer> roomNumbers = findRoomNumber(bookingRoomTypeDto,bookingDto.getPropertyId());
             BookingRooms bookingRooms= createBookingRooms(bookingRoomTypeDto,bill.getId(),roomNumbers);

@@ -25,6 +25,8 @@ spring:
       definition: sendPayment; sendRefund
     stream:
       bindings:
+        sendUpdateSuspiciousTran-out-0:
+          destination: send-update-suspicious
         sendPayment-in-0:
           destination: send-update-status
           group: ${spring.application.name}

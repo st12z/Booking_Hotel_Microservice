@@ -305,7 +305,7 @@ public class PaymentServiceImpl implements IPaymentService {
                     .userId(userId)
                     .build();
             SuspiciousPaymentLog savedSuspiciousPaymentLog=suspiciousPaymentLogRepository.save(suspiciousPaymentLog);
-            redisPrimitive.saveData(uniqueCheck, savedSuspiciousPaymentLog.getId());
+            redisPrimitive.saveData(String.format("suspiciousPaymentTranId-%s",uniqueCheck), savedSuspiciousPaymentLog.getId());
             OtpDto otpDto = new OtpDto(bookingDto.getUserEmail(),uniqueCheck);
             var result = streamBridge.send("sendOtpCheckBooking-out-0",otpDto);
             log.debug("Receive send otp callback :{}",result);
@@ -320,7 +320,7 @@ public class PaymentServiceImpl implements IPaymentService {
 
     @Override
     public Boolean checkOtp(String otp, String uniqueCheck) {
-        String otpRedis = redisPrimitive.getData(uniqueCheck,String.class);
+        String otpRedis = redisPrimitive.getData(String.format("otp-%s",uniqueCheck),String.class);
         if(otpRedis==null) return false;
         return otp.equals(otpRedis);
     }

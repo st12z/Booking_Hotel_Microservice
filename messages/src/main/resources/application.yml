@@ -61,6 +61,7 @@ spring:
         sendOtpCheckBooking-out-0:
           destination: otp-send
 
+
   mail:
     host: ${MAIL_HOST}
     username: ${MAIL_USERNAME}
