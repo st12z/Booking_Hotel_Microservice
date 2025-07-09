@@ -3,6 +3,7 @@ package com.thuc.payments;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.MapPropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
@@ -11,7 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 @SpringBootApplication
-@EnableJpaAuditing
+@EnableJpaAuditing(auditorAwareRef = "auditorAwareImpl")
+@EnableFeignClients
 public class PaymentsApplication {
 
 	public static void main(String[] args) {

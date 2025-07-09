@@ -29,7 +29,7 @@ spring:
       ddl-auto: update
   data:
     redis:
-      host: ${REDIS_HORT}
+      host: ${REDIS_HOST}
       port: ${REDIS_PORT}
       connect-timeout: 2s
       timeout: 4s

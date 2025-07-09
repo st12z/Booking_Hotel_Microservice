@@ -3,6 +3,7 @@ package com.thuc.bookings.dto.responseDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @ToString
-public class BookingRoomConfirmDto {
+public class BookingRoomConfirmDto implements Serializable {
     private int roomTypeId;
     private int propertyId;
 

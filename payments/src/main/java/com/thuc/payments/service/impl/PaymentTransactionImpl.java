@@ -1,17 +1,21 @@
 package com.thuc.payments.service.impl;
 
 import com.thuc.payments.converter.PaymentTransactionConverter;
-import com.thuc.payments.dto.FilterTransactionDto;
-import com.thuc.payments.dto.PageResponseDto;
-import com.thuc.payments.dto.PaymentTransactionDto;
+import com.thuc.payments.dto.*;
 import com.thuc.payments.entity.PaymentTransaction;
 import com.thuc.payments.repository.PaymentTransactionRepository;
 import com.thuc.payments.service.IPaymentTransactionService;
+import com.thuc.payments.service.client.BookingsFeignClient;
+import com.thuc.payments.service.client.UsersFeignClient;
 import com.thuc.payments.utils.TransactionType;
+import com.thuc.payments.utils.VnpayUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -30,26 +34,42 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class PaymentTransactionImpl implements IPaymentTransactionService {
     private final PaymentTransactionRepository paymentTransactionRepository;
+    private final Logger log = LoggerFactory.getLogger(PaymentTransactionImpl.class);
+    private final UsersFeignClient usersFeignClient;
+    private final BookingsFeignClient bookingsFeignClient;
     @PersistenceContext
     private EntityManager entityManager;
     @Override
     public void createPayment(String vnpResponseCode, String vnpTxnRef, int vnpAmount,
-                              String vnpTransactionNo, String vnpTransactionDate) {
-        PaymentTransaction paymentTransaction =  PaymentTransaction.builder()
-                .transactionType(TransactionType.PAYMENT)
-                .vnpResponseCode(vnpResponseCode)
-                .vnpTxnRef(vnpTxnRef)
-                .vnpAmount(vnpAmount/100)
-                .vnpTransactionNo(vnpTransactionNo)
-                .vnpTransactionDate(vnpTransactionDate)
-                .build();
-        paymentTransactionRepository.save(paymentTransaction);
+                              String vnpTransactionNo, String vnpTransactionDate, String ipAddress) {
+
+        try{
+            log.debug(">>> createPayment called with IP: {}", ipAddress);
+            SuccessResponseDto<BillDto> responseBill =  bookingsFeignClient.getBillByBillCode(vnpTxnRef).getBody();
+            BillDto billDto = responseBill.getData();
+            SuccessResponseDto<UserDto> responseUser = usersFeignClient.getUserInfo(billDto.getUserEmail()).getBody();
+            UserDto userDto = responseUser.getData();
+
+            PaymentTransaction paymentTransaction =  PaymentTransaction.builder()
+                    .transactionType(TransactionType.PAYMENT)
+                    .vnpResponseCode(vnpResponseCode)
+                    .vnpTxnRef(vnpTxnRef)
+                    .vnpAmount(vnpAmount/100)
+                    .vnpTransactionNo(vnpTransactionNo)
+                    .vnpTransactionDate(vnpTransactionDate)
+                    .ipAddress(ipAddress)
+                    .userId(userDto.getId())
+                    .build();
+            paymentTransactionRepository.save(paymentTransaction);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
     @Override
     public PageResponseDto<List<PaymentTransactionDto>> getAllTransactions(FilterTransactionDto filterDto) throws ParseException {
         String vnpResponseCode="00";
         String clauseFrom = "SELECT pt.id, pt.vnp_txn_ref, pt.vnp_amount, pt.vnp_transaction_no,pt.vnp_transaction_date, " +
-                "pt.vnp_response_code, pt.created_at, pt.created_by, pt.updated_at, pt.updated_by, pt.transaction_type FROM payment_transaction pt";
+                "pt.vnp_response_code, pt.created_at, pt.created_by, pt.updated_at, pt.updated_by, pt.transaction_type, pt.ip_address FROM payment_transaction pt";
         StringBuilder builder = new StringBuilder(clauseFrom);
         Map<String,Object> params = new HashMap<>();
         if(filterDto.getPropertyId()!=null && filterDto.getPropertyId()!=0){

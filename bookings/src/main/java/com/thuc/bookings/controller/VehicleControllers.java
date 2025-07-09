@@ -1,9 +1,9 @@
 package com.thuc.bookings.controller;
 
 import com.thuc.bookings.constants.VehicleConstant;
-import com.thuc.bookings.dto.requestDto.BookingDto;
 import com.thuc.bookings.dto.requestDto.FilterCarDto;
 import com.thuc.bookings.dto.requestDto.VehicleRequestDto;
+import com.thuc.bookings.dto.responseDto.BookingDto;
 import com.thuc.bookings.dto.responseDto.SuccessResponseDto;
 import com.thuc.bookings.dto.responseDto.VehicleDto;
 import com.thuc.bookings.service.IVehiclesService;

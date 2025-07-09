@@ -1,9 +1,12 @@
 package com.thuc.messages.functions;
 
 import com.thuc.messages.dto.BillDto;
+import com.thuc.messages.dto.OtpDto;
 import com.thuc.messages.dto.RefundBillDto;
 import com.thuc.messages.dto.UserDto;
+import com.thuc.messages.service.IRedisPrimitive;
 import com.thuc.messages.utils.CustomMailSender;
+import com.thuc.messages.utils.RandomString;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +19,7 @@ import java.util.function.Function;
 public class MessageFunctions {
     private static final Logger log = LoggerFactory.getLogger(MessageFunctions.class);
     private final CustomMailSender mailSender;
+    private final IRedisPrimitive redisPrimitive;
     @Bean
     public Function<UserDto, String> sendEmailCreateAccount(){
         return userDto->{
@@ -122,6 +126,27 @@ public class MessageFunctions {
                 return "Gửi mail thành công";
             }catch (Exception e){
                 log.debug("send email failed with {}", refundBillDto.toString());
+                throw new RuntimeException(e);
+            }
+        };
+    }
+    @Bean
+    public Function<OtpDto,String> sendOtpCheckBooking(){
+        return otpDto->{
+            try {
+                log.debug("send email with otpDto={}", otpDto.toString());
+                String uniqueKey = otpDto.getUniqueKey();
+                String otp = RandomString.getRandomString(6);
+                redisPrimitive.saveData(uniqueKey, otp);
+                log.debug("send otp ={}",otpDto);
+                String subject = "Thông tin mã xác nhận đặt phòng";
+                String content= "<span>Mã xác nhận OTP: </span>" +
+                       "<b>"+otp+"</b>"+
+                        "<p>Thời gian hết hạn: 10 phút</p>";
+                mailSender.sendMail(otpDto.getEmail(),content,subject);
+                return "Gửi mail thành công";
+            }catch (Exception e){
+                log.debug("send email failed with {}", otpDto.toString());
                 throw new RuntimeException(e);
             }
         };

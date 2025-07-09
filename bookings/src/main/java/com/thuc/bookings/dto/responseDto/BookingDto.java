@@ -1,6 +1,8 @@
-package com.thuc.bookings.dto.requestDto;
+package com.thuc.bookings.dto.responseDto;
 
 
+import com.thuc.bookings.dto.requestDto.BookingCarsRequestDto;
+import com.thuc.bookings.dto.requestDto.BookingRoomTypeDto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -10,13 +12,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookingDto {
+public class BookingDto implements Serializable {
     private String addressDetail;
     private int bookingForWho;
     private List<BookingCarsRequestDto> bookingCars;

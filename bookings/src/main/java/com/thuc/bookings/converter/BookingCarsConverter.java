@@ -1,10 +1,8 @@
 package com.thuc.bookings.converter;
 
 import com.thuc.bookings.dto.requestDto.BookingCarsRequestDto;
-import com.thuc.bookings.dto.requestDto.BookingDto;
 import com.thuc.bookings.dto.responseDto.BookingCarsResponseDto;
 import com.thuc.bookings.dto.responseDto.VehicleDto;
-import com.thuc.bookings.entity.Bill;
 import com.thuc.bookings.entity.BookingCars;
 
 public class BookingCarsConverter {

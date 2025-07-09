@@ -2,9 +2,9 @@ package com.thuc.bookings.service.impl;
 
 import com.thuc.bookings.converter.VehicleConverter;
 import com.thuc.bookings.dto.requestDto.BookingCarsRequestDto;
-import com.thuc.bookings.dto.requestDto.BookingDto;
 import com.thuc.bookings.dto.requestDto.FilterCarDto;
 import com.thuc.bookings.dto.requestDto.VehicleRequestDto;
+import com.thuc.bookings.dto.responseDto.BookingDto;
 import com.thuc.bookings.dto.responseDto.VehicleDto;
 import com.thuc.bookings.entity.Vehicles;
 import com.thuc.bookings.exception.ResourceNotFoundException;

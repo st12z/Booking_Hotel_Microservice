@@ -10,16 +10,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookingDto {
+public class BookingDto implements Serializable {
     private String addressDetail;
-    private String bookingForWho;
-    private List<Integer> choosedCar;
+    private int bookingForWho;
+    private List<BookingCarsRequestDto> bookingCars;
     private String city;
     private String country;
     private int discountCar;
@@ -54,9 +55,11 @@ public class BookingDto {
 
     @NotNull(message = "propertyId is not null")
     private int propertyId;
+
     private List<BookingRoomTypeDto> roomTypes;
 
     private String specialMessage;
+
 
     @NotBlank(message = "userEmail must have value")
     @Email

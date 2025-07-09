@@ -57,7 +57,8 @@ public class SecurityConfig {
                                         "/bookinghotel/payments/api/payments/statistic-transaction-month/**",
                                         "/bookinghotel/payments/api/payments/list-transactions/**",
                                         "/bookinghotel/payments/api/payments/transaction-types/**",
-                                        "/bookinghotel/payments/api/payments/search/**"
+                                        "/bookinghotel/payments/api/payments/search/**",
+                                        "/bookinghotel/payments/api/export/**"
                                 ).hasAnyRole("ADMIN","MANAGER","STAFF")
                                 .pathMatchers("/bookinghotel/bookings/api/bills/**",
                                         "/bookinghotel/bookings/api/bookingcars/**",
@@ -69,6 +70,8 @@ public class SecurityConfig {
                                         "/bookinghotel/rooms/api/room-chats/**",
                                         "/bookinghotel/payments/api/payments/refund/**",
                                         "/bookinghotel/payments/api/payments/get-url/**",
+                                        "/bookinghotel/payments/api/payments/check-booking/**",
+                                        "/bookinghotel/payments/api/payments/check-otp/**",
                                         "/bookinghotel/rooms/api/roomtypes/**"
                                 )
                                 .hasAnyRole("ADMIN","MANAGER","STAFF","USER")

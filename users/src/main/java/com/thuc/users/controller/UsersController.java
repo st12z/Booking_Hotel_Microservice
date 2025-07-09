@@ -95,20 +95,18 @@ public class UsersController {
         return ResponseEntity.ok(success);
     }
     @GetMapping("/info-user")
-    public ResponseEntity<?> getUserInfo(@RequestHeader("X-User-Email") String email) {
+    public ResponseEntity<SuccessResponseDto<UserDto>> getUserInfo(@RequestHeader("X-User-Email") String email) {
         log.debug("Getting user info");
-        UserDto user = usersService.getUserByEmail(email);
-        SuccessResponseDto<?> success = SuccessResponseDto.builder()
+        SuccessResponseDto<UserDto> success = SuccessResponseDto.<UserDto>builder()
                 .message(UsersConstant.MESSAGE_200)
                 .code(UsersConstant.STATUS_200)
-                .data(user).build();
+                .data(usersService.getUserByEmail(email)).build();
         return ResponseEntity.ok(success);
     }
     @GetMapping("/get-user/{id}")
     public ResponseEntity<SuccessResponseDto<UserDto>> getInfoUserById(@PathVariable("id") Integer id) {
         log.debug("Getting user info with id: {}", id);
         UserDto userDto = usersService.getInfoUserById(id);
-
         SuccessResponseDto<UserDto> response = SuccessResponseDto.<UserDto>builder()
                 .code(UsersConstant.STATUS_200)
                 .message(UsersConstant.MESSAGE_200)

@@ -1,9 +1,7 @@
 package com.thuc.bookings.converter;
 
-import com.thuc.bookings.dto.requestDto.BookingDto;
 import com.thuc.bookings.dto.requestDto.BookingRoomTypeDto;
 import com.thuc.bookings.dto.responseDto.BookingRoomsDto;
-import com.thuc.bookings.entity.Bill;
 import com.thuc.bookings.entity.BookingRooms;
 
 import java.util.List;

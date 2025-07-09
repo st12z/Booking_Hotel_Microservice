@@ -5,6 +5,7 @@ import com.thuc.payments.constant.PaymentConstant;
 import com.thuc.payments.dto.*;
 import com.thuc.payments.service.IPaymentService;
 import com.thuc.payments.service.IPaymentTransactionService;
+import com.thuc.payments.utils.VnpayUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +28,21 @@ public class PaymentControllers {
     private final Logger log = LoggerFactory.getLogger(PaymentControllers.class);
     private final StreamBridge streamBridge;
     private final IPaymentTransactionService paymentTransactionService;
+    @PostMapping("/check-booking")
+    public ResponseEntity<SuccessResponseDto<CheckBookingDto>> checkBooking(HttpServletRequest request
+            , @RequestBody BookingDto bookingDto)  {
+        log.debug("check booking with {}",bookingDto);
+        SuccessResponseDto<CheckBookingDto> response = SuccessResponseDto.<CheckBookingDto>builder()
+                .code(PaymentConstant.STATUS_200)
+                .message(PaymentConstant.MESSAGE_200)
+                .data(paymentService.checkBooking(request,bookingDto))
+                .build();
+        return ResponseEntity.ok(response);
+    }
     @PostMapping("/get-url")
-    public ResponseEntity<SuccessResponseDto<PaymentResponseDto>> getUrl(HttpServletRequest request,@RequestBody BookingDto bookingDto) {
+    public ResponseEntity<SuccessResponseDto<PaymentResponseDto>> getUrl(HttpServletRequest request
+            ,@RequestBody BookingDto bookingDto)
+    {
         log.debug("Request to get payment url : {}", bookingDto);
         SuccessResponseDto<PaymentResponseDto> response = new SuccessResponseDto<>(
                 PaymentConstant.STATUS_200,
@@ -36,6 +50,28 @@ public class PaymentControllers {
                 paymentService.getUrlPayment(request, bookingDto)
         );
         return ResponseEntity.ok(response);
+    }
+    @GetMapping("/vn-pay-callback")
+    public void getVnPayCallback(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        log.debug("Request to get payment callback");
+        String vnpResponseCode = request.getParameter("vnp_ResponseCode");
+        String vnpTxnRef = request.getParameter("vnp_TxnRef");
+        int vnpAmount = Integer.parseInt(request.getParameter("vnp_Amount"));
+        String vnpTransactionNo = request.getParameter("vnp_TransactionNo");
+        String vnpTransactionDate = request.getParameter("vnp_PayDate");
+        String ipAddress = VnpayUtil.getIpAddress(request);
+        int status = vnpResponseCode.equals("00") ? PaymentConstant.STATUS_200 : PaymentConstant.STATUS_500;
+        String billCode =request.getParameter("vnp_TxnRef");
+        paymentTransactionService.createPayment(vnpResponseCode,vnpTxnRef,vnpAmount,vnpTransactionNo,vnpTransactionDate,ipAddress);
+        if(vnpResponseCode.equals("00")) {
+            // tạo payment transaction
+            // send message đến booking cập nhật đơn hàng
+            log.debug("send payment callback :{}",request.getParameter("vnp_TxnRef"));
+            var result = streamBridge.send("sendPayment-out-0",request.getParameter("vnp_TxnRef"));
+            log.debug("Receive payment callback :{}",result);
+        }
+        response.sendRedirect("http://localhost:3000/payments?status=" + status + "&billCode=" + billCode);
+
     }
     @GetMapping("/refund/{billCode}")
     public ResponseEntity<SuccessResponseDto<VnpayRefundResponseDto>> refund(HttpServletRequest request, @PathVariable String billCode) throws JsonProcessingException {
@@ -47,28 +83,7 @@ public class PaymentControllers {
                 .build();
         return ResponseEntity.ok(response);
     }
-    @GetMapping("/vn-pay-callback")
-    public void getVnPayCallback(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        log.debug("Request to get payment callback");
-        String vnpResponseCode = request.getParameter("vnp_ResponseCode");
-        String vnpTxnRef = request.getParameter("vnp_TxnRef");
-        int vnpAmount = Integer.parseInt(request.getParameter("vnp_Amount"));
-        String vnpTransactionNo = request.getParameter("vnp_TransactionNo");
-        String vnpTransactionDate = request.getParameter("vnp_PayDate");
 
-        int status = vnpResponseCode.equals("00") ? PaymentConstant.STATUS_200 : PaymentConstant.STATUS_500;
-        String billCode =request.getParameter("vnp_TxnRef");
-        paymentTransactionService.createPayment(vnpResponseCode,vnpTxnRef,vnpAmount,vnpTransactionNo,vnpTransactionDate);
-        if(vnpResponseCode.equals("00")) {
-            // tạo payment transaction
-            // send message đến booking cập nhật đơn hàng
-            log.debug("send payment callback :{}",request.getParameter("vnp_TxnRef"));
-            var result = streamBridge.send("sendPayment-out-0",request.getParameter("vnp_TxnRef"));
-            log.debug("Receive payment callback :{}",result);
-        }
-        response.sendRedirect("http://localhost:3000/payments?status=" + status + "&billCode=" + billCode);
-
-    }
     @PostMapping("amount-transaction-month")
     public ResponseEntity<SuccessResponseDto<List<StatisticTransactionDto>>> getAmountTransactionMonth(@RequestBody FilterStatistic filterDto) {
         log.debug("Request to get amount transaction filter : {}", filterDto);
@@ -130,6 +145,16 @@ public class PaymentControllers {
                 .code(PaymentConstant.STATUS_200)
                 .message(PaymentConstant.MESSAGE_200)
                 .data(paymentTransactionService.getSearchTransaction(keyword,pageNo,pageSize))
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+    @GetMapping("check-otp")
+    public ResponseEntity<SuccessResponseDto<Boolean>> checkOtp(@RequestParam String otp,@RequestParam String uniqueCheck) {
+        log.debug("Request to check otp : {}", otp);
+        SuccessResponseDto<Boolean> response = SuccessResponseDto.<Boolean>builder()
+                .code(PaymentConstant.STATUS_200)
+                .message(PaymentConstant.MESSAGE_200)
+                .data(paymentService.checkOtp(otp,uniqueCheck))
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }

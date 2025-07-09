@@ -19,4 +19,8 @@ public interface PaymentTransactionRepository extends JpaRepository<PaymentTrans
     List<PaymentTransaction> findByTransactionTypeAndCreatedAtBetween(TransactionType transactionType, LocalDateTime startDay, LocalDateTime endDay);
 
     List<PaymentTransaction> findByCreatedAtBetween(LocalDateTime startDay, LocalDateTime endDay);
+
+    @Query("SELECT AVG(pt.vnpAmount) FROM PaymentTransaction pt WHERE pt.userId=:userId " +
+            "AND pt.vnpResponseCode=:vnpResponseCode AND pt.transactionType=:transactionType")
+    Double avgByUserIdAndVnpResponseCodeAndTransactionType(Integer userId, String vnpResponseCode, TransactionType transactionType);
 }

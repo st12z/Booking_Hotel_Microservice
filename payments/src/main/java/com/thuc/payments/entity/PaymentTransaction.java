@@ -29,4 +29,8 @@ public class PaymentTransaction extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "transaction_type", nullable = false)
     private TransactionType transactionType;
+
+    private String ipAddress;
+
+    private Integer userId;
 }

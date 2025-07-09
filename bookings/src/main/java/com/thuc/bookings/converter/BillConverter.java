@@ -1,12 +1,12 @@
 package com.thuc.bookings.converter;
 
-import com.thuc.bookings.dto.requestDto.BookingDto;
 import com.thuc.bookings.dto.responseDto.BillDto;
+import com.thuc.bookings.dto.responseDto.BookingDto;
 import com.thuc.bookings.entity.Bill;
 import com.thuc.bookings.utils.BillStatus;
 
 public class BillConverter {
-    public static Bill toBill(BookingDto bookingDto,String billCode) {
+    public static Bill toBill(BookingDto bookingDto, String billCode) {
         Bill bill = Bill.builder()
                 .firstName(bookingDto.getFirstName())
                 .lastName(bookingDto.getLastName())

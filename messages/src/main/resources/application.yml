@@ -1,9 +1,15 @@
 spring:
   application:
     name: messages
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      connect-timeout: 2s
+      timeout: 4s
   cloud:
     function:
-      definition: sendEmailCreateAccount; sendEmailConfirmBill ; sendEmailRefundBill
+      definition: sendEmailCreateAccount; sendEmailConfirmBill ; sendEmailRefundBill ; sendOtpCheckBooking
     stream:
       bindings:
         sendEmailCreateAccount-in-0:
@@ -28,6 +34,8 @@ spring:
             default-retryable: true # retry tất cả lỗi
             retryable-exceptions:
               java.lang.RuntimeException: true
+        sendEmailConfirmBill-out-0:
+          destination: confirm-bill-send
         sendEmailRefundBill-in-0:
           destination: send-refund-bill
           group: ${spring.application.name}
@@ -38,10 +46,20 @@ spring:
             default-retryable: true # retry tất cả lỗi
             retryable-exceptions:
               java.lang.RuntimeException: true
-        sendEmailConfirmBill-out-0:
-          destination: confirm-bill-send
         sendEmailRefundBill-out-0:
           destination: refund-bill-send
+        sendOtpCheckBooking-in-0:
+          destination: send-otp
+          group: ${spring.application.name}
+          consumer:
+            max-attempts: 3 #
+            back-off-initial-interval: 2000 # đợi 2s retry lần đaầu
+            back-off-multiplier: 2.0 # x2 khi retry
+            default-retryable: true # retry tất cả lỗi
+            retryable-exceptions:
+              java.lang.RuntimeException: true
+        sendOtpCheckBooking-out-0:
+          destination: otp-send
 
   mail:
     host: ${MAIL_HOST}

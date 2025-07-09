@@ -1,18 +1,20 @@
 package com.thuc.bookings.dto.responseDto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.thuc.bookings.utils.BillStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class BillDto {
+public class BillDto implements Serializable {
 
     private Integer id;
 
@@ -62,5 +64,7 @@ public class BillDto {
 
     private int discountHotelId;
 
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdAt;
+
 }

@@ -2,7 +2,6 @@ package com.thuc.bookings.service.impl;
 
 import com.thuc.bookings.converter.*;
 import com.thuc.bookings.dto.requestDto.BookingCarsRequestDto;
-import com.thuc.bookings.dto.requestDto.BookingDto;
 import com.thuc.bookings.dto.requestDto.BookingRoomTypeDto;
 import com.thuc.bookings.dto.responseDto.*;
 import com.thuc.bookings.entity.*;
@@ -12,6 +11,7 @@ import com.thuc.bookings.repository.BookingCarsRepository;
 import com.thuc.bookings.repository.BookingRoomsRepository;
 import com.thuc.bookings.repository.VehiclesRepository;
 import com.thuc.bookings.service.IBookingService;
+import com.thuc.bookings.service.IRedisBookingService;
 import com.thuc.bookings.service.IRedisVehicleService;
 import com.thuc.bookings.service.client.PaymentsFeignClient;
 import com.thuc.bookings.service.client.RoomTypesFeignClient;
@@ -44,12 +44,13 @@ public class BookingServiceImpl implements IBookingService {
     private final IRedisVehicleService redisVehicleService;
     private final VehiclesRepository vehiclesRepository;
     private final RedisTemplate<String,Object> redisTemplate;
-
+    private final IRedisBookingService redisBookingService;
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
-    public String confirm(BookingDto bookingDto) {
+    public String confirm(String uniqueCheck) {
+        BookingDto bookingDto = redisBookingService.getData(String.format("bookings-%s",uniqueCheck));
         ResponseEntity<SuccessResponseDto<PaymentResponseDto>> response = paymentsFeignClient.getUrl(bookingDto);
         PaymentResponseDto data =(PaymentResponseDto) Objects.requireNonNull(response.getBody().getData());
         Bill bill= billRepository.save(createBill(bookingDto,data.getBillCode()));
@@ -137,7 +138,7 @@ public class BookingServiceImpl implements IBookingService {
                 for(BookingRooms item :bookingRooms){
                     Integer billId = item.getBillId();
                     Bill bill = billRepository.findById(billId).orElseThrow(()-> new ResourceNotFoundException("Bill","id",String.valueOf(billId)));
-                    if(bill.getBillStatus().equals(BillStatus.SUCCESS)){
+                    if(bill.getBillStatus().getValue().equalsIgnoreCase(BillStatus.SUCCESS.getValue())){
                         result.add(item);
                     }
                 }
@@ -150,7 +151,7 @@ public class BookingServiceImpl implements IBookingService {
         for(BookingRooms item :bookingRooms){
                 Integer billId = item.getBillId();
                 Bill bill = billRepository.findById(billId).orElseThrow(()-> new ResourceNotFoundException("Bill","id",String.valueOf(billId)));
-                if(bill.getBillStatus().equals(BillStatus.SUCCESS)){
+                if(bill.getBillStatus().getValue().equalsIgnoreCase(BillStatus.SUCCESS.getValue())){
                     result.add(item);
                 }
         }
@@ -193,7 +194,7 @@ public class BookingServiceImpl implements IBookingService {
         return BookingCarsConverter.toBookingCars(bookingDto,billId);
     }
 
-    private Bill createBill(BookingDto bookingDto,String billCode) {
+    private Bill createBill(BookingDto bookingDto, String billCode) {
         return BillConverter.toBill(bookingDto,billCode);
     }
 }

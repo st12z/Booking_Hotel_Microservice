@@ -16,6 +16,14 @@ spring:
       validation-timeout: 5000 # Thời gian tối đa (ms) để kiểm tra tính hợp lệ của kết nối (5 giây)
       leak-detection-threshold: 15000 # Thời gian (ms) để phát hiện rò rỉ kết nối (15 giây)
       connection-test-query: SELECT 1 # Câu truy vấn để kiểm tra tính hợp lệ của kết nối
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
   cloud:
     stream:
       bindings:
@@ -23,12 +31,20 @@ spring:
           destination: send-update-status
         sendRefund-out-0:
           destination: send-refund-status
+        sendOtpCheckBooking-out-0:
+          destination: send-otp
   rabbitmq:
     username: ${RABBITMQ_USERNAME}
     password: ${RABBITMQ_PASSWORD}
     host: ${RABBITMQ_HOST}
     connection-timeout: 5s
     port: ${RABBITMQ_PORT}
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      connect-timeout: 2s
+      timeout: 4s
 eureka:
   instance:
     prefer-ip-address: true

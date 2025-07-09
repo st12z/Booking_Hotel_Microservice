@@ -7,16 +7,22 @@ import com.thuc.payments.config.VnpayConfig;
 import com.thuc.payments.config.VnpayRefundConfig;
 import com.thuc.payments.dto.*;
 import com.thuc.payments.entity.PaymentTransaction;
+import com.thuc.payments.entity.SuspiciousPaymentLog;
 import com.thuc.payments.exception.ResourceNotFoundException;
 import com.thuc.payments.repository.PaymentTransactionRepository;
+import com.thuc.payments.repository.SuspiciousPaymentLogRepository;
 import com.thuc.payments.service.IPaymentService;
+import com.thuc.payments.service.IRedisBookingService;
+import com.thuc.payments.service.IRedisPrimitive;
+import com.thuc.payments.service.client.UsersFeignClient;
+import com.thuc.payments.utils.CheckExceed;
+import com.thuc.payments.utils.SuspiciousTypeEnum;
 import com.thuc.payments.utils.TransactionType;
 import com.thuc.payments.utils.VnpayUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cglib.core.Local;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -27,7 +33,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -41,8 +46,28 @@ public class PaymentServiceImpl implements IPaymentService {
     private final PaymentTransactionRepository paymentTransactionRepository;
     private final Logger logger = LoggerFactory.getLogger(PaymentServiceImpl.class);
     private final StreamBridge streamBridge;
+    private final UsersFeignClient usersFeignClient;
+    private final SuspiciousPaymentLogRepository suspiciousPaymentLogRepository;
+    private final IRedisPrimitive redisPrimitive;
+    private final IRedisBookingService redisBookingService;
+    private Double getAvgPaymentTransaction(Integer userId){
+        return paymentTransactionRepository
+                .avgByUserIdAndVnpResponseCodeAndTransactionType(userId,"00",TransactionType.PAYMENT);
+    }
+    private int getUserId(HttpServletRequest request){
+        String email =request.getHeader("X-User-Email");
+        SuccessResponseDto<UserDto> response = usersFeignClient.getUserInfo(email).getBody();
+        UserDto userDto = response.getData();
+        return userDto.getId();
+    }
+    public boolean checkAmountExceedAvg(HttpServletRequest request, BookingDto bookingDto){
+        int userId = getUserId(request);
+        Double value = getAvgPaymentTransaction(userId);
+        return value!=null && value<=bookingDto.getNewTotalPayment()* CheckExceed.AMOUNT.getValue();
+    }
     @Override
     public PaymentResponseDto getUrlPayment(HttpServletRequest request, BookingDto bookingDto) {
+
         Map<String,String> params = vnpayConfig.getVNPayConfig(request);
         log.debug("params: params={}", params);
         int amount = bookingDto.getNewTotalPayment();
@@ -84,6 +109,7 @@ public class PaymentServiceImpl implements IPaymentService {
         String vnp_SecureHash= VnpayUtil.hmacSHA512(vnpayConfig.getSecretKey(), hashData.toString());
         queryUrl+= "&vnp_SecureHash="+vnp_SecureHash;
         String paymentUrl = vnpayConfig.getVnp_PayUrl() +"?"+ queryUrl;
+        log.debug("getUrlPayment: paymentUrl={}", paymentUrl);
         return PaymentResponseDto.builder()
                 .billCode(params.get("vnp_TxnRef"))
                 .paymentUrl(paymentUrl)
@@ -262,6 +288,41 @@ public class PaymentServiceImpl implements IPaymentService {
                 new StatisticTransactionTypeDto(TransactionType.PAYMENT.getValue(),amountPayment)
         );
 
+    }
+
+    @Override
+    public CheckBookingDto checkBooking(HttpServletRequest request, BookingDto bookingDto) {
+        boolean checkExceedAmount = checkAmountExceedAvg(request,bookingDto);
+        String ipAddress = VnpayUtil.getIpAddress(request);
+        int userId = getUserId(request);
+        String uniqueCheck = VnpayUtil.getRandomString(6);
+        if(checkExceedAmount){
+            SuspiciousPaymentLog suspiciousPaymentLog = SuspiciousPaymentLog.builder()
+                    .amount(bookingDto.getNewTotalPayment())
+                    .suspiciousReason("Số tiền vượt mức trung bình")
+                    .ipAddress(ipAddress)
+                    .suspiciousType(SuspiciousTypeEnum.AMOUNT)
+                    .userId(userId)
+                    .build();
+            SuspiciousPaymentLog savedSuspiciousPaymentLog=suspiciousPaymentLogRepository.save(suspiciousPaymentLog);
+            redisPrimitive.saveData(uniqueCheck, savedSuspiciousPaymentLog.getId());
+            OtpDto otpDto = new OtpDto(bookingDto.getUserEmail(),uniqueCheck);
+            var result = streamBridge.send("sendOtpCheckBooking-out-0",otpDto);
+            log.debug("Receive send otp callback :{}",result);
+        }
+        redisBookingService.saveData(String.format("bookings-%s",uniqueCheck), bookingDto);
+        return CheckBookingDto.builder()
+                .check(checkExceedAmount)
+                .suspiciousType(SuspiciousTypeEnum.AMOUNT)
+                .uniqueCheck(uniqueCheck)
+                .build();
+    }
+
+    @Override
+    public Boolean checkOtp(String otp, String uniqueCheck) {
+        String otpRedis = redisPrimitive.getData(uniqueCheck,String.class);
+        if(otpRedis==null) return false;
+        return otp.equals(otpRedis);
     }
 
 

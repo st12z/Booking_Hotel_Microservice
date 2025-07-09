@@ -19,4 +19,7 @@ public interface IPaymentService {
     List<StatisticTransactionTypeDto> getStatisticTransactionType(Integer month);
 
 
+    CheckBookingDto checkBooking(HttpServletRequest request, BookingDto bookingDto);
+
+    Boolean checkOtp(String otp, String uniqueKey);
 }

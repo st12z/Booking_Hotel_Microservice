@@ -5,12 +5,13 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
 @Builder
-public class PaymentTransactionDto {
+public class PaymentTransactionDto implements Serializable {
     private Integer id;
 
     private String vnpTxnRef;
