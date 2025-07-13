@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -25,4 +27,7 @@ public class SuspiciousTransactionDto {
     private SuspiciousTypeEnum suspiciousType;
 
     private String billCode;
+
+    private LocalDateTime createdAt;
+
 }

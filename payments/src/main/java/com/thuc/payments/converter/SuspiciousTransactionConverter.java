@@ -11,6 +11,9 @@ public class SuspiciousTransactionConverter {
                 .suspiciousReason(suspiciousPaymentLog.getSuspiciousReason())
                 .suspiciousType(suspiciousPaymentLog.getSuspiciousType())
                 .billCode(suspiciousPaymentLog.getBillCode())
+                .createdAt(suspiciousPaymentLog.getCreatedAt())
+                .userId(suspiciousPaymentLog.getUserId())
+                .ipAddress(suspiciousPaymentLog.getIpAddress())
                 .build();
     }
 }

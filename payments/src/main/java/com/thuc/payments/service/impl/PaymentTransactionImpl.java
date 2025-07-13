@@ -89,7 +89,7 @@ public class PaymentTransactionImpl implements IPaymentTransactionService {
     public PageResponseDto<List<PaymentTransactionDto>> getAllTransactions(FilterTransactionDto filterDto) throws ParseException {
         String vnpResponseCode="00";
         String clauseFrom = "SELECT pt.id, pt.vnp_txn_ref, pt.vnp_amount, pt.vnp_transaction_no,pt.vnp_transaction_date, " +
-                "pt.vnp_response_code, pt.created_at, pt.created_by, pt.updated_at, pt.updated_by, pt.transaction_type, pt.ip_address FROM payment_transaction pt";
+                "pt.vnp_response_code, pt.created_at, pt.created_by, pt.updated_at, pt.updated_by, pt.transaction_type, pt.ip_address,pt.user_id FROM payment_transaction pt";
         StringBuilder builder = new StringBuilder(clauseFrom);
         Map<String,Object> params = new HashMap<>();
         if(filterDto.getPropertyId()!=null && filterDto.getPropertyId()!=0){

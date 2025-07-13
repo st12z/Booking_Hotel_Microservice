@@ -29,4 +29,5 @@ public class SuspiciousPaymentLog extends BaseEntity{
 
     private String billCode;
 
+
 }

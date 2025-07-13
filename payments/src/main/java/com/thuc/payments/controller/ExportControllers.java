@@ -12,10 +12,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ExportControllers {
     private final IExportService exportFileService;
-    @GetMapping("")
+    @GetMapping("/payment-transactions")
     public void exportPaymentTransactions(HttpServletResponse response) {
-        response.setHeader("Content-Disposition", "attachment; filename=bills.xls");
+        response.setHeader("Content-Disposition", "attachment; filename=payment-transactions.xls");
         response.setContentType("application/octet-stream");
         exportFileService.generateFileExcelOfPaymentTransactions(response);
+    }
+    @GetMapping("/suspicious-tran-logs")
+    public void exportSuspiciousTranLogs(HttpServletResponse response) {
+        response.setHeader("Content-Disposition", "attachment; filename=suspicious-tran-logs.xls");
+        response.setContentType("application/octet-stream");
+        exportFileService.generateFileExcelOfSuspiciousTransactions(response);
     }
 }
