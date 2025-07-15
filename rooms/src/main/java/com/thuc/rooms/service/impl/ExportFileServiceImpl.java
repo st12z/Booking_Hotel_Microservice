@@ -2,7 +2,9 @@ package com.thuc.rooms.service.impl;
 
 import com.thuc.rooms.converter.PropertyConverter;
 import com.thuc.rooms.dto.PropertyDto;
+import com.thuc.rooms.entity.City;
 import com.thuc.rooms.entity.Property;
+import com.thuc.rooms.repository.CityRepository;
 import com.thuc.rooms.service.IExportFileService;
 import com.thuc.rooms.service.client.BillsFeignClient;
 import jakarta.persistence.EntityManager;
@@ -23,6 +25,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ExportFileServiceImpl implements IExportFileService {
     private final BillsFeignClient billsFeignClient;
+    private final CityRepository cityRepository;
     @PersistenceContext
     private EntityManager entityManager;
     @Override
@@ -60,6 +63,41 @@ public class ExportFileServiceImpl implements IExportFileService {
                 dataRow.createCell(3).setCellValue(propertyDto.getRatingStar());
                 dataRow.createCell(4).setCellValue(propertyDto.getTotalBills());
                 dataRow.createCell(5).setCellValue(propertyDto.getTotalPayments());
+                dataRowIndex++;
+            }
+            ServletOutputStream ops = response.getOutputStream();
+            workbook.write(ops);
+            workbook.close();
+            ops.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void generateExcelOfCities(HttpServletResponse response) {
+        try{
+            List<City> cities = cityRepository.findAll();
+            HSSFWorkbook workbook = new HSSFWorkbook();
+            HSSFSheet sheet= workbook.createSheet("List of Cities Info");
+            HSSFRow row=sheet.createRow(0);
+            row.createCell(0).setCellValue("ID");
+            row.createCell(1).setCellValue("Name");
+            row.createCell(2).setCellValue("Image");
+            row.createCell(3).setCellValue("Slug");
+            row.createCell(4).setCellValue("Latitude Center");
+            row.createCell(5).setCellValue("Longitude Center");
+            row.createCell(6).setCellValue("Created Date");
+            int dataRowIndex = 1;
+            for(City item:cities){
+                HSSFRow dataRow = sheet.createRow(dataRowIndex);
+                dataRow.createCell(0).setCellValue(item.getId());
+                dataRow.createCell(1).setCellValue(item.getName());
+                dataRow.createCell(2).setCellValue(item.getImage());
+                dataRow.createCell(3).setCellValue(item.getSlug());
+                dataRow.createCell(4).setCellValue(String.valueOf(item.getLatitudeCenter()));
+                dataRow.createCell(5).setCellValue(String.valueOf(item.getLongitudeCenter()));
+                dataRow.createCell(6).setCellValue(item.getCreatedAt());
                 dataRowIndex++;
             }
             ServletOutputStream ops = response.getOutputStream();

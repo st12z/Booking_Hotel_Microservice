@@ -48,6 +48,8 @@ public class SecurityConfig {
                                         "/bookinghotel/rooms/api/roomtypes/update",
                                         "/bookinghotel/rooms/api/rooms/create",
                                         "/bookinghotel/rooms/api/rooms/delete",
+                                        "/bookinghotel/rooms/api/cities/update/**",
+                                        "/bookinghotel/rooms/api/cities/create/**",
                                         "/bookinghotel/bookings/api/bills/search",
                                         "/bookinghotel/bookings/api/refund-bills/filter",
                                         "/bookinghotel/bookings/api/refund-bills/amount-refund-month",

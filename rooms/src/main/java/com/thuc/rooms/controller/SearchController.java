@@ -23,7 +23,7 @@ public class SearchController {
     private final Logger log = LoggerFactory.getLogger(SearchController.class);
     @GetMapping("")
     public ResponseEntity<SuccessResponseDto<PageResponseDto<List<PropertyDto>>>> search(
-            @RequestParam String destination,
+            @RequestParam(required = false,defaultValue = "") String destination,
             @RequestParam(required = false)  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime checkIn,
             @RequestParam(required = false)  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime checkOut,
             @RequestParam(required = false)  Integer quantityBeds,
@@ -42,7 +42,7 @@ public class SearchController {
     }
     @PostMapping("")
     public ResponseEntity<SuccessResponseDto<PageResponseDto<List<PropertyDto>>>> filter(
-            @RequestParam String destination,
+            @RequestParam(required = false,defaultValue = "") String destination,
             @RequestParam(required = false)  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime checkIn,
             @RequestParam(required = false)  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime checkOut,
             @RequestParam(required = false)  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Integer quantityBeds,

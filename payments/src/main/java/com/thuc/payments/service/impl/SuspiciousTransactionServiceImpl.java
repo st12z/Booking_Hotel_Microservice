@@ -209,7 +209,10 @@ public class SuspiciousTransactionServiceImpl implements ISuspiciousTransactionS
         }
         int limit = pageSize;
         int offset = (pageNo-1) * pageSize;
-        List<SuspiciousTransactionDto> result = suspiciousTransactionDtos.subList(offset, Math.min(offset+limit, suspiciousTransactionDtos.size()));
+        List<SuspiciousTransactionDto> result = new ArrayList<>();
+        if(offset <= suspiciousTransactionDtos.size()){
+            result = suspiciousTransactionDtos.subList(offset, Math.min(offset+limit, suspiciousTransactionDtos.size()));
+        }
         return PageResponseDto.<List<SuspiciousTransactionDto>>builder()
                 .pageNo(pageNo)
                 .pageSize(pageSize)

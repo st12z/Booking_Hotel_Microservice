@@ -48,11 +48,9 @@ public class UploadCloudinary {
 
             String transformedImageUrl = cloudinary.url()
                     .transformation(new Transformation()
-                            .crop("pad")
-                            .width(300)
-                            .height(400)
-                            .background("auto:predominant"))
-                    .version(uploadResult.get("version").toString()) // thêm version để khác URL
+                            .gravity("center")
+                            .quality("100")) // hoặc "100" nếu muốn chất lượng tối đa
+                    .version(uploadResult.get("version").toString())
                     .generate(publicId);
 
             // Trả về URL của ảnh đã biến đổi

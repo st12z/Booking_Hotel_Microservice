@@ -16,6 +16,7 @@ public class CityConverter {
                 .name(city.getName())
                 .image(city.getImage())
                 .slug(city.getSlug())
+                .createdAt(city.getCreatedAt())
                 .build();
     }
 }

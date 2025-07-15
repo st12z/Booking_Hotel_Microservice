@@ -40,43 +40,11 @@ public class SearchServiceImpl implements ISearchService {
     @PersistenceContext
     private EntityManager entityManager;
     // Use NativeQuery
-    @Override
-    public PageResponseDto<List<PropertyDto>> getPropertiesBySearchV1(int pageNo,int pageSize,SearchDto searchDto) {
-        log.debug("Requested to getPropertiesBySearchV1 with {} successfully",searchDto);
-        String key = String.format("search:%s",searchDto);
-        StringBuilder sql = new StringBuilder(" SELECT * FROM properties p WHERE 1=1 ");
-        Map<String,Object> parameters = new HashMap<>();
-        if(searchDto.getDestination() != null && !searchDto.getDestination().isEmpty()) {
-            sql.append(" AND (unaccent(p.name) ILIKE unaccent(:destination) ");
-            sql.append(" OR EXISTS ( SELECT 1 FROM cities c WHERE p.city_id = c.id and unaccent(name) ILIKE unaccent(:destination)) ");
-            sql.append(" OR EXISTS (SELECT 1 FROM trip tr WHERE  p.city_id = tr.city_id and unaccent(name) ILIKE unaccent(:destination)))");
-            parameters.put("destination",(String)('%'+searchDto.getDestination()+'%'));
-        }
-
-        if(searchDto.getQuantityBeds()!=null){
-            sql.append(" AND EXISTS (SELECT 1 FROM room_type rt WHERE rt.property_id=p.id AND num_beds = :quantityBed) ");
-            parameters.put("quantityBed",searchDto.getQuantityBeds());
-        }
-        Query countQuery = entityManager.createNativeQuery(sql.toString().replace("SELECT *","SELECT COUNT(*)"));
-        parameters.forEach(countQuery::setParameter);
-        Long total = (Long)countQuery.getSingleResult();
-        Query allQuery = entityManager.createNativeQuery(sql.toString(),Property.class);
-        parameters.forEach(allQuery::setParameter);
-        List<Property> propertiesAll = allQuery.getResultList();
-        List<PropertyDto> propertyDtoAll = propertiesAll.stream().map(PropertyConverter::toPropertyDto).toList();
-
-        sql.append(" LIMIT :limit OFFSET :offset ");
-        int limit = pageSize;
-        int offset = pageSize*(pageNo-1);
-        Query query = entityManager.createNativeQuery(sql.toString(), Property.class);
-        parameters.forEach(query::setParameter);
-        query.setParameter("limit",limit);
-        query.setParameter("offset",offset);
-        List<Property> properties = query.getResultList();
+    public List<Property> getListPropertyIfHaveCheckInChecOut(List<Property> properties,SearchDto searchDto){
         LocalDateTime currentTime = LocalDateTime.now();
-        log.debug("properties :{}",properties);
         List<Property> propertiesByTime = properties.stream().filter(property -> {
             List<RoomType> roomTypes = property.getRoomTypes();
+            if (roomTypes.isEmpty()) return true;
             int propertyId= property.getId();
             return roomTypes.stream().anyMatch(roomType -> {
                 int roomTypeId = roomType.getId();
@@ -102,8 +70,63 @@ public class SearchServiceImpl implements ISearchService {
                 return roomNumbers.stream().anyMatch(number->!bookedNow.contains(number));
             });
         }).toList();
-        List<PropertyDto> propertyDtos = propertiesByTime.stream().map(PropertyConverter::toPropertyDto).collect(Collectors.toList());
-        if(redisService.getData(key)==null) redisService.saveData(key,propertyDtos);
+        return propertiesByTime;
+    }
+    @Override
+    public PageResponseDto<List<PropertyDto>> getPropertiesBySearchV1(int pageNo,int pageSize,SearchDto searchDto) {
+        List<Property> result = new ArrayList<>();
+        log.debug("Requested to getPropertiesBySearchV1 with {} successfully",searchDto);
+        String key = String.format("search:%s",searchDto);
+        StringBuilder sql = new StringBuilder(" SELECT * FROM properties p WHERE 1=1 ");
+        Map<String,Object> parameters = new HashMap<>();
+        if(searchDto.getDestination() != null && !searchDto.getDestination().isEmpty()) {
+            sql.append(" AND (unaccent(p.name) ILIKE unaccent(:destination) ");
+            sql.append(" OR EXISTS ( SELECT 1 FROM cities c WHERE p.city_id = c.id AND unaccent(c.name) ILIKE unaccent(:destination)) ");
+            sql.append(" OR EXISTS (SELECT 1 FROM trip tr WHERE  p.city_id = tr.city_id AND unaccent(tr.name) ILIKE unaccent(:destination)))");
+            parameters.put("destination",(String)('%'+searchDto.getDestination()+'%'));
+        }
+
+        if(searchDto.getQuantityBeds()!=null){
+            sql.append(" AND EXISTS (SELECT 1 FROM room_type rt WHERE rt.property_id=p.id AND num_beds = :quantityBed) ");
+            parameters.put("quantityBed",searchDto.getQuantityBeds());
+        }
+        sql.append(" ORDER BY id ");
+        Query allQuery = entityManager.createNativeQuery(sql.toString(), Property.class);
+        parameters.forEach(allQuery::setParameter);
+        sql.append(" LIMIT :limit OFFSET :offset ");
+        int limit = pageSize;
+        int offset = pageSize*(pageNo-1);
+        Query query = entityManager.createNativeQuery(sql.toString(), Property.class);
+        parameters.forEach(query::setParameter);
+        query.setParameter("limit",limit);
+        query.setParameter("offset",offset);
+        List<Property> properties = query.getResultList();
+        List<Property> allPropertiesCondition = allQuery.getResultList();
+        List<Property> allPropertiesIfHaveCheckInAndCheckout =getListPropertyIfHaveCheckInChecOut(allPropertiesCondition,searchDto);
+        List<Property> resultAll = allPropertiesIfHaveCheckInAndCheckout.isEmpty()? allPropertiesCondition : allPropertiesIfHaveCheckInAndCheckout;
+        List<PropertyDto> resultPropertyDtoAll = resultAll.stream().map(PropertyConverter::toPropertyDto).toList();
+        long total = resultAll.size();
+        log.debug("properties :{}",properties);
+        List<Property> propertiesByTime = getListPropertyIfHaveCheckInChecOut(properties,searchDto);
+        if(propertiesByTime.isEmpty()){
+            result.addAll(properties);
+        }
+        else{
+            result.addAll(propertiesByTime);
+        }
+        List<PropertyDto> propertyDtos = result.stream().sorted(Comparator.comparing(Property::getId))
+                .map(PropertyConverter::toPropertyDto).collect(Collectors.toList());
+        log.debug("redis data key {}: {}",key,redisService.getData(key));
+        if(redisService.getData(key)!=null && !redisService.getData(key).isEmpty()){
+            List<PropertyDto> propertyDtosInRedis = redisService.getData(key);
+            log.debug("propertyDtos :{}",propertyDtosInRedis.toString());
+            if(propertyDtosInRedis.size()!=resultPropertyDtoAll.size()){
+                redisService.saveData(key,resultPropertyDtoAll);
+            }
+        }
+        if(redisService.getData(key)==null || redisService.getData(key).isEmpty()){
+            redisService.saveData(key,resultPropertyDtoAll);
+        }
         return PageResponseDto.<List<PropertyDto>>builder()
                 .dataPage(propertyDtos)
                 .pageNo(pageNo)

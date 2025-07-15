@@ -23,7 +23,11 @@ public class ExportController {
         response.setHeader("Content-Disposition", "attachment; filename=properties-revenue.xls");
         response.setContentType("application/octet-stream");
         exportFileService.generateExcelOfPropertyRevenue(response);
-
-
+    }
+    @GetMapping("cities")
+    public void exportCities(HttpServletResponse response) {
+        response.setHeader("Content-Disposition", "attachment; filename=cities.xls");
+        response.setContentType("application/octet-stream");
+        exportFileService.generateExcelOfCities(response);
     }
 }
