@@ -2,10 +2,7 @@ package com.thuc.rooms.entity;
 
 import com.thuc.rooms.utils.ConvertToSlug;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 
@@ -15,6 +12,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="trip")
+@Builder
 public class Trip extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

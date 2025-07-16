@@ -4,7 +4,11 @@ import com.thuc.rooms.converter.PropertyConverter;
 import com.thuc.rooms.dto.PropertyDto;
 import com.thuc.rooms.entity.City;
 import com.thuc.rooms.entity.Property;
+import com.thuc.rooms.entity.Trip;
+import com.thuc.rooms.entity.TripType;
 import com.thuc.rooms.repository.CityRepository;
+import com.thuc.rooms.repository.TripRepository;
+import com.thuc.rooms.repository.TripTypeRepository;
 import com.thuc.rooms.service.IExportFileService;
 import com.thuc.rooms.service.client.BillsFeignClient;
 import jakarta.persistence.EntityManager;
@@ -16,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.locationtech.jts.triangulate.tri.Tri;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +31,8 @@ import java.util.stream.Collectors;
 public class ExportFileServiceImpl implements IExportFileService {
     private final BillsFeignClient billsFeignClient;
     private final CityRepository cityRepository;
+    private final TripRepository tripRepository;
+    private final TripTypeRepository tripTypeRepository;
     @PersistenceContext
     private EntityManager entityManager;
     @Override
@@ -98,6 +105,72 @@ public class ExportFileServiceImpl implements IExportFileService {
                 dataRow.createCell(4).setCellValue(String.valueOf(item.getLatitudeCenter()));
                 dataRow.createCell(5).setCellValue(String.valueOf(item.getLongitudeCenter()));
                 dataRow.createCell(6).setCellValue(item.getCreatedAt());
+                dataRowIndex++;
+            }
+            ServletOutputStream ops = response.getOutputStream();
+            workbook.write(ops);
+            workbook.close();
+            ops.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void generateExcelOfTrips(HttpServletResponse response) {
+        try{
+            List<Trip> trips = tripRepository.findAll();
+            HSSFWorkbook workbook = new HSSFWorkbook();
+            HSSFSheet sheet= workbook.createSheet("List of Trips");
+            HSSFRow row=sheet.createRow(0);
+            row.createCell(0).setCellValue("ID");
+            row.createCell(1).setCellValue("Name");
+            row.createCell(2).setCellValue("Trip Type");
+            row.createCell(3).setCellValue("City ID");
+            row.createCell(4).setCellValue("Latitude");
+            row.createCell(5).setCellValue("Longitude");
+            row.createCell(6).setCellValue("Image");
+            row.createCell(7).setCellValue("CreatedAt");
+            int dataRowIndex = 1;
+            for(Trip item:trips){
+                HSSFRow dataRow = sheet.createRow(dataRowIndex);
+                dataRow.createCell(0).setCellValue(item.getId());
+                dataRow.createCell(1).setCellValue(item.getName());
+                dataRow.createCell(2).setCellValue(item.getTripType());
+                dataRow.createCell(3).setCellValue(item.getCity().getId());
+                dataRow.createCell(4).setCellValue(item.getLatitude().toString());
+                dataRow.createCell(5).setCellValue(item.getLongitude().toString());
+                dataRow.createCell(6).setCellValue(item.getImage());
+                dataRow.createCell(7).setCellValue(item.getCreatedAt());
+                dataRowIndex++;
+            }
+            ServletOutputStream ops = response.getOutputStream();
+            workbook.write(ops);
+            workbook.close();
+            ops.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void generateExcelOfTripTypes(HttpServletResponse response) {
+        try{
+            List<TripType> tripTypes = tripTypeRepository.findAll();
+            HSSFWorkbook workbook = new HSSFWorkbook();
+            HSSFSheet sheet= workbook.createSheet("List of TripTypes");
+            HSSFRow row=sheet.createRow(0);
+            row.createCell(0).setCellValue("ID");
+            row.createCell(1).setCellValue("Name");
+            row.createCell(2).setCellValue("Image Icon");
+            row.createCell(3).setCellValue("CreatedAt");
+            int dataRowIndex = 1;
+            for(TripType item:tripTypes){
+                HSSFRow dataRow = sheet.createRow(dataRowIndex);
+                dataRow.createCell(0).setCellValue(item.getId());
+                dataRow.createCell(1).setCellValue(item.getName());
+                dataRow.createCell(1).setCellValue(item.getIcon());
+                dataRow.createCell(7).setCellValue(item.getCreatedAt());
                 dataRowIndex++;
             }
             ServletOutputStream ops = response.getOutputStream();

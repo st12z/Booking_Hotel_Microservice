@@ -6,4 +6,8 @@ public interface IExportFileService {
     void generateExcelOfPropertyRevenue(HttpServletResponse response) ;
 
     void generateExcelOfCities(HttpServletResponse response);
+
+    void generateExcelOfTrips(HttpServletResponse response);
+
+    void generateExcelOfTripTypes(HttpServletResponse response);
 }

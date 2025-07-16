@@ -30,4 +30,16 @@ public class ExportController {
         response.setContentType("application/octet-stream");
         exportFileService.generateExcelOfCities(response);
     }
+    @GetMapping("trips")
+    public void exportTrips(HttpServletResponse response) {
+        response.setHeader("Content-Disposition", "attachment; filename=trips.xls");
+        response.setContentType("application/octet-stream");
+        exportFileService.generateExcelOfTrips(response);
+    }
+    @GetMapping("triptypes")
+    public void exportTripTypes(HttpServletResponse response) {
+        response.setHeader("Content-Disposition", "attachment; filename=trip-types.xls");
+        response.setContentType("application/octet-stream");
+        exportFileService.generateExcelOfTripTypes(response);
+    }
 }

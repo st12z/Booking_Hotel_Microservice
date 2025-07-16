@@ -13,6 +13,7 @@ public class TripConverter {
                 .city_id(trip.getCity().getId())
                 .longitude(trip.getLongitude())
                 .latitude(trip.getLatitude())
+                .createdAt(trip.getCreatedAt())
                 .build();
     }
 }

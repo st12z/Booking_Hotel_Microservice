@@ -1,6 +1,5 @@
 package com.thuc.rooms.dto;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,13 +13,11 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TripDto implements Serializable {
-    private Integer id;
+public class TripRequestDto implements Serializable {
     private String name;
     private String tripType;
     private Integer city_id;
     private BigDecimal latitude;
     private BigDecimal longitude;
     private String image;
-    private LocalDateTime createdAt;
 }
