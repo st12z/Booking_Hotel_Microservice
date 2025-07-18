@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -145,5 +146,13 @@ public class UsersServiceImpl implements IUsersService {
             result.add(new StatisticVisitByMonth(i,total));
         }
         return result;
+    }
+
+    @Override
+    public List<UserDto> getAllUsersAdmin() {
+        List<RoleEntity> roles = roleRepository.findAll();
+        Integer roleId = roles.stream().filter(role->role.getName().equals("USER")).findFirst().get().getId();
+        List<UserEntity> users = userRepository.findByRolesNotContainUser(roleId);
+        return users.stream().map(UsersConverter::toUserDto).collect(Collectors.toList());
     }
 }

@@ -15,6 +15,7 @@ public class DiscountConverter {
                 .endDate(discount.getEndDate())
                 .startDate(discount.getStartDate())
                 .quantity(discount.getQuantity())
+                .createdAt(discount.getCreatedAt())
                 .build();
     }
 }

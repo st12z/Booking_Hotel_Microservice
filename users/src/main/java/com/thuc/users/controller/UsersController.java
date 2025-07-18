@@ -164,4 +164,14 @@ public class UsersController {
                 .build();
         return ResponseEntity.ok(response);
     }
+    @GetMapping("/all-users")
+    public ResponseEntity<SuccessResponseDto<List<UserDto>>> getAllUsersAdmin(){
+        log.debug("Getting all users");
+        SuccessResponseDto<List<UserDto>> response = SuccessResponseDto.<List<UserDto>>builder()
+                .code(UsersConstant.STATUS_200)
+                .message(UsersConstant.MESSAGE_200)
+                .data(usersService.getAllUsersAdmin())
+                .build();
+        return ResponseEntity.ok(response);
+    }
 }

@@ -18,7 +18,6 @@ public class FilterBillsDto {
 
     private String endDate;
 
-
     private String timeOption;
 
     private String billTypeStatus;

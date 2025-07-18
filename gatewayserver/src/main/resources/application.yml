@@ -23,7 +23,7 @@ management:
   endpoint:
     gateway:
       access: unrestricted
-
+url_frontend: ${URL_FRONTEND}
 eureka:
   instance:
     prefer-ip-address: true

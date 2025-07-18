@@ -31,4 +31,6 @@ public interface IUsersService {
     Integer getAmountUsers();
 
     List<StatisticVisitByMonth> getAmountVisitsByMonth(Integer month);
+
+    List<UserDto> getAllUsersAdmin();
 }

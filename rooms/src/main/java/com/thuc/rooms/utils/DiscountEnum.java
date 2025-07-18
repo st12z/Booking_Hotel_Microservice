@@ -10,7 +10,7 @@ public enum DiscountEnum {
     DiscountEnum(String type) {
         this.type = type;
     }
-    public List<String> getAllDiscountTypes(){
+    public static List<String> getAllDiscountTypes(){
         List<String> types = new ArrayList<String>();
         for(DiscountEnum e : DiscountEnum.values()){
             types.add(e.type);

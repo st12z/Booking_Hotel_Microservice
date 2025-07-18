@@ -30,4 +30,6 @@ public class DiscountDto implements Serializable {
     private Integer quantity;
 
     private String image;
+
+    private LocalDateTime createdAt;
 }

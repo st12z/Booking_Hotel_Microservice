@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Repository
 @Transactional
@@ -24,5 +25,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
     @Query("Update UserEntity u set u.sendEmail=true WHERE u.email= :email")
     void updateSendEmailByEmail(@Param("email") String email);
 
-
+    @Query(" SELECT u FROM UserEntity u WHERE EXISTS(SELECT r FROM u.roles r WHERE r.id<>:roleId) ")
+    List<UserEntity> findByRolesNotContainUser(Integer roleId);
 }

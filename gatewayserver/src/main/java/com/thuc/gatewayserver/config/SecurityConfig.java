@@ -1,6 +1,7 @@
 package com.thuc.gatewayserver.config;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
@@ -24,6 +25,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+    @Value("${url_frontend}")
+    private String urlFrontEnd;
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         return http
@@ -54,6 +57,8 @@ public class SecurityConfig {
                                         "/bookinghotel/rooms/api/trip/create/**",
                                         "/bookinghotel/rooms/api/triptypes/create/**",
                                         "/bookinghotel/rooms/api/triptypes/update/**",
+                                        "/bookinghotel/rooms/api/facilities/create/**",
+                                        "/bookinghotel/rooms/api/facilities/update/**",
                                         "/bookinghotel/bookings/api/bills/search",
                                         "/bookinghotel/bookings/api/refund-bills/filter",
                                         "/bookinghotel/bookings/api/refund-bills/amount-refund-month",
@@ -74,12 +79,24 @@ public class SecurityConfig {
                                         "/bookinghotel/rooms/api/chats/**",
                                         "/bookinghotel/rooms/api/reviews/**",
                                         "/bookinghotel/rooms/api/upload/**",
-                                        "/bookinghotel/rooms/api/room-chats/**",
+                                        "/bookinghotel/rooms/api/room-chats/rooms/**",
+                                        "/bookinghotel/rooms/api/discounts/save/**",
+                                        "/bookinghotel/rooms/api/discounts/my-discounts/**",
+                                        "/bookinghotel/rooms/api/discounts/my-discounts-page/**",
+                                        "/bookinghotel/rooms/api/discounts/discount-types/**",
+                                        "/bookinghotel/rooms/api/discounts/filter/**",
+                                        "/bookinghotel/rooms/api/discount-cars/my-discounts/**",
+                                        "/bookinghotel/rooms/api/discount-cars/save-discount/**",
+                                        "/bookinghotel/rooms/api/discount-cars/my-discounts-page/**",
+                                        "/bookinghotel/rooms/api/discount-cars/search/**",
+                                        "/bookinghotel/rooms/api/discount-cars/update/**",
+                                        "/bookinghotel/rooms/api/discount-cars/create/**",
                                         "/bookinghotel/payments/api/payments/refund/**",
                                         "/bookinghotel/payments/api/payments/get-url/**",
                                         "/bookinghotel/payments/api/payments/check-booking/**",
                                         "/bookinghotel/payments/api/payments/check-otp/**",
-                                        "/bookinghotel/rooms/api/roomtypes/**"
+                                        "/bookinghotel/rooms/api/roomtypes/**",
+                                        "/ws/**"
                                 )
                                 .hasAnyRole("ADMIN","MANAGER","STAFF","USER")
                                 .anyExchange().permitAll()
@@ -103,11 +120,10 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:3000"));
+        config.setAllowedOrigins(List.of(urlFrontEnd));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
-
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return source;

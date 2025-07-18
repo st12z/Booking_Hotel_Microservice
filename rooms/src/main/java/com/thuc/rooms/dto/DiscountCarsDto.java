@@ -30,4 +30,6 @@ public class DiscountCarsDto {
     private Boolean isActive;
 
     private int discountValue;
+
+    private LocalDateTime createdAt;
 }

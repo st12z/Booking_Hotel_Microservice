@@ -15,6 +15,7 @@ public class DiscountCarsConverter {
                 .endDate(discountCars.getEndDate())
                 .images(discountCars.getImages())
                 .isActive(discountCars.getIsActive())
+                .createdAt(discountCars.getCreatedAt())
                 .build();
     }
 }

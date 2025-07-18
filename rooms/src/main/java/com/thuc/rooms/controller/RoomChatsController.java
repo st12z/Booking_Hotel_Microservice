@@ -2,6 +2,7 @@ package com.thuc.rooms.controller;
 
 import com.thuc.rooms.constants.ChatConstant;
 import com.thuc.rooms.constants.RoomChatConstant;
+import com.thuc.rooms.dto.RoomChatRequestDto;
 import com.thuc.rooms.dto.RoomChatsDto;
 import com.thuc.rooms.dto.SuccessResponseDto;
 import com.thuc.rooms.service.IRoomChatService;
@@ -20,7 +21,7 @@ import java.util.List;
 public class RoomChatsController {
     private final Logger logger = LoggerFactory.getLogger(RoomChatsController.class);
     private final IRoomChatService roomChatService;
-    @GetMapping("/rooms/{userId}")
+    @GetMapping("rooms/{userId}")
     public ResponseEntity<SuccessResponseDto<List<RoomChatsDto>>> getRoomChats(@PathVariable int userId) {
         logger.debug("Getting room chats of {}", userId);
         SuccessResponseDto<List<RoomChatsDto>> response = SuccessResponseDto.<List<RoomChatsDto>>builder()
@@ -30,8 +31,8 @@ public class RoomChatsController {
                 .build();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    @PostMapping("/create")
-    public ResponseEntity<SuccessResponseDto<RoomChatsDto>> createRoomChat(@RequestBody RoomChatsDto roomChatsDto) {
+    @PostMapping("create")
+    public ResponseEntity<SuccessResponseDto<RoomChatsDto>> createRoomChat(@RequestBody RoomChatRequestDto roomChatsDto) {
         logger.debug("Creating room chats of {}", roomChatsDto);
         SuccessResponseDto<RoomChatsDto> response = SuccessResponseDto.<RoomChatsDto>builder()
                 .code(RoomChatConstant.STATUS_200)

@@ -17,6 +17,11 @@ spring:
       validation-timeout: 5000 # Thời gian tối đa (ms) để kiểm tra tính hợp lệ của kết nối (5 giây)
       leak-detection-threshold: 15000 # Thời gian (ms) để phát hiện rò rỉ kết nối (15 giây)
       connection-test-query: SELECT 1 # Câu truy vấn để kiểm tra tính hợp lệ của kết nối
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI}
   servlet:
     multipart:
       max-request-size: 10MB
@@ -53,6 +58,7 @@ eureka:
 logging:
   level:
     com.thuc.rooms: DEBUG
+url_frontend: ${URL_FRONTEND}
 
 cloudinary:
   cloud_name: ${CLOUDINARY_CLOUD_NAME}
