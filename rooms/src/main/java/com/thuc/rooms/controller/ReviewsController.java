@@ -6,6 +6,8 @@ import com.cloudinary.utils.ObjectUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thuc.rooms.constants.ReviewConstant;
+import com.thuc.rooms.dto.FilterReviewDto;
+import com.thuc.rooms.dto.PageResponseDto;
 import com.thuc.rooms.dto.ReviewDto;
 import com.thuc.rooms.dto.SuccessResponseDto;
 import com.thuc.rooms.service.IReviewService;
@@ -23,6 +25,7 @@ import com.cloudinary.*;
 import com.cloudinary.utils.ObjectUtils;
 import io.github.cdimascio.dotenv.Dotenv;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -75,6 +78,30 @@ public class ReviewsController {
                 .code(ReviewConstant.STATUS_200)
                 .message(ReviewConstant.MESSAGE_200)
                 .data(reviewService.getAmountReviews())
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+    @PostMapping("/filter")
+    public ResponseEntity<SuccessResponseDto<PageResponseDto<List<ReviewDto>>>> getAllReviews(@RequestBody FilterReviewDto filterDto) throws ParseException {
+        log.debug("getAllReviews with filterDto: {}", filterDto);
+        SuccessResponseDto<PageResponseDto<List<ReviewDto>>> response = SuccessResponseDto.<PageResponseDto<List<ReviewDto>>>builder()
+                .code(ReviewConstant.STATUS_200)
+                .message(ReviewConstant.MESSAGE_200)
+                .data(reviewService.getAllReviews(filterDto))
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+    @GetMapping("/search")
+    public ResponseEntity<SuccessResponseDto<PageResponseDto<List<ReviewDto>>>> getSearchReviews(
+            @RequestParam(defaultValue = "",required = false) String keyword,
+            @RequestParam(defaultValue = "1") Integer pageNo,
+            @RequestParam(defaultValue = "10") Integer pageSize
+    ){
+        log.debug("getSearchReviews with pageNo: {}, pageSize: {}", pageNo, pageSize);
+        SuccessResponseDto<PageResponseDto<List<ReviewDto>>> response = SuccessResponseDto.<PageResponseDto<List<ReviewDto>>>builder()
+                .code(ReviewConstant.STATUS_200)
+                .message(ReviewConstant.MESSAGE_200)
+                .data(reviewService.getSearchReviews(keyword,pageNo,pageSize))
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }

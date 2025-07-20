@@ -2,6 +2,7 @@ package com.thuc.rooms.controller;
 
 import com.thuc.rooms.constants.ChatConstant;
 import com.thuc.rooms.constants.RoomChatConstant;
+import com.thuc.rooms.dto.PageResponseDto;
 import com.thuc.rooms.dto.RoomChatRequestDto;
 import com.thuc.rooms.dto.RoomChatsDto;
 import com.thuc.rooms.dto.SuccessResponseDto;
@@ -48,6 +49,30 @@ public class RoomChatsController {
                 .code(RoomChatConstant.STATUS_200)
                 .message(RoomChatConstant.MESSAGE_200)
                 .data(roomChatService.getRoomChatsById(id))
+                .build();
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    @GetMapping("all")
+    public ResponseEntity<SuccessResponseDto<PageResponseDto<List<RoomChatsDto>>>> getAllRoomChats(
+            @RequestParam(defaultValue = "") String keyword,
+            @RequestParam(defaultValue = "1") Integer pageNo,
+            @RequestParam(defaultValue = "10") Integer pageSize
+    ) {
+        logger.debug("Getting all room chats of");
+        SuccessResponseDto<PageResponseDto<List<RoomChatsDto>>> response = SuccessResponseDto.<PageResponseDto<List<RoomChatsDto>>>builder()
+                .code(RoomChatConstant.STATUS_200)
+                .message(RoomChatConstant.MESSAGE_200)
+                .data(roomChatService.getAllRoomChats(keyword,pageNo,pageSize))
+                .build();
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    @PostMapping("update")
+    public ResponseEntity<SuccessResponseDto<List<RoomChatsDto>>> updateRoomChats(@RequestBody List<RoomChatsDto> roomChatsDto) {
+        logger.debug("Updating room chats of {}", roomChatsDto);
+        SuccessResponseDto<List<RoomChatsDto>> response = SuccessResponseDto.<List<RoomChatsDto>>builder()
+                .code(RoomChatConstant.STATUS_200)
+                .message(RoomChatConstant.MESSAGE_200)
+                .data(roomChatService.updateRoomChats(roomChatsDto))
                 .build();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

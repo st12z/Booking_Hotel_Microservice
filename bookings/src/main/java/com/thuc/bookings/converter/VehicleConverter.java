@@ -12,11 +12,12 @@ public class VehicleConverter {
                 .licensePlate(vehicles.getLicensePlate())
                 .longitude(vehicles.getLongitude())
                 .latitude(vehicles.getLatitude())
-                .status(vehicles.getStatus().getValue())
-                .carType(vehicles.getCarType().getValue())
+                .status(vehicles.getStatus().toString())
+                .carType(vehicles.getCarType().toString())
                 .discount(vehicles.getDiscount())
                 .quantity(vehicles.getQuantity())
                 .star(vehicles.getStar())
+                .createdAt(vehicles.getCreatedAt())
                 .build();
     }
 }

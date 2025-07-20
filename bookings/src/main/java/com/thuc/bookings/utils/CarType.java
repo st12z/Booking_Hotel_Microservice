@@ -2,6 +2,11 @@ package com.thuc.bookings.utils;
 
 import lombok.Getter;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @Getter
 public enum CarType {
     BUS("Bus"),
@@ -12,5 +17,12 @@ public enum CarType {
     private String value;
     CarType(String value) {
         this.value = value;
+    }
+    public static Map<String,String> getValues() {
+        Map<String,String> values = new HashMap<>();
+        for (CarType carType : CarType.values()) {
+            values.put(carType.value, carType.toString());
+        }
+        return values;
     }
 }

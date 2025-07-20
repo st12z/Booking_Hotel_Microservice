@@ -18,6 +18,6 @@ public interface UsersFeignClient {
     public ResponseEntity<SuccessResponseDto<UserDto>> getUserInfo(@RequestHeader("X-User-Email") String email);
     @GetMapping("/get-user/{id}")
     public ResponseEntity<SuccessResponseDto<UserDto>> getInfoUserById(@PathVariable("id") Integer id) ;
-    @GetMapping("/all-users")
+    @GetMapping("/all-users-admin")
     public ResponseEntity<SuccessResponseDto<List<UserDto>>> getAllUsersAdmin();
 }

@@ -1,7 +1,7 @@
 package com.thuc.bookings.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.thuc.bookings.dto.requestDto.VehicleRequestDto;
+import com.thuc.bookings.dto.requestDto.VehicleHoldDto;
 import com.thuc.bookings.service.IRedisVehicleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -15,7 +15,7 @@ public class RedisVehicleServiceImpl implements IRedisVehicleService {
     private final RedisTemplate<String, Object> redisTemplate;
     private final ObjectMapper objectMapper;
     @Override
-    public void saveData(String key, VehicleRequestDto vehicleDto) {
+    public void saveData(String key, VehicleHoldDto vehicleDto) {
         try{
             String json = objectMapper.writeValueAsString(1);
             redisTemplate.opsForValue().set(key, json,10, TimeUnit.MINUTES);
