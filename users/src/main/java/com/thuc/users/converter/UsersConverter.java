@@ -36,6 +36,8 @@ public class UsersConverter {
                 .phoneNumber(userEntity.getPhoneNumber())
                 .birthday(userEntity.getBirthday())
                 .roles(userEntity.getRoles().stream().map(RoleEntity::getName).toList())
+                .createdAt(userEntity.getCreatedAt())
+                .roleDtos(userEntity.getRoles().stream().map(RoleConverter::toRoleDto).toList())
                 .build();
     }
 }

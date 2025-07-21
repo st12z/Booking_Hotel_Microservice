@@ -28,6 +28,8 @@ spring:
       bindings:
         sendCommunication-out-0:
           destination: send-communication
+        sendResetPassword-out-0:
+          destination: send-resetpassword
         updateCommunication-in-0:
           destination: communication-sent
           group: ${spring.application.name}

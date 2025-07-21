@@ -32,6 +32,14 @@ public class SecurityConfig {
         return http
                 .authorizeExchange(exchange ->
                         exchange
+                                .pathMatchers("/bookinghotel/rooms/api/room-chats/all/**",
+                                        "/bookinghotel/rooms/api/room-chats/update/**",
+                                        "/bookinghotel/rooms/api/chats/messages-page/**",
+                                        "/bookinghotel/rooms/api/roles/all/**",
+                                        "/bookinghotel/rooms/api/roles/create/**",
+                                        "/bookinghotel/users/api/users/update-roles/**",
+                                        "/bookinghotel/users/api/users/reset-password/**"
+                                        ).hasAnyRole("ADMIN","MANAGER")
                                 .pathMatchers("/bookinghotel/bookings/api/bills/amount-bills-today",
                                         "/bookinghotel/bookings/api/bills/amount-bills-month",
                                         "/bookinghotel/bookings/api/bills/amount-revenue-today",

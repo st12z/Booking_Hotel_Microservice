@@ -1,9 +1,6 @@
 package com.thuc.messages.functions;
 
-import com.thuc.messages.dto.BillDto;
-import com.thuc.messages.dto.OtpDto;
-import com.thuc.messages.dto.RefundBillDto;
-import com.thuc.messages.dto.UserDto;
+import com.thuc.messages.dto.*;
 import com.thuc.messages.service.IRedisPrimitive;
 import com.thuc.messages.utils.CustomMailSender;
 import com.thuc.messages.utils.RandomString;
@@ -41,45 +38,45 @@ public class MessageFunctions {
     @Bean
     public Function<BillDto,String> sendEmailConfirmBill(){
         return billDto->{
-          try {
-              log.debug("send email with billDto={}", billDto.toString());
-              String subject = "Hóa đơn đặt phòng";
-              String content = "<h3>Thông tin chi tiết về hóa đơn đặt phòng" +
-                      "<table border='1'>\n" +
-                      "    <thead>\n" +
-                      "      <tr>\n" +
-                      "        <th>Mã hóa đơn</th>\n" +
-                      "        <th>Họ tên</th>\n" +
-                      "        <th>Tên</th>\n" +
-                      "        <th>Email</th>\n" +
-                      "        <th>Số điện thoại</th>\n" +
-                      "        <th>Huyện</th>\n" +
-                      "        <th>Thành phố</th>\n" +
-                      "        <th>Quốc gia</th>\n" +
-                      "        <th>Địa chỉ chi tiết</th>\n" +
-                      "        <th>Tổng tiền</th>\n" +
-                      "      </tr>\n" +
-                      "    </thead>\n" +
-                      "    <tbody>\n" +
-                      "      <tr>\n" +
-                      "        <td>" + billDto.billCode() + "</td>\n" +
-                      "        <td>" + billDto.firstName() + "</td>\n" +
-                      "        <td>" + billDto.lastName() + "</td>\n" +
-                      "        <td>" + billDto.email() + "</td>\n" +
-                      "        <td>" + billDto.phoneNumber() + "</td>\n" +
-                      "        <td>" + billDto.district() + "</td>\n" +
-                      "        <td>" + billDto.city() + "</td>\n" +
-                      "        <td>" + billDto.country() + "</td>\n" +
-                      "        <td>" + billDto.addressDetail() + "</td>\n" +
-                      "        <td>" + billDto.originTotalPayment() + "</td>\n" +
-                      "        <tr>\n" +
-                      "  </table>";
-              mailSender.sendMail(billDto.email(),content,subject);
-              return "Gửi mail thành công";
-          }catch (Exception e){
-              log.debug("send email failed with {}", billDto.toString());
-              throw new RuntimeException(e);
-          }
+            try {
+                log.debug("send email with billDto={}", billDto.toString());
+                String subject = "Hóa đơn đặt phòng";
+                String content = "<h3>Thông tin chi tiết về hóa đơn đặt phòng" +
+                        "<table border='1'>\n" +
+                        "    <thead>\n" +
+                        "      <tr>\n" +
+                        "        <th>Mã hóa đơn</th>\n" +
+                        "        <th>Họ tên</th>\n" +
+                        "        <th>Tên</th>\n" +
+                        "        <th>Email</th>\n" +
+                        "        <th>Số điện thoại</th>\n" +
+                        "        <th>Huyện</th>\n" +
+                        "        <th>Thành phố</th>\n" +
+                        "        <th>Quốc gia</th>\n" +
+                        "        <th>Địa chỉ chi tiết</th>\n" +
+                        "        <th>Tổng tiền</th>\n" +
+                        "      </tr>\n" +
+                        "    </thead>\n" +
+                        "    <tbody>\n" +
+                        "      <tr>\n" +
+                        "        <td>" + billDto.billCode() + "</td>\n" +
+                        "        <td>" + billDto.firstName() + "</td>\n" +
+                        "        <td>" + billDto.lastName() + "</td>\n" +
+                        "        <td>" + billDto.email() + "</td>\n" +
+                        "        <td>" + billDto.phoneNumber() + "</td>\n" +
+                        "        <td>" + billDto.district() + "</td>\n" +
+                        "        <td>" + billDto.city() + "</td>\n" +
+                        "        <td>" + billDto.country() + "</td>\n" +
+                        "        <td>" + billDto.addressDetail() + "</td>\n" +
+                        "        <td>" + billDto.originTotalPayment() + "</td>\n" +
+                        "        <tr>\n" +
+                        "  </table>";
+                mailSender.sendMail(billDto.email(),content,subject);
+                return "Gửi mail thành công";
+            }catch (Exception e){
+                log.debug("send email failed with {}", billDto.toString());
+                throw new RuntimeException(e);
+            }
         };
     }
     @Bean
@@ -141,12 +138,27 @@ public class MessageFunctions {
                 log.debug("send otp ={}",otpDto);
                 String subject = "Thông tin mã xác nhận đặt phòng";
                 String content= "<span>Mã xác nhận OTP: </span>" +
-                       "<b>"+otp+"</b>"+
+                        "<b>"+otp+"</b>"+
                         "<p>Thời gian hết hạn: 10 phút</p>";
                 mailSender.sendMail(otpDto.getEmail(),content,subject);
                 return "Gửi mail thành công";
             }catch (Exception e){
                 log.debug("send email failed with {}", otpDto.toString());
+                throw new RuntimeException(e);
+            }
+        };
+    }
+    @Bean
+    public Function<ResetPasswordDto,String> sendEmailResetPassword(){
+        return resetPasswordDto->{
+            try {
+                log.debug("send email with email={}", resetPasswordDto.toString());
+                String subject = "Reset Password";
+                String content= "<p>Password: <b>"  + resetPasswordDto.getPassword() +"</b></p>";
+                mailSender.sendMail(resetPasswordDto.getEmail(),content,subject);
+                return "Gửi mail thành công";
+            }catch (Exception e){
+                log.debug("send email failed with {}", resetPasswordDto.toString());
                 throw new RuntimeException(e);
             }
         };

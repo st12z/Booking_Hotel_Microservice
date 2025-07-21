@@ -9,11 +9,21 @@ spring:
       timeout: 4s
   cloud:
     function:
-      definition: sendEmailCreateAccount; sendEmailConfirmBill ; sendEmailRefundBill ; sendOtpCheckBooking
+      definition: sendEmailCreateAccount; sendEmailConfirmBill ; sendEmailRefundBill ; sendOtpCheckBooking; sendEmailResetPassword
     stream:
       bindings:
         sendEmailCreateAccount-in-0:
           destination: send-communication
+          group: ${spring.application.name}
+          consumer:
+            max-attempts: 3 #
+            back-off-initial-interval: 2000 # đợi 2s retry lần đaầu
+            back-off-multiplier: 2.0 # x2 khi retry
+            default-retryable: true # retry tất cả lỗi
+            retryable-exceptions:
+              java.lang.RuntimeException: true
+        sendEmailResetPassword-in-0:
+          destination: send-resetpassword
           group: ${spring.application.name}
           consumer:
             max-attempts: 3 #

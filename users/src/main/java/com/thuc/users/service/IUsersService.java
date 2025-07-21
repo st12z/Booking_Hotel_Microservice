@@ -1,10 +1,13 @@
 package com.thuc.users.service;
 
+import com.thuc.users.dto.requestDto.FilterUserDto;
 import com.thuc.users.dto.requestDto.RoomChatsDto;
 import com.thuc.users.dto.requestDto.UserRequestDto;
+import com.thuc.users.dto.responseDto.PageResponseDto;
 import com.thuc.users.dto.responseDto.StatisticVisitByMonth;
 import com.thuc.users.dto.responseDto.UserDto;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -33,4 +36,12 @@ public interface IUsersService {
     List<StatisticVisitByMonth> getAmountVisitsByMonth(Integer month);
 
     List<UserDto> getAllUsersAdmin();
+
+    PageResponseDto<List<UserDto>> getAllUsersByPage(FilterUserDto filterDto) throws ParseException;
+
+    PageResponseDto<List<UserDto>> getSearchUsers(String keyword, Integer pageNo, Integer pageSize);
+
+    UserDto updateRolesByUser(Integer id, List<Integer> roleIds);
+
+    UserDto resetPassword(Integer id);
 }

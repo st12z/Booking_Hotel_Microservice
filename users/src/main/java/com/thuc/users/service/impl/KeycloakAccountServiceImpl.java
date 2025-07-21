@@ -5,9 +5,12 @@ import com.thuc.users.dto.requestDto.UserRequestDto;
 import com.thuc.users.entity.PermissionEntity;
 import com.thuc.users.entity.RoleEntity;
 import com.thuc.users.entity.UserEntity;
+import com.thuc.users.exception.ResourceNotFoundException;
+import com.thuc.users.repository.RoleRepository;
 import com.thuc.users.repository.UserRepository;
 import com.thuc.users.service.IKeycloakAccountService;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
@@ -32,6 +35,7 @@ import java.util.stream.Collectors;
 public class KeycloakAccountServiceImpl implements IKeycloakAccountService {
     private final Logger logger = LoggerFactory.getLogger(KeycloakAccountServiceImpl.class);
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     @Value("${keycloak-credential.auth-server-url}")
     private String authServerUrl;
 
@@ -53,7 +57,7 @@ public class KeycloakAccountServiceImpl implements IKeycloakAccountService {
                 .grantType(OAuth2Constants.CLIENT_CREDENTIALS)
                 .build();
     }
-    public void createUser(UserRequestDto user) {
+    public boolean createUser(UserRequestDto user) {
         try {
             logger.debug("Creating user in Keycloak: " + user.getEmail());
             Keycloak keycloak = getKeycloakInstance();
@@ -82,16 +86,17 @@ public class KeycloakAccountServiceImpl implements IKeycloakAccountService {
             if (response.getStatus() == 201) {
                 logger.debug("User created successfully");
 
-                String userId = response.getLocation().getPath().replaceAll(".*/([^/]+)$", "$1");
-                logger.debug("User created with id: " + userId);
+                String keycloakId = response.getLocation().getPath().replaceAll(".*/([^/]+)$", "$1");
+                logger.debug("User created with id: " + keycloakId);
                 UserEntity userEntity = userRepository.findByEmail(user.getEmail());
                 List<String> roles =userEntity.getRoles().stream().map(RoleEntity::getName).collect(Collectors.toList());
                 roles.addAll(userEntity.getRoles().stream().flatMap(role->role.getPermissions().stream()).map(PermissionEntity::getName).toList());
-                assignRoleToUser(keycloak, userId,roles);
-
+                assignRoleToUser(keycloak, keycloakId,roles);
+                return true;
             } else {
                 logger.error("User creation failed with status: " + response.getStatus());
                 logger.error("Response body: " + response.readEntity(String.class));
+                return false;
             }
         } catch (Exception e) {
             logger.error("Error creating user in Keycloak", e);
@@ -99,10 +104,77 @@ public class KeycloakAccountServiceImpl implements IKeycloakAccountService {
         }
     }
 
-    private void assignRoleToUser(Keycloak keycloak, String userId,List<String> roles) {
+    @Override
+    public void createRole(String name) {
+        try{
+            Keycloak keycloak = getKeycloakInstance();
+            List<String> roleNames = List.of(name);
+            createRoleIfNotExists(keycloak, roleNames);
+        }catch (Exception e){
+            throw new RuntimeException("Error create role in Keycloak: " + e.getMessage());
+        }
+    }
+    private String getKeycloakUserId(String email){
+        Keycloak keycloak = getKeycloakInstance();
+        List<UserRepresentation> users = keycloak.realm(realm)
+                .users()
+                .searchByUsername(email, true);
+        if(!users.isEmpty()){
+            UserRepresentation userRepresentation = users.get(0);
+            return userRepresentation.getId();
+        }
+        return null;
+    }
+    @Override
+    public boolean updateRoleByUser(UserEntity existUser, List<Integer> roleIds) {
+        try{
+            Keycloak keycloak = getKeycloakInstance();
+            List<String> roleNames = roleIds.stream().map(id->{
+                RoleEntity roleEntity = roleRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Role","id",String.valueOf(id)));
+                return roleEntity.getName();
+            }).toList();
+            String keycloakId = getKeycloakUserId(existUser.getEmail());
+            UserResource userResource = keycloak.realm(realm).users().get(keycloakId);
+            List<RoleRepresentation> currentRoles = userResource.roles().realmLevel().listAll();
+            if(!currentRoles.isEmpty()) {
+                userResource.roles().realmLevel().remove(currentRoles);
+            }
+            assignRoleToUser(keycloak, keycloakId, roleNames);
+            return true;
+        }catch (Exception e){
+            throw new RuntimeException("Error update role in Keycloak: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public boolean resetPassword(UserEntity user, String passwordRaw) {
+        try {
+            logger.debug("reset password user in Keycloak: " + user.getEmail());
+            Keycloak keycloak = getKeycloakInstance();
+            String keycloakId = getKeycloakUserId(user.getEmail());
+            CredentialRepresentation credentialRepresentation = new CredentialRepresentation();
+            credentialRepresentation.setType(CredentialRepresentation.PASSWORD);
+            credentialRepresentation.setValue(passwordRaw);
+            credentialRepresentation.setTemporary(false);
+            keycloak.realm(realm)
+                    .users()
+                    .get(keycloakId)
+                    .resetPassword(credentialRepresentation);
+            return true;
+
+        } catch (Exception e) {
+            logger.error("Error reset password user in Keycloak", e);
+            throw new RuntimeException("Error reset password user in Keycloak: " + e.getMessage());
+        }
+    }
+
+
+
+    // Gán role
+    private void assignRoleToUser(Keycloak keycloak, String keycloakId,List<String> roles) {
         try{
             List<RoleRepresentation> role= createRoleIfNotExists(keycloak, roles);
-            UserResource userResource = keycloak.realm(realm).users().get(userId);
+            UserResource userResource = keycloak.realm(realm).users().get(keycloakId);
             logger.debug("Assigning user to Keycloak: " + userResource);
             userResource.roles().realmLevel().add(role);
         }catch (Exception e){
@@ -111,6 +183,7 @@ public class KeycloakAccountServiceImpl implements IKeycloakAccountService {
 
     }
 
+    // Tạo List<Role> mới nếu không tồn tại
     private List<RoleRepresentation> createRoleIfNotExists(Keycloak keycloak, List<String> roles) {
         RolesResource rolesResource = keycloak.realm(realm).roles();
         List<RoleRepresentation> result = new ArrayList<>();

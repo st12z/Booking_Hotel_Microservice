@@ -27,4 +27,9 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 
     @Query(" SELECT u FROM UserEntity u WHERE EXISTS(SELECT r FROM u.roles r WHERE r.id<>:roleId) ")
     List<UserEntity> findByRolesNotContainUser(Integer roleId);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE UserEntity u SET u.password = :passwordEncode WHERE u.id = :id")
+    void updatePasswordById(@Param("id") Integer id, @Param("passwordEncode") String passwordEncode);
 }

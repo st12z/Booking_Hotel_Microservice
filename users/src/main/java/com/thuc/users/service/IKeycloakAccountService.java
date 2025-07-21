@@ -1,8 +1,17 @@
 package com.thuc.users.service;
 
 import com.thuc.users.dto.requestDto.UserRequestDto;
+import com.thuc.users.entity.UserEntity;
+import org.apache.catalina.User;
+
+import java.util.List;
 
 public interface IKeycloakAccountService {
-    public void createUser(UserRequestDto user) ;
+    public boolean createUser(UserRequestDto user) ;
 
+    void createRole(String name);
+
+    boolean updateRoleByUser(UserEntity existUser, List<Integer> roleIds);
+
+    boolean resetPassword(UserEntity user, String passwordRaw);
 }

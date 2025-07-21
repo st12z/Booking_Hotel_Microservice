@@ -1,12 +1,10 @@
 package com.thuc.users.controller;
 
 import com.thuc.users.constant.UsersConstant;
+import com.thuc.users.dto.requestDto.FilterUserDto;
 import com.thuc.users.dto.requestDto.RoomChatsDto;
 import com.thuc.users.dto.requestDto.UserRequestDto;
-import com.thuc.users.dto.responseDto.ErrorResponseDto;
-import com.thuc.users.dto.responseDto.StatisticVisitByMonth;
-import com.thuc.users.dto.responseDto.SuccessResponseDto;
-import com.thuc.users.dto.responseDto.UserDto;
+import com.thuc.users.dto.responseDto.*;
 import com.thuc.users.service.IUsersService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,6 +19,7 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
@@ -171,6 +170,50 @@ public class UsersController {
                 .code(UsersConstant.STATUS_200)
                 .message(UsersConstant.MESSAGE_200)
                 .data(usersService.getAllUsersAdmin())
+                .build();
+        return ResponseEntity.ok(response);
+    }
+    @PostMapping("/filter")
+    public ResponseEntity<SuccessResponseDto<PageResponseDto<List<UserDto>>>> filter(@RequestBody FilterUserDto filterDto) throws ParseException {
+        log.debug("filter user: {}", filterDto);
+        SuccessResponseDto<PageResponseDto<List<UserDto>>> response = SuccessResponseDto.<PageResponseDto<List<UserDto>>>builder()
+                .code(UsersConstant.STATUS_200)
+                .message(UsersConstant.MESSAGE_200)
+                .data(usersService.getAllUsersByPage(filterDto))
+                .build();
+        return ResponseEntity.ok(response);
+    }
+    @GetMapping("/search")
+    public ResponseEntity<SuccessResponseDto<PageResponseDto<List<UserDto>>>> search(
+            @RequestParam(defaultValue = "") String keyword,
+            @RequestParam(defaultValue = "1") Integer pageNo,
+            @RequestParam(defaultValue = "10") Integer pageSize
+    ){
+        log.debug("Searching for users with keyword: {}", keyword);
+        SuccessResponseDto<PageResponseDto<List<UserDto>>> response = SuccessResponseDto.<PageResponseDto<List<UserDto>>>builder()
+                .code(UsersConstant.STATUS_200)
+                .message(UsersConstant.MESSAGE_200)
+                .data(usersService.getSearchUsers(keyword,pageNo,pageSize))
+                .build();
+        return ResponseEntity.ok(response);
+    }
+    @PostMapping("/update-roles/{id}")
+    public ResponseEntity<SuccessResponseDto<UserDto>> updateRoles(@PathVariable Integer id,@RequestBody List<Integer> roleIds){
+        log.debug("Updating roles with request: {}", id);
+        SuccessResponseDto<UserDto> response = SuccessResponseDto.<UserDto>builder()
+                .code(UsersConstant.STATUS_200)
+                .message(UsersConstant.MESSAGE_200)
+                .data(usersService.updateRolesByUser(id,roleIds))
+                .build();
+        return ResponseEntity.ok(response);
+    }
+    @GetMapping("/reset-password/{id}")
+    public ResponseEntity<SuccessResponseDto<UserDto>> resetPassword(@PathVariable Integer id){
+        log.debug("Reset password with request: {}", id);
+        SuccessResponseDto<UserDto> response = SuccessResponseDto.<UserDto>builder()
+                .code(UsersConstant.STATUS_200)
+                .message(UsersConstant.MESSAGE_200)
+                .data(usersService.resetPassword(id))
                 .build();
         return ResponseEntity.ok(response);
     }
