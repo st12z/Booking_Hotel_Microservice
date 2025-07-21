@@ -6,6 +6,7 @@ import com.thuc.users.dto.requestDto.UserRequestDto;
 import com.thuc.users.dto.responseDto.PageResponseDto;
 import com.thuc.users.dto.responseDto.StatisticVisitByMonth;
 import com.thuc.users.dto.responseDto.UserDto;
+import jakarta.validation.Valid;
 
 import java.text.ParseException;
 import java.util.List;
@@ -44,4 +45,6 @@ public interface IUsersService {
     UserDto updateRolesByUser(Integer id, List<Integer> roleIds);
 
     UserDto resetPassword(Integer id);
+
+    UserDto createStaff(@Valid UserRequestDto user);
 }

@@ -9,6 +9,7 @@ import com.thuc.users.exception.ResourceNotFoundException;
 import com.thuc.users.repository.RoleRepository;
 import com.thuc.users.repository.UserRepository;
 import com.thuc.users.service.IKeycloakAccountService;
+import com.thuc.users.utils.RoleEnum;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.User;
 import org.keycloak.OAuth2Constants;
@@ -88,10 +89,9 @@ public class KeycloakAccountServiceImpl implements IKeycloakAccountService {
 
                 String keycloakId = response.getLocation().getPath().replaceAll(".*/([^/]+)$", "$1");
                 logger.debug("User created with id: " + keycloakId);
-                UserEntity userEntity = userRepository.findByEmail(user.getEmail());
-                List<String> roles =userEntity.getRoles().stream().map(RoleEntity::getName).collect(Collectors.toList());
-                roles.addAll(userEntity.getRoles().stream().flatMap(role->role.getPermissions().stream()).map(PermissionEntity::getName).toList());
-                assignRoleToUser(keycloak, keycloakId,roles);
+                RoleEntity roleUser = roleRepository.findByName(RoleEnum.USER.getValue());
+                List<String> roleNames = List.of(roleUser.getName());
+                assignRoleToUser(keycloak, keycloakId,roleNames);
                 return true;
             } else {
                 logger.error("User creation failed with status: " + response.getStatus());
@@ -103,7 +103,51 @@ public class KeycloakAccountServiceImpl implements IKeycloakAccountService {
             throw new RuntimeException("Error creating user in Keycloak: " + e.getMessage());
         }
     }
+    @Override
+    public boolean createStaff(UserRequestDto user,List<RoleEntity> roles ) {
+        try {
+            logger.debug("Creating user in Keycloak: " + user.getEmail());
+            Keycloak keycloak = getKeycloakInstance();
 
+            // Tạo user mới
+            UserRepresentation userRepresentation = new UserRepresentation();
+            userRepresentation.setFirstName(user.getFirstName());
+            userRepresentation.setLastName(user.getLastName());
+            userRepresentation.setEmail(user.getEmail());
+            userRepresentation.setEnabled(true);
+            userRepresentation.setEmailVerified(true);
+            userRepresentation.setUsername(user.getEmail());
+
+            // Thiết lập mật khẩu
+            CredentialRepresentation credentialRepresentation = new CredentialRepresentation();
+            credentialRepresentation.setType(CredentialRepresentation.PASSWORD);
+            credentialRepresentation.setValue(user.getPassword());
+            credentialRepresentation.setTemporary(false);
+            userRepresentation.setCredentials(Collections.singletonList(credentialRepresentation));
+
+            // Gửi yêu cầu tạo user
+            UsersResource usersResource = keycloak.realm(realm).users();
+            var response = usersResource.create(userRepresentation);
+            logger.debug("User created successfully with {}",response);
+            // Kiểm tra phản hồi từ Keycloak
+            if (response.getStatus() == 201) {
+                logger.debug("User created successfully");
+
+                String keycloakId = response.getLocation().getPath().replaceAll(".*/([^/]+)$", "$1");
+                logger.debug("User created with id: " + keycloakId);
+                List<String> roleNames = roles.stream().map(RoleEntity::getName).toList();
+                assignRoleToUser(keycloak, keycloakId,roleNames);
+                return true;
+            } else {
+                logger.error("User creation failed with status: " + response.getStatus());
+                logger.error("Response body: " + response.readEntity(String.class));
+                return false;
+            }
+        } catch (Exception e) {
+            logger.error("Error creating user in Keycloak", e);
+            throw new RuntimeException("Error creating user in Keycloak: " + e.getMessage());
+        }
+    }
     @Override
     public void createRole(String name) {
         try{
@@ -167,6 +211,7 @@ public class KeycloakAccountServiceImpl implements IKeycloakAccountService {
             throw new RuntimeException("Error reset password user in Keycloak: " + e.getMessage());
         }
     }
+
 
 
 

@@ -38,7 +38,8 @@ public class SecurityConfig {
                                         "/bookinghotel/rooms/api/roles/all/**",
                                         "/bookinghotel/rooms/api/roles/create/**",
                                         "/bookinghotel/users/api/users/update-roles/**",
-                                        "/bookinghotel/users/api/users/reset-password/**"
+                                        "/bookinghotel/users/api/users/reset-password/**",
+                                        "/bookinghotel/users/api/users/create-staff/**"
                                         ).hasAnyRole("ADMIN","MANAGER")
                                 .pathMatchers("/bookinghotel/bookings/api/bills/amount-bills-today",
                                         "/bookinghotel/bookings/api/bills/amount-bills-month",

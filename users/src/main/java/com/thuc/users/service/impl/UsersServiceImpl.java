@@ -58,25 +58,46 @@ public class UsersServiceImpl implements IUsersService {
     @Override
     public UserDto createUser(UserRequestDto user) {
         logger.debug("Creating a new user");
-        UserEntity userEntity = userRepository.findByEmail(user.getEmail());
-        if(userEntity != null) {
+        UserEntity existUser = userRepository.findByEmail(user.getEmail());
+        if(existUser != null) {
             throw new ResourceAlreadyException("User","email",user.getEmail());
         }
         boolean checked= keycloakAccountService.createUser(user);
         if(checked){
             RoleEntity roleUser = roleRepository.findByName(RoleEnum.USER.getValue());
-            userEntity = UsersConverter.toUserEntity(user);
+            UserEntity userEntity = UsersConverter.toUserEntity(user);
             userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
             userEntity.setRoles(List.of(roleUser));
             userEntity.setAvatar(user.getAvatar());
             UserEntity saveUser= userRepository.save(userEntity);
-
             sendCommunication(user);
             return UsersConverter.toUserDto(saveUser);
         }
         throw new RuntimeException("create user fail");
     }
+    @Override
+    public UserDto createStaff(UserRequestDto user) {
+        logger.debug("Creating a new staff");
+        UserEntity existUser = userRepository.findByEmail(user.getEmail());
+        if(existUser != null) {
+            throw new ResourceAlreadyException("User","email",user.getEmail());
+        }
+        List<RoleEntity> roles = user.getRoleIds().stream().map(id->{
+            return roleRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Role","id",String.valueOf(id)));
+        }).toList();
+        boolean checked= keycloakAccountService.createStaff(user,roles);
 
+        if(checked){
+            UserEntity userEntity = UsersConverter.toUserEntity(user);
+            userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
+            userEntity.setRoles(roles);
+            userEntity.setAvatar(user.getAvatar());
+            UserEntity saveUser= userRepository.save(userEntity);
+            sendCommunication(user);
+            return UsersConverter.toUserDto(saveUser);
+        }
+        throw new RuntimeException("create staff fail");
+    }
     private void sendCommunication(UserRequestDto user) {
         logger.debug("Sending communication with {}",user);
         var result = streamBridge.send("sendCommunication-out-0",user);
@@ -343,4 +364,6 @@ public class UsersServiceImpl implements IUsersService {
         }
         throw new RuntimeException("Reset Password Failed");
     }
+
+
 }

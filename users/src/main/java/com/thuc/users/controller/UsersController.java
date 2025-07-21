@@ -42,6 +42,16 @@ public class UsersController {
                 .build();
         return ResponseEntity.ok(response);
     }
+    @PostMapping("/create-staff")
+    public ResponseEntity<SuccessResponseDto<UserDto>> createStaff(@RequestBody @Valid UserRequestDto user) {
+        log.debug("Creating use with request: {}", user);
+        SuccessResponseDto<UserDto> response = SuccessResponseDto.<UserDto>builder()
+                .code(UsersConstant.STATUS_201)
+                .data(usersService.createStaff(user))
+                .message(UsersConstant.MESSAGE_201)
+                .build();
+        return ResponseEntity.ok(response);
+    }
     @GetMapping("/access-token")
     public ResponseEntity<?> getAccessToken(@RequestParam String code, HttpServletResponse response) {
         log.debug("authorization code received: {}", code);
