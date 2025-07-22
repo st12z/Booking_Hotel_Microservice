@@ -22,10 +22,13 @@ public class UsersApplication {
 
 		app.addInitializers(applicationContext -> {
 			try {
+//				Dotenv dotenv = Dotenv.configure()
+//						.directory(System.getProperty("user.dir")+"/users")
+//						.load();
 				Dotenv dotenv = Dotenv.configure()
-						.directory(System.getProperty("user.dir")+"/users")
+						.directory("/app")
+						.filename(".env")
 						.load();
-
 				Map<String, Object> dotenvMap = new HashMap<>();
 				dotenv.entries().forEach(entry -> dotenvMap.put(entry.getKey(), entry.getValue()));
 

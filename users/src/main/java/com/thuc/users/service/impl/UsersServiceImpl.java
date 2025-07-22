@@ -3,7 +3,7 @@ package com.thuc.users.service.impl;
 import com.thuc.users.converter.UsersConverter;
 import com.thuc.users.dto.requestDto.FilterUserDto;
 import com.thuc.users.dto.requestDto.ResetPasswordDto;
-import com.thuc.users.dto.requestDto.RoomChatsDto;
+import com.thuc.users.dto.requestDto.RoomChatRequestDto;
 import com.thuc.users.dto.requestDto.UserRequestDto;
 import com.thuc.users.dto.responseDto.PageResponseDto;
 import com.thuc.users.dto.responseDto.StatisticVisitByMonth;
@@ -51,7 +51,7 @@ public class UsersServiceImpl implements IUsersService {
     private final RoleRepository roleRepository;
     private final Logger logger = LoggerFactory.getLogger(UsersServiceImpl.class);
     private final StreamBridge streamBridge;
-    private final RoomChatsFeignClient  roomChatsFeignClient;
+    private final RoomChatsFeignClient roomChatsFeignClient;
     private final UserVisitRepository userVisitRepository;
     @PersistenceContext
     private EntityManager entityManager;
@@ -135,8 +135,8 @@ public class UsersServiceImpl implements IUsersService {
     }
 
     @Override
-    public RoomChatsDto createRoomChats(RoomChatsDto roomChats) {
-        SuccessResponseDto<RoomChatsDto> response = roomChatsFeignClient.createRoomChat(roomChats).getBody();
+    public RoomChatRequestDto createRoomChats(RoomChatRequestDto roomChats) {
+        SuccessResponseDto<RoomChatRequestDto> response = roomChatsFeignClient.createRoomChat(roomChats).getBody();
         return response.getData();
     }
 

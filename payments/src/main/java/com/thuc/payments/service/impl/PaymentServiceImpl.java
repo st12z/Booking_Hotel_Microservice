@@ -57,11 +57,19 @@ public class PaymentServiceImpl implements IPaymentService {
         return paymentTransactionRepository
                 .avgByUserIdAndVnpResponseCodeAndTransactionType(userId,"00",TransactionType.PAYMENT);
     }
-    private int getUserId(HttpServletRequest request){
-        String email =request.getHeader("X-User-Email");
-        SuccessResponseDto<UserDto> response = usersFeignClient.getUserInfo(email).getBody();
-        UserDto userDto = response.getData();
-        return userDto.getId();
+    private Integer getUserId(HttpServletRequest request){
+        try{
+            String email =request.getHeader("X-User-Email");
+            logger.debug("X-User-Email {}",email);
+            SuccessResponseDto<UserDto> response = usersFeignClient.getUserInfo(email).getBody();
+            logger.debug("userDto {}",response);
+            UserDto userDto = response.getData();
+            logger.debug("userDto {}",userDto.toString());
+            return userDto.getId();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
     public boolean checkAmountExceedAvg(HttpServletRequest request, BookingDto bookingDto){
         int userId = getUserId(request);

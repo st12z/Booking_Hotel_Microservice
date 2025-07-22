@@ -1,7 +1,7 @@
 package com.thuc.users.service;
 
 import com.thuc.users.dto.requestDto.FilterUserDto;
-import com.thuc.users.dto.requestDto.RoomChatsDto;
+import com.thuc.users.dto.requestDto.RoomChatRequestDto;
 import com.thuc.users.dto.requestDto.UserRequestDto;
 import com.thuc.users.dto.responseDto.PageResponseDto;
 import com.thuc.users.dto.responseDto.StatisticVisitByMonth;
@@ -26,7 +26,7 @@ public interface IUsersService {
 
     UserDto getInfoUserById(Integer id);
 
-    RoomChatsDto createRoomChats(RoomChatsDto roomChats);
+    RoomChatRequestDto createRoomChats(RoomChatRequestDto roomChats);
 
     int updateUserVisits(Integer userId);
 

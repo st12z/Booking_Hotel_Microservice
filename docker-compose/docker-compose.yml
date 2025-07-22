@@ -27,15 +27,25 @@ services:
     environment:
       SPRING_APPLICATION_NAME : bookings
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE}
-      SPRING_DATASOURCE_URL: ${DB_URL}
+      SPRING_DATASOURCE_UR: ${SPRING_DATASOURCE_URL}
       SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
       SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
-      SPRING_DATA_REDIS_HOST: ${SPRING_DATA_REDIS_HOST}
+
+      #REDIS
+      SPRING_DATA_REDIS_HOST: ${REDIS_HOST}
+      SPRING_DATA_REDIS_PORT: ${REDIS_PORT}
+
+      #RABBITMQ
       SPRING_RABBITMQ_HOST: ${SPRING_RABBITMQ_HOST}
       SPRING_RABBITMQ_PORT: ${SPRING_RABBITMQ_PORT}
       SPRING_RABBITMQ_USERNAME: ${SPRING_RABBITMQ_USERNAME}
       SPRING_RABBITMQ_PASSWORD: ${SPRING_RABBITMQ_PASSWORD}
+
+      #CLOUDINARY
+      CLOUDINARY_CLOUD_NAME: ${CLOUDINARY_CLOUD_NAME}
+      CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY}
+      CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET}
     healthcheck:
       test: "curl --fail --silent localhost:8081/actuator/health/readiness | grep UP || exit 1"
       interval: 20s
@@ -53,6 +63,8 @@ services:
         condition: service_healthy
     networks:
       - thuc-bookings
+    volumes:
+      - ../docker-compose/.env:/app/.env
     deploy:
       resources:
         limits:
@@ -70,6 +82,12 @@ services:
       MAIL_PORT: ${MAIL_PORT}
       MAIL_SMTP_AUTH: true
       MAIL_SMTP_STARTTLS_ENABLE: true
+
+      #REDIS
+      SPRING_DATA_REDIS_HOST: ${REDIS_HOST}
+      SPRING_DATA_REDIS_PORT: ${REDIS_PORT}
+
+      #RABBITMQ
       SPRING_RABBITMQ_HOST: ${SPRING_RABBITMQ_HOST}
       SPRING_RABBITMQ_PORT: ${SPRING_RABBITMQ_PORT}
       SPRING_RABBITMQ_USERNAME: ${SPRING_RABBITMQ_USERNAME}
@@ -87,6 +105,8 @@ services:
         condition: service_healthy
     networks:
       - thuc-bookings
+    volumes:
+      - ../docker-compose/.env:/app/.env
     deploy:
       resources:
         limits:
@@ -124,6 +144,8 @@ services:
 
     networks:
       - thuc-bookings
+    volumes:
+      - ../docker-compose/.env:/app/.env
     healthcheck:
       test: "curl --fail --silent localhost:8083/actuator/health/readiness | grep UP || exit 1"
       interval: 20s
@@ -141,6 +163,28 @@ services:
       resources:
         limits:
           memory: 700m
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.0.7
+    container_name: keycloak-ms
+    ports:
+      - "7080:8080"
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: ${KC_BOOTSTRAP_ADMIN_USERNAME}
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KC_BOOTSTRAP_ADMIN_PASSWORD}
+    command:
+      - start-dev
+    networks:
+      - thuc-bookings
+    healthcheck:
+      test: [
+        "CMD-SHELL",
+        "exec 3<>/dev/tcp/localhost/8080 && echo -e 'GET /realms/master/.well-known/openid-configuration HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\n' >&3 && cat <&3 | grep -q '200 OK'"
+      ]
+      interval: 30s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - keycloakdata:/opt/keycloak/data
   rooms:
     image: thucng04/rooms:s1
     container_name: rooms-ms
@@ -149,18 +193,33 @@ services:
     environment:
       SPRING_APPLICATION_NAME: rooms
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE}
+
+      #CLOUDINARY
       CLOUDINARY_CLOUD_NAME: ${CLOUDINARY_CLOUD_NAME}
       CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY}
       CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET}
+
+      #DATABASE
       SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
       SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
       SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
-      SPRING_DATA_REDIS_HOST: ${SPRING_DATA_REDIS_HOST}
+
+      #REDIS
+      SPRING_DATA_REDIS_HOST: ${REDIS_HOST}
+      SPRING_DATA_REDIS_PORT: ${REDIS_PORT}
+
+      #RABBITMQ
       SPRING_RABBITMQ_HOST: ${SPRING_RABBITMQ_HOST}
       SPRING_RABBITMQ_PORT: ${SPRING_RABBITMQ_PORT}
       SPRING_RABBITMQ_USERNAME: ${SPRING_RABBITMQ_USERNAME}
       SPRING_RABBITMQ_PASSWORD: ${SPRING_RABBITMQ_PASSWORD}
+
+
+      #URL_FRONTEND
+      URL_FRONTEND: ${URL_FRONTEND}
+      #URL_FRONTEND_DOCKER
+      URL_FRONTEND_DOCKER: ${URL_FRONTEND_DOCKER}
     healthcheck:
       test: "curl --fail --silent localhost:8080/actuator/health/readiness | grep UP || exit 1"
       interval: 20s
@@ -169,6 +228,8 @@ services:
       start_period: 10s
     networks:
       - thuc-bookings
+    volumes:
+      - ../docker-compose/.env:/app/.env
     depends_on:
       rabbitmq:
         condition: service_healthy
@@ -177,6 +238,8 @@ services:
       redis:
         condition: service_healthy
       eurekaserver:
+        condition: service_healthy
+      keycloak:
         condition: service_healthy
     deploy:
       resources:
@@ -221,7 +284,8 @@ services:
 
     networks:
       - thuc-bookings
-
+    volumes:
+      - ../docker-compose/.env:/app/.env
     healthcheck:
       test: "curl --fail --silent localhost:8082/actuator/health/readiness | grep UP || exit 1"
       interval: 20s
@@ -251,10 +315,12 @@ services:
       - "8072:8072"
     environment:
       SPRING_APPLICATION_NAME: gatewayserver
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: ${}
-      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI: ${}
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE}
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI: ${SECURITY_OAUTH2_RESOURCESERVER_JWT_SET_URI}
     networks:
       - thuc-bookings
+    volumes:
+      - ../docker-compose/.env:/app/.env
     depends_on:
       eurekaserver:
         condition: service_healthy
@@ -326,29 +392,7 @@ services:
     networks:
       - thuc-bookings
 
-  keycloak:
-    image: quay.io/keycloak/keycloak:26.0.7
-    container_name: keycloak-ms
-    ports:
-      - "7080:8080"
-    environment:
-      KC_BOOTSTRAP_ADMIN_USERNAME: ${KC_BOOTSTRAP_ADMIN_USERNAME}
-      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KC_BOOTSTRAP_ADMIN_PASSWORD}
-      KC_HEALTH_ENABLED: "true"
-    command:
-      - start-dev
-    networks:
-      - thuc-bookings
-    healthcheck:
-      test: [
-        "CMD-SHELL",
-        "exec 3<>/dev/tcp/localhost/9000 && echo -e 'GET /health/ready HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\n' >&3 && cat <&3 | grep -q '200 OK'"
-      ]
-      interval: 30s
-      timeout: 5s
-      retries: 20
-    volumes:
-      - keycloakdata:/opt/keycloak/data
+
 
 
 networks:

@@ -28,7 +28,7 @@ public class PropertyConverter {
                 .images(property.getPropertyImages().stream().map(PropertyImages::getImage).toList())
                 .latitude(property.getLatitude())
                 .longitude(property.getLongitude())
-                .ratingStar(ratingDto.getRatingStar())
+                .ratingStar(property.getRatingStar())
                 .distanceFromCenter(property.getDistanceFromCenter())
                 .distanceFromTrip(property.getDistanceFromTrip())
                 .slug(property.getSlug())

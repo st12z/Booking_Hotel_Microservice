@@ -24,13 +24,8 @@ public class MessagesController {
     private final UsersFeignClient usersFeignClient;
     @MessageMapping("/sendMessage/{roomChatId}")
     @SendTo("/topic/rooms/{roomChatId}")
-    public ChatResponseDto sendMessage(@DestinationVariable Integer roomChatId, @Payload ChatResponseDto chatRequest, Principal principal) {
+    public ChatResponseDto sendMessage(@DestinationVariable Integer roomChatId, @Payload ChatResponseDto chatRequest) {
         try{
-            log.debug("email: {}", principal.getName());
-            SuccessResponseDto<UserDto> responseUser = usersFeignClient.getUserInfo(principal.getName()).getBody();
-            UserDto userDto = responseUser.getData();
-            int userId = userDto.getId();
-            chatRequest.setUserSend(userId);
             ChatResponseDto responseDto = chatService.createMessage(chatRequest);
             return responseDto;
         }catch (Exception e){

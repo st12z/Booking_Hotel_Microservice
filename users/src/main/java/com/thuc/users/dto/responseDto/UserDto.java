@@ -1,7 +1,5 @@
 package com.thuc.users.dto.responseDto;
 
-import com.thuc.users.utils.RoleEnum;
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

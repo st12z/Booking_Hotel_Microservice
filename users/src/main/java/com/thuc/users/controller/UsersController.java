@@ -2,7 +2,7 @@ package com.thuc.users.controller;
 
 import com.thuc.users.constant.UsersConstant;
 import com.thuc.users.dto.requestDto.FilterUserDto;
-import com.thuc.users.dto.requestDto.RoomChatsDto;
+import com.thuc.users.dto.requestDto.RoomChatRequestDto;
 import com.thuc.users.dto.requestDto.UserRequestDto;
 import com.thuc.users.dto.responseDto.*;
 import com.thuc.users.service.IUsersService;
@@ -13,15 +13,11 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
-import java.time.Duration;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -106,10 +102,12 @@ public class UsersController {
     @GetMapping("/info-user")
     public ResponseEntity<SuccessResponseDto<UserDto>> getUserInfo(@RequestHeader("X-User-Email") String email) {
         log.debug("Getting user info");
+        UserDto userDto = usersService.getUserByEmail(email);
+        log.debug("userDto: {}", userDto.toString());
         SuccessResponseDto<UserDto> success = SuccessResponseDto.<UserDto>builder()
                 .message(UsersConstant.MESSAGE_200)
                 .code(UsersConstant.STATUS_200)
-                .data(usersService.getUserByEmail(email)).build();
+                .data(userDto).build();
         return ResponseEntity.ok(success);
     }
     @GetMapping("/get-user/{id}")
@@ -124,9 +122,9 @@ public class UsersController {
         return ResponseEntity.ok(response);
     }
     @PostMapping("/create-rooms")
-    public ResponseEntity<SuccessResponseDto<RoomChatsDto>> createRoomChats(@RequestBody  RoomChatsDto roomChats) {
+    public ResponseEntity<SuccessResponseDto<RoomChatRequestDto>> createRoomChats(@RequestBody RoomChatRequestDto roomChats) {
         log.debug("Creating room chats with request: {}", roomChats);
-        SuccessResponseDto<RoomChatsDto> response = SuccessResponseDto.<RoomChatsDto>builder()
+        SuccessResponseDto<RoomChatRequestDto> response = SuccessResponseDto.<RoomChatRequestDto>builder()
                 .code(UsersConstant.STATUS_200)
                 .message(UsersConstant.MESSAGE_200)
                 .data(usersService.createRoomChats(roomChats))

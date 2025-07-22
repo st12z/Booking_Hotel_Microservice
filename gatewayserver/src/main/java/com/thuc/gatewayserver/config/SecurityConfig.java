@@ -25,7 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
-    @Value("${url_frontend}")
+    @Value("${URL_FRONTEND}")
     private String urlFrontEnd;
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {

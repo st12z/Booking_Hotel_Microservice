@@ -16,8 +16,8 @@ spring:
         format_sql: true
   data:
     redis:
-      port: ${REDIS_PORT}
-      host: ${REDIS_HOST}
+      port: ${SPRING_DATA_REDIS_PORT}
+      host: ${SPRING_DATA_REDIS_HOST}
       connect-timeout: 2s
       timeout: 5s
   cloud:

@@ -14,6 +14,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -33,6 +35,7 @@ public class RoomChatServiceImpl implements IRoomChatService {
     private final RoomChatsRepository roomChatsRepository;
     private final UsersFeignClient usersFeignClient;
     private final RolesFeignClient rolesFeignClient;
+    private final Logger logger =  LoggerFactory.getLogger(this.getClass());
     @PersistenceContext
     private EntityManager entityManager;
     @Override
@@ -54,6 +57,7 @@ public class RoomChatServiceImpl implements IRoomChatService {
     public RoomChatsDto createRoomChats(RoomChatRequestDto roomChatsDto) {
         SuccessResponseDto<List<RoleDto>> responseRole = rolesFeignClient.getAllRoles().getBody();
         List<RoleDto> roleDtos = responseRole.getData();
+        logger.debug("roleDtos {}",roleDtos);
         Integer roleId = roleDtos.stream().filter(roleDto -> roleDto.getName().equals("USER")).findFirst().get().getId();
         RoomChats existRoomChats = roomChatsRepository.findByUserAId(roomChatsDto.getUserAId());
         if(existRoomChats != null) {
@@ -76,6 +80,7 @@ public class RoomChatServiceImpl implements IRoomChatService {
                 .userBId(roleIds.get(randomIndex))
                 .build();
         RoomChats savedRoomChats = roomChatsRepository.save(roomChats);
+        logger.debug("savedRoomChats {}",savedRoomChats);
         return RoomChatsConverter.toRoomChatsDto(savedRoomChats);
     }
 
