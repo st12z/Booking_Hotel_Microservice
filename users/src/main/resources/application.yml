@@ -2,9 +2,9 @@ spring:
   application:
     name:   users
   datasource:
-    url: jdbc:postgresql://localhost:5432/booking-hotel
-    username: postgres
-    password: Anhthucdz1234!
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: org.postgresql.Driver
     hikari:
       # Cấu hình tối ưu cho Connection Pool
@@ -42,10 +42,11 @@ spring:
               java.lang.RuntimeException: true
 
   rabbitmq:
-    port: 5672
-    host: localhost
-    username: guest
-    password: guest
+    username: ${SPRING_RABBITMQ_USERNAME}
+    password: ${SPRING_RABBITMQ_PASSWORD}
+    host: ${SPRING_RABBITMQ_HOST}
+    connection-timeout: 5s
+    port: ${SPRING_RABBITMQ_PORT}
 server:
   port: 8082
 eureka:

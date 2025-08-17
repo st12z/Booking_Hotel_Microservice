@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,8 @@ public class PaymentControllers {
     private final StreamBridge streamBridge;
     private final IPaymentTransactionService paymentTransactionService;
     private final IRedisPrimitive redisPrimitive;
+    @Value("${payment.vnpay.vnp_ReturnUrl}")
+    private String vnpayReturnUrl;
     @PostMapping("/check-booking")
     public ResponseEntity<SuccessResponseDto<CheckBookingDto>> checkBooking(HttpServletRequest request
             , @RequestBody BookingDto bookingDto)  {
@@ -73,7 +76,7 @@ public class PaymentControllers {
             var result = streamBridge.send("sendPayment-out-0",request.getParameter("vnp_TxnRef"));
             log.debug("Receive payment callback :{}",result);
         }
-        response.sendRedirect("http://localhost:3000/payments?status=" + status + "&billCode=" + billCode);
+        response.sendRedirect(vnpayReturnUrl+"?status=" + status + "&billCode=" + billCode);
 
     }
     @GetMapping("/refund/{billCode}")

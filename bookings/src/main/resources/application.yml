@@ -14,6 +14,8 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        jdbc:
+          time_zone: Asia/Ho_Chi_Minh
   data:
     redis:
       port: ${SPRING_DATA_REDIS_PORT}
@@ -38,10 +40,10 @@ spring:
         sendPayment-out-0:
           destination: send-confirm-bill
   rabbitmq:
-    port: ${RABBITMQ_PORT}
-    host: ${RABBITMQ_HOST}
-    username: ${RABBITMQ_USERNAME}
-    password: ${RABBITMQ_PASSWORD}
+    port: ${SPRING_RABBITMQ_PORT}
+    host: ${SPRING_RABBITMQ_HOST}
+    username: ${SPRING_RABBITMQ_USERNAME}
+    password: ${SPRING_RABBITMQ_PASSWORD}
 management:
   endpoints:
     web:

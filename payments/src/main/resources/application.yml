@@ -48,15 +48,15 @@ spring:
         sendOtpCheckBooking-out-0:
           destination: send-otp
   rabbitmq:
-    username: ${RABBITMQ_USERNAME}
-    password: ${RABBITMQ_PASSWORD}
-    host: ${RABBITMQ_HOST}
+    username: ${SPRING_RABBITMQ_USERNAME}
+    password: ${SPRING_RABBITMQ_PASSWORD}
+    host: ${SPRING_RABBITMQ_HOST}
     connection-timeout: 5s
-    port: ${RABBITMQ_PORT}
+    port: ${SPRING_RABBITMQ_PORT}
   data:
     redis:
-      host: ${REDIS_HOST}
-      port: ${REDIS_PORT}
+      host: ${SPRING_DATA_REDIS_HOST}
+      port: ${SPRING_DATA_REDIS_PORT}
       connect-timeout: 2s
       timeout: 4s
 eureka:
