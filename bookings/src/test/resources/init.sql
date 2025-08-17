@@ -15,7 +15,7 @@ SET row_security = off;
 --
 
 CREATE EXTENSION IF NOT EXISTS postgis WITH SCHEMA public;
-
+SET search_path TO public, postgis;
 
 --
 -- TOC entry 6190 (class 0 OID 0)
@@ -2454,6 +2454,8 @@ ALTER TABLE ONLY public.vehicles
 -- Name: bill bill_property_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
+ALTER TABLE ONLY public.bill
+    ADD CONSTRAINT bill_property_id_fkey FOREIGN KEY (property_id) REFERENCES public.properties(id);
 
 
 --
@@ -2686,3 +2688,98 @@ ALTER TABLE ONLY public.user_roles
 --
 -- PostgreSQL database dump complete
 --
+INSERT INTO public.cities (
+    id,
+    name,
+    image,
+    created_at,
+    created_by,
+    updated_at,
+    updated_by,
+    slug,
+    latitude_center,
+    longitude_center,
+    geog
+) VALUES (
+             1,
+             'Another City',
+             'another-city.jpg',
+             CURRENT_TIMESTAMP,
+             'admin',
+             CURRENT_TIMESTAMP,
+             'admin',
+             'another-city',
+             15.584105,   -- ví dụ latitude của một thành phố khác
+             108.455243,  -- ví dụ longitude của một thành phố khác
+             ST_GeogFromText('SRID=4326;POINT(108.455243 15.584105)')  -- tạo geography point
+         );
+
+INSERT INTO public.properties (
+    id,
+    name,
+    city_id,
+    property_type,
+    rating_star,
+    address,
+    latitude,
+    longitude,
+    overview,
+    avg_review_score,
+    created_at,
+    updated_at,
+    created_by,
+    updated_by,
+    slug,
+    geog,
+    distance_from_center,
+    distance_from_trip
+) VALUES (
+             1,
+             'Downtown Apartment',
+             1,
+             'Apartment',
+             4,
+             '456 Center Street, Hometown',
+             10.772622,
+             106.670172,
+             'A modern apartment in the city center',
+             4.5,
+             CURRENT_TIMESTAMP,
+             CURRENT_TIMESTAMP,
+             'testuser',
+             'testuser',
+             'downtown-apartment',
+             ST_GeogFromText('SRID=4326;POINT(106.670172 10.772622)'),
+             1.0,
+             0.5
+         );
+
+INSERT INTO public.room_type (
+    id,
+    property_id,
+    name,
+    price,
+    max_guests,
+    num_beds,
+    created_at,
+    area,
+    discount,
+    created_by,
+    updated_at,
+    updated_by,
+    status
+) VALUES (
+             1,
+             1,
+             'Standard Room',
+             80,
+             1,
+             1,
+             CURRENT_TIMESTAMP,
+             25,
+             5,
+             'testuser',
+             CURRENT_TIMESTAMP,
+             'testuser',
+             true
+         );

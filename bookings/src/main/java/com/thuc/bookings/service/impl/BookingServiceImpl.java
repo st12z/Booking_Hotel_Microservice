@@ -22,6 +22,7 @@ import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.ResponseEntity;
@@ -33,20 +34,44 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class BookingServiceImpl implements IBookingService {
-    private final RoomTypesFeignClient roomsFeignClient;
-    private final UsersFeignClient usersFeignClient;
-    private final PaymentsFeignClient paymentsFeignClient;
-    private final BookingCarsRepository bookingCarsRepository;
-    private final BookingRoomsRepository bookingRoomsRepository;
-    private final BillRepository billRepository;
-    private final Logger log = LoggerFactory.getLogger(BookingServiceImpl.class);
-    private final IRedisVehicleService redisVehicleService;
-    private final VehiclesRepository vehiclesRepository;
-    private final RedisTemplate<String,Object> redisTemplate;
-    private final IRedisBookingService redisBookingService;
-    private final StreamBridge streamBridge;
+    private final   Logger log = LoggerFactory.getLogger(BookingServiceImpl.class);
+
+
+    @Autowired
+    private RoomTypesFeignClient roomsFeignClient;
+
+    @Autowired
+    private UsersFeignClient usersFeignClient;
+
+    @Autowired
+    private PaymentsFeignClient paymentsFeignClient;
+
+    @Autowired
+    private BookingCarsRepository bookingCarsRepository;
+
+    @Autowired
+    private BookingRoomsRepository bookingRoomsRepository;
+
+    @Autowired
+    private BillRepository billRepository;
+
+    @Autowired
+    private IRedisVehicleService redisVehicleService;
+
+    @Autowired
+    private VehiclesRepository vehiclesRepository;
+
+    @Autowired
+    private RedisTemplate<String,Object> redisTemplate;
+
+    @Autowired
+    private IRedisBookingService redisBookingService;
+
+    @Autowired
+    private StreamBridge streamBridge;
+
+    @Autowired
     @PersistenceContext
     private EntityManager entityManager;
 
