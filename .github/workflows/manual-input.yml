@@ -1,0 +1,33 @@
+name: Test Manual Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Chọn mức log'
+        required: true
+        default: 'warning'
+        type: choice
+        options:
+          - info
+          - warning
+          - debug
+      print_tags:
+        description: 'In tags ra console?'
+        required: true
+        type: boolean
+      tags:
+        description: 'Nhập tags test'
+        required: true
+        type: string
+
+jobs:
+  print-tags-job:
+    runs-on: ubuntu-latest
+    if: ${{ inputs.print_tags }}
+    steps:
+      - name: Show inputs
+        run: |
+          echo "Log Level: ${{ inputs.logLevel }}"
+          echo "Tags: ${{ inputs.tags }}"
+          echo "Print Tags: ${{ inputs.print_tags }}"
