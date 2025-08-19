@@ -6,9 +6,8 @@ on:
       - main
       - feature/**
   pull_request:
-    branches:
+    branches-ignore:
       - main
-      - feature/**
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
