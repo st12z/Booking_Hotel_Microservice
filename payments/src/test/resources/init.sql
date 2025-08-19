@@ -544,6 +544,50 @@ ALTER SEQUENCE public.discount_id_seq OWNER TO postgres;
 ALTER SEQUENCE public.discount_id_seq OWNED BY public.discount.id;
 
 
+--
+-- TOC entry 254 (class 1259 OID 37516)
+-- Name: drivers; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.drivers (
+                                id integer NOT NULL,
+                                name character varying(255),
+                                phone_number character varying(255),
+                                vehicle_id integer,
+                                status character varying(255),
+                                created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+                                updated_at timestamp without time zone,
+                                updated_by character varying(255),
+                                created_by character varying(255)
+);
+
+
+ALTER TABLE public.drivers OWNER TO postgres;
+
+--
+-- TOC entry 253 (class 1259 OID 37515)
+-- Name: drivers_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.drivers_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.drivers_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 6199 (class 0 OID 0)
+-- Dependencies: 253
+-- Name: drivers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.drivers_id_seq OWNED BY public.drivers.id;
+
 
 --
 -- TOC entry 275 (class 1259 OID 45698)
@@ -1549,6 +1593,7 @@ CREATE TABLE public.vehicles (
                                  updated_at timestamp without time zone,
                                  updated_by character varying(255),
                                  created_by character varying(255),
+                                 driver_id integer,
                                  status character varying(255),
                                  quantity integer,
                                  star integer,
@@ -1644,6 +1689,7 @@ ALTER TABLE ONLY public.discount_cars ALTER COLUMN id SET DEFAULT nextval('publi
 -- Name: drivers id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
+ALTER TABLE ONLY public.drivers ALTER COLUMN id SET DEFAULT nextval('public.drivers_id_seq'::regclass);
 
 
 --
@@ -1860,6 +1906,7 @@ SELECT pg_catalog.setval('public.discount_id_seq', 12, true);
 -- Name: drivers_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
+SELECT pg_catalog.setval('public.drivers_id_seq', 10, true);
 
 
 --
@@ -2155,7 +2202,8 @@ ALTER TABLE ONLY public.discount
 -- Name: drivers drivers_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-
+ALTER TABLE ONLY public.drivers
+    ADD CONSTRAINT drivers_pkey PRIMARY KEY (id);
 
 
 --
@@ -2343,7 +2391,8 @@ ALTER TABLE ONLY public.trip
 -- Name: vehicles ukstdy3n8bjv14qchxmw9u8vluq; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-
+ALTER TABLE ONLY public.vehicles
+    ADD CONSTRAINT ukstdy3n8bjv14qchxmw9u8vluq UNIQUE (driver_id);
 
 
 --
@@ -2450,6 +2499,9 @@ ALTER TABLE ONLY public.booking_rooms
 -- Name: drivers drivers_vehicle_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
+ALTER TABLE ONLY public.drivers
+    ADD CONSTRAINT drivers_vehicle_id_fkey FOREIGN KEY (vehicle_id) REFERENCES public.vehicles(id);
+
 
 --
 -- TOC entry 5965 (class 2606 OID 45897)
@@ -2501,7 +2553,8 @@ ALTER TABLE ONLY public.reviews
 -- Name: vehicles fkaashphrwfd4ts511y8vj785ia; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-
+ALTER TABLE ONLY public.vehicles
+    ADD CONSTRAINT fkaashphrwfd4ts511y8vj785ia FOREIGN KEY (driver_id) REFERENCES public.drivers(id);
 
 
 --
@@ -2729,62 +2782,4 @@ INSERT INTO public.room_type (
              CURRENT_TIMESTAMP,
              'testuser',
              true
-         );
-INSERT INTO public.vehicles (
-    id,
-    license_plate,
-    car_type,
-    images,
-    latitude,
-    longitude,
-    discount,
-    price,
-    created_at,
-    updated_at,
-    updated_by,
-    created_by,
-    status,
-    quantity,
-    star
-) VALUES (
-             1,                     -- id
-             '51A-12345',           -- license_plate
-             'Sedan',               -- car_type
-             '["car1.jpg","car2.jpg"]', -- images (JSON text)
-             10.762622,             -- latitude
-             106.660172,            -- longitude
-             0,                     -- discount
-             500000,                -- price
-             CURRENT_TIMESTAMP,     -- created_at
-             CURRENT_TIMESTAMP,     -- updated_at
-             'admin',               -- updated_by
-             'admin',               -- created_by
-             'AVAILABLE',           -- status (phải là AVAILABLE, BUSY, INACTIVE)
-             5,                     -- quantity
-             5                      -- star
-         );
-INSERT INTO public.rooms (
-    id,
-    room_number,
-    status,
-    property_id,
-    room_type_id,
-    created_at,
-    created_by,
-    updated_at,
-    updated_by,
-    check_in,
-    check_out
-) VALUES (
-             1,                  -- id
-             101,                -- room_number
-             'available',        -- status
-             1,                  -- property_id
-             1,                  -- room_type_id
-             CURRENT_TIMESTAMP,  -- created_at
-             'admin',            -- created_by
-             CURRENT_TIMESTAMP,  -- updated_at
-             'admin',            -- updated_by
-             NULL,               -- check_in (chưa có khách)
-             NULL                -- check_out (chưa có khách)
          );

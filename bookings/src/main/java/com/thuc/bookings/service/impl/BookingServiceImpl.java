@@ -37,7 +37,6 @@ import java.util.stream.Collectors;
 public class BookingServiceImpl implements IBookingService {
     private final   Logger log = LoggerFactory.getLogger(BookingServiceImpl.class);
 
-
     @Autowired
     private RoomTypesFeignClient roomsFeignClient;
 

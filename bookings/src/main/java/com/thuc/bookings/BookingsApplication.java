@@ -14,7 +14,6 @@ import java.util.Map;
 
 @SpringBootApplication
 @EnableFeignClients
-@EnableJpaAuditing
 public class BookingsApplication {
 
 	public static void main(String[] args) {

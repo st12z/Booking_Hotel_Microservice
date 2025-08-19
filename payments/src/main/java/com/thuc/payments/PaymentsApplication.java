@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @SpringBootApplication
-@EnableJpaAuditing(auditorAwareRef = "auditorAwareImpl")
 @EnableFeignClients
 public class PaymentsApplication {
 

@@ -10,6 +10,7 @@ import com.thuc.bookings.service.IBillService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,10 +20,10 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/bills")
-@RequiredArgsConstructor
 public class BillControllers {
     private final Logger log = LoggerFactory.getLogger(BillControllers.class);
-    private final IBillService billService;
+    @Autowired
+    private IBillService billService;
     @GetMapping("")
     public ResponseEntity<SuccessResponseDto<PageResponseDto<List<BillDto>>>> getMyBills(@RequestHeader("X-User-Email") String email,
                                                                                          @RequestParam(defaultValue = "") String keyword,
