@@ -56,7 +56,7 @@ Hệ thống gồm **7 service** chính:
 
 ## Các tính năng nổi bật
 
-### 🛏 Tìm kiếm & Lọc thông minh
+### Tìm kiếm & Lọc thông minh
 - API tìm kiếm và lọc theo:
   - Tên phòng, loại phòng, giá, địa điểm
   - Điểm đến (`destination`), chuyến đi (`trip`)
