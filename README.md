@@ -1,6 +1,6 @@
-# 🏨 Booking Hotel Microservice System
+# Booking Hotel Microservice System
 
-## 📌 Giới thiệu
+## Giới thiệu
 
 **Booking Hotel** là một hệ thống đặt phòng khách sạn hiện đại, được xây dựng theo kiến trúc **Microservice** với mục tiêu:
 
@@ -11,7 +11,7 @@
 
 ---
 
-## 🧱 Kiến trúc tổng quan
+## Kiến trúc tổng quan
 
 Hệ thống gồm **7 service** chính:
 
@@ -27,7 +27,7 @@ Hệ thống gồm **7 service** chính:
 
 ---
 
-## 🔐 Xác thực và Phân quyền (RBAC)
+## Xác thực và Phân quyền (RBAC)
 
 - Sử dụng **Keycloak** làm **Authorization Server**
 - Phân quyền người dùng dựa trên **Role** (RBAC)
@@ -36,7 +36,7 @@ Hệ thống gồm **7 service** chính:
 
 ---
 
-## 🔧 Công nghệ sử dụng
+## Công nghệ sử dụng
 
 | Công nghệ      | Mục đích                                                                 |
 |----------------|--------------------------------------------------------------------------|
@@ -54,7 +54,7 @@ Hệ thống gồm **7 service** chính:
 
 ---
 
-## 🌟 Các tính năng nổi bật
+## Các tính năng nổi bật
 
 ### 🛏 Tìm kiếm & Lọc thông minh
 - API tìm kiếm và lọc theo:
@@ -62,20 +62,20 @@ Hệ thống gồm **7 service** chính:
   - Điểm đến (`destination`), chuyến đi (`trip`)
   - Các thuộc tính (`property`) của khách sạn
 
-### 💬 Hệ thống đánh giá & nhận xét
+### Hệ thống đánh giá & nhận xét
 - Người dùng sau khi hoàn thành đặt phòng có thể:
   - **Gửi đánh giá (rating)** theo thang điểm (1-5)
   - **Bình luận (comment)** nội dung trải nghiệm
 - Trung bình đánh giá được tính động trên từng phòng & hiển thị
 
-### 📈 Thống kê & Quản lý
+### Thống kê & Quản lý
 - Trang quản trị có thể:
   - Thống kê doanh thu, số lượng đặt phòng
   - Quản lý danh sách người dùng, quyền hạn
   - Thêm/sửa/xóa vai trò và phân quyền tương ứng
   - Xuất dữ liệu ra Excel (phòng, booking, người dùng, đánh giá...)
 
-### 💳 Thanh toán & Gian lận
+### Thanh toán & Gian lận
 - Tích hợp cổng **VNPAY**
 - Cơ chế bảo vệ:
   - Thanh toán vượt ngưỡng → yêu cầu **OTP**
@@ -84,29 +84,14 @@ Hệ thống gồm **7 service** chính:
   - Thành công, thất bại, hoàn tiền
   - Cập nhật đơn hàng, thông báo người dùng
 
-### 🔒 Xử lý đồng thời
+### Xử lý đồng thời
 - **Redis + Redisson** đảm bảo:
   - Tránh tình trạng giữ cùng 1 phòng cho nhiều người
   - Đặt phiếu giảm giá đồng thời không bị lỗi race condition
 
-### 🔔 Realtime thông báo
+### Realtime thông báo
 - Dùng **Spring WebSocket** để:
   - Gửi thông báo trạng thái thanh toán
   - Gửi tin nhắn chat giữa người dùng và quản lý
   - Cập nhật hóa đơn, số tiền, điểm thưởng realtime
-## 🚀 Triển khai (Deployment)
-
-Hệ thống đã được **deploy hoàn chỉnh lên Render.com**, bao gồm:
-
-| Service         | Trạng thái         | Ghi chú                                      |
-|------------------|---------------------|-----------------------------------------------|
-| `eurekaserver`   | ✅ Đã deploy        | Service Discovery                            |
-| `gatewayserver`  | ✅ Đã deploy        | API Gateway                                 |
-| `users`          | ✅ Đã deploy        | Quản lý người dùng, role                     |
-| `rooms`          | ✅ Đã deploy        | Quản lý phòng, lọc, trips, destinations      |
-| `bookings`       | ✅ Đã deploy        | Đặt phòng, giữ phòng                         |
-| `payments`       | ✅ Đã deploy        | Xử lý thanh toán, hoàn tiền với VNPAY        |
-| `messages`       | ✅ Đã deploy        | Gửi email, WebSocket realtime                |
-| `keycloak`       | ✅ Đã deploy        | Server xác thực & phân quyền OAuth2          |
-| `redis`          | ✅ Redis Cloud      | Xử lý cache, giữ phòng, OTP                  |
-| `rabbitmq`       | ✅ CloudAMQP        | Messaging service cho thanh toán/email/...   |
+## Triển khai (Deployment): render
